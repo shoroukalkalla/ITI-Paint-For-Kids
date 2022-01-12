@@ -1,0 +1,13 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  GUI.cpp
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(244,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(245,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(248,9): warning C4244: '-=': conversion from 'float' to 'LONG', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(249,9): warning C4244: '-=': conversion from 'float' to 'LONG', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(256,13): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(257,13): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(285,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(304,28): warning C4305: '+=': truncation from 'double' to 'float'
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(306,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\ITI\DataStructure (DS)\Final Project\Repo\GUI\GUI.cpp(307,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  PT-Project.vcxproj -> E:\ITI\DataStructure (DS)\Final Project\Repo\Debug\PT Project.exe
