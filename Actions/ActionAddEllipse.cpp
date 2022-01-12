@@ -38,7 +38,7 @@ void ActionAddEllipse::Execute()
 	pGUI->ClearStatusBar();
 
 
-	//Step 2 - prepare Ellipse data
+	//Step 2 - prepare Ellipse data Test Edit
 	//User has entered two points P1&P2
 	//2.1- Identify the Top left corner of the Ellipse
 	Point topLeft;
