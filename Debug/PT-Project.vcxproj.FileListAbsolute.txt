@@ -1,5 +1,0 @@
-D:\cpp\CIE202-Proj-S2018- A\Project Framework\Debug\PT Project.exe
-C:\Users\Mas-ALHassan\Desktop\Project\Project Framework\Debug\PT Project.exe
-E:\ITI\DataStructure (DS)\Final Project\temp\Project Framework\Debug\PT Project.exe
-E:\ITI\DataStructure (DS)\Final Project\Repo\Debug\PT Project.exe
-E:\ITI\C++\Main Project\paintKidsProject\Debug\PT Project.exe
