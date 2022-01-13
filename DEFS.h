@@ -35,7 +35,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	TO_DRAW,		//Switch interface to Draw mode
 	TO_PLAY			//Switch interface to Play mode
 
-	// new comment
+	// Alwakiel 
 };
 
 struct Point	//To be used for figures points
