@@ -16,10 +16,10 @@ GUI::GUI()
 	UI.ToolBarHeight = 50;
 	UI.MenuItemWidth = 50;
 	
-	UI.DrawColor = ROYALBLUE;	//Drawing color
+	UI.DrawColor = ROYALBLUE;		//Drawing color
 	UI.FillColor = MEDIUMSEAGREEN;	//Filling color
 	UI.MsgColor = INDIANRED;		//Messages color
-	UI.BkGrndColor = ALICEBLUE;	//Background color
+	UI.BkGrndColor = ALICEBLUE;		//Background color
 	UI.HighlightColor = ORANGERED;	//This color should NOT be used to draw figures. use if for highlight only
 	UI.StatusBarColor = TAN;
 	UI.PenWidth = 3;	//width of the figures frames
@@ -89,7 +89,7 @@ ActionType GUI::MapInputToActionType() const
 				switch (ClickedItemOrder)
 				{
 				case OPTION_CLR_BLUE: return SELECT_COLOR_BLUE;
-				case CANCEL: return TO_DRAW;
+				case OPTION_CANCEL: return TO_DRAW;
 
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
@@ -102,7 +102,7 @@ ActionType GUI::MapInputToActionType() const
 				case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 				case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
 				case ITM_CLR_RED: return SELECT_COLOR_RED;
-				case CHNG_FILL_CLR: return CHANGE_FILL_COLOR;
+				case CHNG_FILL_CLR: return CHNG_FILL_CLR;
 				case ITM_SQUR: return DRAW_SQUARE;
 				case ITM_ELPS: return DRAW_ELPS;
 				case ITM_HEX: return DRAW_HEX;
@@ -139,8 +139,7 @@ ActionType GUI::MapInputToActionType() const
 
 			switch (ClickedItemOrder)
 			{
-			case ITM_DRAW: return TO_DRAW;
-			case ITM_EXIT_PLAY: return EXIT;
+			case ITM_TO_DRAW: return TO_DRAW;
 
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -208,7 +207,7 @@ void GUI::CreateDrawToolBar() const
 		if (isChoosingOption) {
 			string OptionsItemImages[OPTOINS_MENU_COUNT];
 			OptionsItemImages[OPTION_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
-			OptionsItemImages[CANCEL] = "images\\MenuItems\\Menu_Exit.jpg";
+			OptionsItemImages[OPTION_CANCEL] = "images\\MenuItems\\Menu_Exit.jpg";
 
 			//Draw menu item one image at a time
 			for (int i = 0; i < OPTOINS_MENU_COUNT; i++)
@@ -235,8 +234,7 @@ void GUI::CreateDrawToolBar() const
 	} else { // Play mode
 		printf("Draw menu for play mode");
 		string PlayItemImages[PLAY_ITM_COUNT];
-		PlayItemImages[ITM_DRAW] = "images\\MenuItems\\select_icon.jpg";
-		PlayItemImages[ITM_EXIT_PLAY] = "images\\MenuItems\\Menu_Exit.jpg";
+		PlayItemImages[ITM_TO_DRAW] = "images\\MenuItems\\select_icon.jpg";
 
 		//Draw menu item one image at a time
 		for (int i = 0; i < PLAY_ITM_COUNT; i++)

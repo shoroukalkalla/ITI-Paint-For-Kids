@@ -63,7 +63,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionAddHexagon(this);
 			break;
 
-		case SELECT:
+		case SELECT_FIGURE:
 			newAct = new ActionSelectFigure(this);
 			break;
 
