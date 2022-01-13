@@ -3,7 +3,7 @@
 //constructor make necessary initializations
 GUI::GUI()
 {
-	//Initialize user interface parameters
+	//Initialize user interface parameters MODE_DRAW, MODE_PLAY
 	UI.InterfaceMode = MODE_DRAW;
 	
 	UI.width = 1300;
@@ -32,8 +32,10 @@ GUI::GUI()
 	
 	CreateDrawToolBar();
 	CreateStatusBar();
+
 	CreateSelectedColorSquare();
 	
+	//for ()
 }
 
 
@@ -83,20 +85,34 @@ ActionType GUI::MapInputToActionType() const
 			//Divide x coord of the point clicked by the menu item width (int division)
 			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 
-			switch (ClickedItemOrder)
-			{
-			case ITM_CLR_BLUE: return SELECT_COLOR_BLUE;
-			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
-			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
-			case ITM_CLR_RED: return SELECT_COLOR_RED;
-			case ITM_SQUR: return DRAW_SQUARE;
-			case ITM_ELPS: return DRAW_ELPS;
-			case ITM_HEX: return DRAW_HEX;
-			case ITM_SLCT: return SELECT;
-			case ITM_EXIT: return EXIT;
-			
-			default: return EMPTY;	//A click on empty place in desgin toolbar
+			if (isChoosingOption) {
+				switch (ClickedItemOrder)
+				{
+				case OPTION_CLR_BLUE: return SELECT_COLOR_BLUE;
+				case CANCEL: return TO_DRAW;
+
+
+				default: return EMPTY;	//A click on empty place in desgin toolbar
+				}
 			}
+			else {
+				switch (ClickedItemOrder)
+				{
+				case ITM_CLR_BLUE: return SELECT_COLOR_BLUE;
+				case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
+				case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
+				case ITM_CLR_RED: return SELECT_COLOR_RED;
+				case CHNG_FILL_CLR: return CHANGE_FILL_COLOR;
+				case ITM_SQUR: return DRAW_SQUARE;
+				case ITM_ELPS: return DRAW_ELPS;
+				case ITM_HEX: return DRAW_HEX;
+				case ITM_SLCT: return SELECT_FIGURE;
+				case ITM_EXIT: return EXIT;
+
+				default: return EMPTY;	//A click on empty place in desgin toolbar
+				}
+			}
+			
 		}
 
 		//[2] User clicks on the drawing area
@@ -112,9 +128,35 @@ ActionType GUI::MapInputToActionType() const
 	}
 	else	//GUI is in PLAY mode
 	{
-		///TODO:
-		//perform checks similar to Draw mode checks above
-		//and return the correspoding action
+		//[1] If user clicks on the Toolbar
+		if (y >= 0 && y < UI.ToolBarHeight)
+		{
+			//Check whick Menu item was clicked
+			//==> This assumes that menu items are lined up horizontally <==
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			//Divide x coord of the point clicked by the menu item width (int division)
+			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+			switch (ClickedItemOrder)
+			{
+			case ITM_DRAW: return TO_DRAW;
+			case ITM_EXIT_PLAY: return EXIT;
+
+			default: return EMPTY;	//A click on empty place in desgin toolbar
+			}
+		}
+
+		//[2] User clicks on the drawing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			// TODO: Select figure
+			// Loop FigList from FigCount : 0
+			return DRAWING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
+
 		return TO_PLAY;	//just for now. This should be updated
 	}	
 
@@ -161,35 +203,50 @@ void GUI::CreateDrawToolBar() const
 {
 	UI.InterfaceMode = MODE_DRAW;
 
-	//You can draw the tool bar icons in any way you want.
-	//Below is one possible way
+
+	if (UI.InterfaceMode == MODE_DRAW) { // Draw mood
+		if (isChoosingOption) {
+			string OptionsItemImages[OPTOINS_MENU_COUNT];
+			OptionsItemImages[OPTION_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
+			OptionsItemImages[CANCEL] = "images\\MenuItems\\Menu_Exit.jpg";
+
+			//Draw menu item one image at a time
+			for (int i = 0; i < OPTOINS_MENU_COUNT; i++)
+				pWind->DrawImage(OptionsItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		}
+		else {
+			string MenuItemImages[DRAW_ITM_COUNT];
+			MenuItemImages[ITM_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
+			MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\color_icon_cyan.jpg";
+			MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\color_icon_green.jpg";
+			MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\color_icon_red.jpg";
+			MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
+			MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
+			MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
+			MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
+			MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
+
+			//Draw menu item one image at a time
+			for (int i = 0; i < DRAW_ITM_COUNT; i++)
+				pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		}
+
+		
+	} else { // Play mode
+		printf("Draw menu for play mode");
+		string PlayItemImages[PLAY_ITM_COUNT];
+		PlayItemImages[ITM_DRAW] = "images\\MenuItems\\select_icon.jpg";
+		PlayItemImages[ITM_EXIT_PLAY] = "images\\MenuItems\\Menu_Exit.jpg";
+
+		//Draw menu item one image at a time
+		for (int i = 0; i < PLAY_ITM_COUNT; i++)
+			pWind->DrawImage(PlayItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+	}
+
 	
-	//First prepare List of images for each menu item
-	//To control the order of these images in the menu, 
-	//reoder them in UI_Info.h ==> enum DrawMenuItem
-	string MenuItemImages[DRAW_ITM_COUNT];
-	MenuItemImages[ITM_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
-	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\color_icon_cyan.jpg";
-	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\color_icon_green.jpg";
-	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\color_icon_red.jpg";
-	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
-	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
-	MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
-	MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
-	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
-
-	//TODO: Prepare images for each menu item and add it to the list
-
-	//Draw menu item one image at a time
-	for(int i=0; i<DRAW_ITM_COUNT; i++)
-		pWind->DrawImage(MenuItemImages[i], i*UI.MenuItemWidth,0,UI.MenuItemWidth, UI.ToolBarHeight);
-
-
-
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 3);
+	pWind->SetPen(CYAN, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);	
-
 }
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
@@ -221,12 +278,13 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 
 color GUI::getCrntDrawColor() const	//get current drwawing color
 {	return UI.DrawColor;	}
-// ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::setCrntDrawColor(color c) const
 {
 	UI.DrawColor = c;
 }
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
 
 color GUI::getCrntFillColor() const	//get current filling color
 {	return UI.FillColor;	}

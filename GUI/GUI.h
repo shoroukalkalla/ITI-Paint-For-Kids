@@ -11,6 +11,11 @@
 //No other class is allowed to perform direct i/o
 class GUI	
 {
+	//enum { ColorsCount = 4 };
+private:
+	//color colorPallete[ColorsCount] = { ROYALBLUE, MEDIUMSEAGREEN, INDIANRED, DARKCYAN }; // List of color pallete
+	//CFigure* colorsSquars[ColorsCount];
+	bool isChoosingOption = false;
 public:	
 	window* pWind;	//Pointer to the Graphics Window
 public:
