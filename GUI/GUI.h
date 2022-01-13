@@ -32,19 +32,20 @@ public:
 	void ClearStatusBar() const;	//Clears the status bar
 	void ClearDrawArea() const;	//Clears the drawing area
 	
+	drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const;
 	// -- Figures Drawing functions
 	void DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected=false) const;  //Draw a Square
 	
 	///TODO: Make similar functions for drawing all other figures.
 	void DrawEllipse(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const;
-	
+	void GUI::DrawHexagon(Point P1, Point P2, int radius, GfxInfo RectGfxInfo, bool selected) const;
+
 	void PrintMessage(string msg) const;	//Print a message on Status bar
 
-	color getCrntDrawColor() const;	//get current drwawing color
-	color getCrntFillColor() const;	//get current filling color
-	int getCrntPenWidth() const;		//get current pen width
-
-
+	color getCrntDrawColor() const;			//get current drwawing color
+	void GUI::setCrntDrawColor(color c) const;
+	color getCrntFillColor() const;			//get current filling color
+	int getCrntPenWidth() const;			//get current pen width
 };
 
 

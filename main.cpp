@@ -13,7 +13,7 @@ int main()
 	*/
 	
 	ApplicationManager AppManager;
-	AppManager.Run();	
+	AppManager.Run();
 	
 	return 0;
 }

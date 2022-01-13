@@ -20,7 +20,9 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_SQUR,		//Square item in menu
 	ITM_ELPS,		//Ellipse item in menu
 
-	//ITM_HEX,		//Hexagon item in menu
+	ITM_HEX,		//Hexagon item in menu
+
+	ITM_SLCT,		// Select Figure item in menu
 	
 	//TODO: Add more items names here
 

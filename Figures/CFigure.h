@@ -20,6 +20,8 @@ public:
 	bool IsSelected() const;	//check whether fig is selected
 
 	virtual void DrawMe(GUI*) const  = 0 ;		//Draw the figure
+
+	virtual bool isPointIn(int x, int y) const = 0;		//Check if the point within the figure boundaries
 	
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
@@ -31,7 +33,7 @@ public:
 
 
 	//virtual void Rotate() = 0;	//Rotate the figure
-	//virtual void Resize() = 0;	//Resize the figure
+	//virtual void Resize() = 0;	//Resize the figure <---
 	//virtual void Move() = 0;		//Move the figure
 
 	//virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file

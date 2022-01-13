@@ -87,7 +87,8 @@ ActionType GUI::MapInputToActionType() const
 			{
 			case ITM_SQUR: return DRAW_SQUARE;
 			case ITM_ELPS: return DRAW_ELPS;
-			//case ITM_HEX: return DRAW_HEX;
+			case ITM_HEX: return DRAW_HEX;
+			case ITM_SLCT: return SELECT;
 			case ITM_EXIT: return EXIT;
 			case ITM_EXITT: return EXIT;
 			
@@ -127,14 +128,14 @@ window* GUI::CreateWind(int w, int h, int x, int y) const
 	pW->DrawRectangle(0, UI.ToolBarHeight, w, h);	
 	return pW;
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 void GUI::CreateStatusBar() const
 {
 	pWind->SetPen(UI.StatusBarColor, 1);
 	pWind->SetBrush(UI.StatusBarColor);
 	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 void GUI::ClearStatusBar() const
 {
 	//Clear Status bar by drawing a filled white Square
@@ -142,7 +143,7 @@ void GUI::ClearStatusBar() const
 	pWind->SetBrush(UI.StatusBarColor);
 	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 void GUI::CreateDrawToolBar() const
 {
 	UI.InterfaceMode = MODE_DRAW;
@@ -154,8 +155,10 @@ void GUI::CreateDrawToolBar() const
 	//To control the order of these images in the menu, 
 	//reoder them in UI_Info.h ==> enum DrawMenuItem
 	string MenuItemImages[DRAW_ITM_COUNT];
-	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\Menu_Sqr.jpg";
-	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\Menu_Elps.jpg";
+	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
+	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
+	MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
+	MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 	MenuItemImages[ITM_EXITT] = "images\\MenuItems\\Menu_Exit.jpg";
 
@@ -172,14 +175,14 @@ void GUI::CreateDrawToolBar() const
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);	
 
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::CreatePlayToolBar() const
 {
 	UI.InterfaceMode = MODE_PLAY;
 	///TODO: write code to create Play mode menu
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::ClearDrawArea() const
 {
@@ -188,7 +191,7 @@ void GUI::ClearDrawArea() const
 	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);	
 	
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 {
@@ -198,67 +201,30 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 	pWind->SetFont(20, BOLD , BY_NAME, "Arial");   
 	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.5), msg);
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 
 color GUI::getCrntDrawColor() const	//get current drwawing color
 {	return UI.DrawColor;	}
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::setCrntDrawColor(color c) const
+{
+	UI.DrawColor = c;
+}
 
 color GUI::getCrntFillColor() const	//get current filling color
 {	return UI.FillColor;	}
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 	
 int GUI::getCrntPenWidth() const		//get current pen width
 {	return UI.PenWidth;	}
+
 
 //======================================================================================//
 //								Figures Drawing Functions								//
 //======================================================================================//
 
-void GUI::DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected) const
-{
-	color DrawingClr;
-	if(selected)	
-		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
-	else			
-		DrawingClr = RectGfxInfo.DrawClr;
-	
-	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
-	
-	drawstyle style;
-	if (RectGfxInfo.isFilled)	
-	{
-		style = FILLED;		
-		pWind->SetBrush(RectGfxInfo.FillClr);
-	}
-	else	
-		style = FRAME;
-
-	
-	pWind->DrawRectangle(P1.x, P1.y, P1.x +length, P1.y+length, style);
-	pWind->DrawLine(P1.x, P1.y, P1.x + length, P1.y + length, style);
-}
-
-POINT RotattPoint(float cx, float cy, float angle, POINT p)
-{
-	float s = sin(angle);
-	float c = cos(angle);
-
-	// translate point back to origin:
-	p.x -= cx;
-	p.y -= cy;
-
-	// rotate point
-	float xnew = p.x * c - p.y * s;
-	float ynew = p.x * s + p.y * c;
-
-	// translate point back:
-	p.x = xnew + cx;
-	p.y = ynew + cy;
-	return p;
-}
-
-void GUI::DrawEllipse(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const
+drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const
 {
 	color DrawingClr;
 	if (selected)
@@ -277,49 +243,58 @@ void GUI::DrawEllipse(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) co
 	else
 		style = FRAME;
 
+	return style;
+}
 
-	//pWind->DrawEllipse(P1.x, P1.y, P2.x, P2.y, style);
+void GUI::DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected) const
+{
+	drawstyle style = setupStyle(RectGfxInfo, selected);
 
-	//float radius = abs(P2.x - P1.x);
+	pWind->DrawRectangle(P1.x, P1.y, P1.x +length, P1.y+length, style);
+	pWind->DrawLine(P1.x, P1.y, P1.x + length, P1.y + length, style);
+}
 
-	float radius = sqrt(pow(P1.x - P2.x, 2) + pow(P1.y - P2.y, 2));
+void GUI::DrawEllipse(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const
+{
+	drawstyle style = setupStyle(RectGfxInfo, selected);
+
+
+	pWind->DrawEllipse(P1.x, P1.y, P2.x, P2.y, style);
+}
+
+void GUI::DrawHexagon(Point P1, Point P2, int radius, GfxInfo RectGfxInfo, bool selected) const
+{
+	drawstyle style = setupStyle(RectGfxInfo, selected);
 
 	// Center => (P1.x, P1.y)
 
 	int ipX[6];
 	int ipY[6];
 
+	//ipX[0] = P1.x + radius;
+	//ipY[0] = P1.y;
+	//float angle = 0;
+
+	// The first point => (P2.x, P2.y)
 	ipX[0] = P2.x;
-	ipY[0] = P1.y;
-	//ipY[0] = P2.y;
+	ipY[0] = P2.y;
+	float angle = atan2((float)P2.y - (float)P1.y, (float)P2.x - (float)P1.x);
 
-	//float angle = 6.2831853 - atan(((float) P2.y * (float) P1.x - (float) P2.x * (float) P1.y) /
-	//	((float) P1.x * (float) P2.x + (float) P1.y * (float) P2.y));
-
-	//float angle = atan2(P1.y - P2.y, P1.x - P2.x);
-	//printf("\n\nP1(%d, %d) P2(%d, %d) angle=%f", P1.x, P1.y, P2.x, P2.y, angle * 180 / 3.14159265);
-
-	float angle = 0;
 	for (int i = 1; i < 6; i++) {
 		angle += (3.14159265 / 3);
-		
-		ipX[i] = (float) P1.x + (radius * cos(angle));
-		ipY[i] = (float) P1.y + (radius * sin(angle));
 
-
-		//float s = sin(angle);
-		//float c = cos(angle);
-
-		// rotate point
-		//ipX[i] = ipX[i - 1] * c + ipY[i - 1] * s;
-		//ipY[i] = -ipX[i - 1] * s + ipY[i - 1] * c;
-
+		ipX[i] = (float)P1.x + (radius * cos(angle));
+		ipY[i] = (float)P1.y + (radius * sin(angle));
 	}
+
+	//for (int i = 0; i < 6; i++) {
+	//	printf("\n(x%d, y%d) : (%d, %d)", i + 1, i + 1, ipX[i], ipY[i]);
+	//}
 
 	pWind->DrawPolygon(ipX, ipY, 6, FILLED);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
+// ----- * ----- * ----- * ----- * ----- * ----- //
 GUI::~GUI()
 {
 	delete pWind;

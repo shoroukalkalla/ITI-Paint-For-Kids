@@ -11,6 +11,10 @@ void CSquare::DrawMe(GUI* pGUI) const
 {
 	//Call Output::DrawRect to draw a Square on the screen	
 	pGUI->DrawSquare(TopLeftCorner, length, FigGfxInfo, Selected);
-	
+}
 
+bool CSquare::isPointIn(int x, int y) const
+{
+	return (x >= TopLeftCorner.x && x <= TopLeftCorner.x + length)
+		&& (y >= TopLeftCorner.y && y <= TopLeftCorner.y + length);
 }

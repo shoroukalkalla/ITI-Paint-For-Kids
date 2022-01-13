@@ -15,3 +15,9 @@ void CEllipse::DrawMe(GUI* pGUI) const
 	pGUI->DrawEllipse(TopLeftCorner, BottomRightCorner, FigGfxInfo, Selected);
 
 }
+
+bool CEllipse::isPointIn(int x, int y) const
+{
+	return (x >= TopLeftCorner.x && x <= BottomRightCorner.x)
+		&& (y >= TopLeftCorner.y && y <= BottomRightCorner.y);
+}

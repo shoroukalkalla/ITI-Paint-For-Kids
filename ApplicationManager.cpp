@@ -1,6 +1,8 @@
 #include "ApplicationManager.h"
 #include "Actions\ActionAddSquare.h"
 #include "Actions\ActionAddEllipse.h"
+#include "Actions\ActionAddHexagon.h"
+#include "Actions\ActionSelectFigure.h"
 
 
 //Constructor
@@ -54,8 +56,15 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case DRAW_ELPS:
-			///create AddLineAction here
 			newAct = new ActionAddEllipse(this);
+			break;
+
+		case DRAW_HEX:
+			newAct = new ActionAddHexagon(this);
+			break;
+
+		case SELECT:
+			newAct = new ActionSelectFigure(this);
 			break;
 
 		case EXIT:
@@ -97,11 +106,19 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
 
+	///Add your code here to search for a figure given a point x,y
 
-	///Add your code here to search for a figure given a point x,y	
+	for (int i = FigCount - 1; i >= 0; i--) {
+		if (FigList[i] != NULL) {
+			if (FigList[i]->isPointIn(x, y)) {
+				return FigList[i];
+			}
+		}
+	}
 
 	return NULL;
 }
+
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
