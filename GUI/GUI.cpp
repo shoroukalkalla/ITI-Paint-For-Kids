@@ -90,7 +90,6 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_HEX: return DRAW_HEX;
 			case ITM_SLCT: return SELECT;
 			case ITM_EXIT: return EXIT;
-			case ITM_EXITT: return EXIT;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -160,7 +159,6 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
 	MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
-	MenuItemImages[ITM_EXITT] = "images\\MenuItems\\Menu_Exit.jpg";
 
 	//TODO: Prepare images for each menu item and add it to the list
 
