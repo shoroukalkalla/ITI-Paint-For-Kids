@@ -9,7 +9,7 @@ class ActionAddEllipse : public Action
 public:
 	ActionAddEllipse(ApplicationManager* pApp);
 
-	//Add Ellipse to the ApplicationManager
+	//Add Ellipse to the gApplicationManager
 	virtual void Execute();
 
 };
