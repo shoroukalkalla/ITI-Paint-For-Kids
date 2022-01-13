@@ -16,13 +16,12 @@ GUI::GUI()
 	UI.ToolBarHeight = 50;
 	UI.MenuItemWidth = 50;
 	
-	UI.SelectedColor = WHITE; // Current Selected Color
-	UI.DrawColor = BLUE;	//Drawing color
-	UI.FillColor = GREEN;	//Filling color
-	UI.MsgColor = RED;		//Messages color
-	UI.BkGrndColor = LIGHTGOLDENRODYELLOW;	//Background color
-	UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
-	UI.StatusBarColor = TURQUOISE;
+	UI.DrawColor = ROYALBLUE;	//Drawing color
+	UI.FillColor = MEDIUMSEAGREEN;	//Filling color
+	UI.MsgColor = INDIANRED;		//Messages color
+	UI.BkGrndColor = ALICEBLUE;	//Background color
+	UI.HighlightColor = ORANGERED;	//This color should NOT be used to draw figures. use if for highlight only
+	UI.StatusBarColor = TAN;
 	UI.PenWidth = 3;	//width of the figures frames
 
 	
@@ -33,6 +32,7 @@ GUI::GUI()
 	
 	CreateDrawToolBar();
 	CreateStatusBar();
+	CreateSelectedColorSquare();
 	
 }
 
@@ -85,6 +85,10 @@ ActionType GUI::MapInputToActionType() const
 
 			switch (ClickedItemOrder)
 			{
+			case ITM_CLR_BLUE: return SELECT_COLOR_BLUE;
+			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
+			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
+			case ITM_CLR_RED: return SELECT_COLOR_RED;
 			case ITM_SQUR: return DRAW_SQUARE;
 			case ITM_ELPS: return DRAW_ELPS;
 			case ITM_HEX: return DRAW_HEX;
@@ -134,6 +138,16 @@ void GUI::CreateStatusBar() const
 	pWind->SetBrush(UI.StatusBarColor);
 	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
 }
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::CreateSelectedColorSquare() const
+{
+	pWind->SetPen(UI.DrawColor, 3);
+	pWind->SetBrush(UI.FillColor);
+	pWind->DrawRectangle(10, UI.StatusBarHeight + 10, 40, UI.StatusBarHeight + 40);
+}
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
 void GUI::ClearStatusBar() const
 {
@@ -154,6 +168,10 @@ void GUI::CreateDrawToolBar() const
 	//To control the order of these images in the menu, 
 	//reoder them in UI_Info.h ==> enum DrawMenuItem
 	string MenuItemImages[DRAW_ITM_COUNT];
+	MenuItemImages[ITM_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
+	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\color_icon_cyan.jpg";
+	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\color_icon_green.jpg";
+	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\color_icon_red.jpg";
 	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
 	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
 	MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
@@ -231,6 +249,7 @@ drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const
 		DrawingClr = RectGfxInfo.DrawClr;
 
 	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
+	//pWind->SetBrush(RectGfxInfo.FillClr);
 
 	drawstyle style;
 	if (RectGfxInfo.isFilled)
@@ -289,7 +308,7 @@ void GUI::DrawHexagon(Point P1, Point P2, int radius, GfxInfo RectGfxInfo, bool 
 	//	printf("\n(x%d, y%d) : (%d, %d)", i + 1, i + 1, ipX[i], ipY[i]);
 	//}
 
-	pWind->DrawPolygon(ipX, ipY, 6, FILLED);
+	pWind->DrawPolygon(ipX, ipY, 6, style);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //

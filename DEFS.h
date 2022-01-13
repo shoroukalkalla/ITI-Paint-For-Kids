@@ -6,6 +6,11 @@
 //This file contais some global constants and definitions to be used in the project.
 enum ActionType //The actions supported (you can add more if needed)
 {
+	SELECT_COLOR_BLUE, // Change the current select color to blue
+	SELECT_COLOR_CYAN, // Change the current select color to cyan
+	SELECT_COLOR_GREEN, // Change the current select color to green
+	SELECT_COLOR_RED, // Change the current select color to red
+
 	DRAW_SQUARE,	//Draw a Square
 	DRAW_ELPS,		//Draw an Ellipse
 	DRAW_HEX,		//Draw a Hexagon

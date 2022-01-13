@@ -30,6 +30,7 @@ public:
 	void CreateStatusBar() const;	//create the status bar
 
 	void ClearStatusBar() const;	//Clears the status bar
+	void CreateSelectedColorSquare() const;
 	void ClearDrawArea() const;	//Clears the drawing area
 	
 	drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const;

@@ -17,6 +17,11 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 {
 	//Note: Items are ordered here as they appear in menu
 	//If you want to change the menu items order, change the order here
+	ITM_CLR_BLUE,		//Select Blue Color in the menu
+	ITM_CLR_CYAN,		//Select Cyan Color in the menu
+	ITM_CLR_GREEN,		//Select Green Color in the menu
+	ITM_CLR_RED,		//Select Red Color in the menu
+
 	ITM_SQUR,		//Square item in menu
 	ITM_ELPS,		//Ellipse item in menu
 
