@@ -72,32 +72,43 @@ string GUI::GetSrting() const
 ActionType GUI::MapInputToActionType() const
 {	
 	int x,y;
-	pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
+	GetPointClicked(x, y);	//Get the coordinates of the user click
 
 	if(UI.InterfaceMode == MODE_DRAW)	//GUI in the DRAW mode
 	{
-		//[1] If user clicks on the Toolbar
-		if (y >= 0 && y < UI.ToolBarHeight)
-		{	
-			//Check whick Menu item was clicked
-			//==> This assumes that menu items are lined up horizontally <==
-			int ClickedItemOrder = (x / UI.MenuItemWidth);
-			//Divide x coord of the point clicked by the menu item width (int division)
-			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+		return MapInputInDrawMood(x, y);
+	}
+	else	//GUI is in PLAY mode
+	{
+		return MapInputInPlayMood(x, y);
+	}	
+}
 
-			if (isChoosingOption) {
-				switch (ClickedItemOrder)
-				{
+
+
+ActionType GUI::MapInputInDrawMood(int x, int y) const
+{
+	//[1] If user clicks on the Toolbar
+	if (y >= 0 && y < UI.ToolBarHeight)
+	{
+		//Check which Menu item was clicked
+		//==> This assumes that menu items are lined up horizontally <==
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		//Divide x coord of the point clicked by the menu item width (int division)
+		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+		if (isChoosingOption) {
+			switch (ClickedItemOrder)
+			{
 				case OPTION_CLR_BLUE: return SELECT_COLOR_BLUE;
 				case OPTION_CANCEL: return TO_DRAW;
 
-
 				default: return EMPTY;	//A click on empty place in desgin toolbar
-				}
 			}
-			else {
-				switch (ClickedItemOrder)
-				{
+		}
+		else {
+			switch (ClickedItemOrder)
+			{
 				case ITM_CLR_BLUE: return SELECT_COLOR_BLUE;
 				case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 				case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
@@ -110,56 +121,56 @@ ActionType GUI::MapInputToActionType() const
 				case ITM_EXIT: return EXIT;
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
-				}
 			}
-			
 		}
 
-		//[2] User clicks on the drawing area
-		if ( y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
-		{
-			// TODO: Select figure
-			// Loop FigList from FigCount : 0
-			return DRAWING_AREA;	
-		}
-		
-		//[3] User clicks on the status bar
-		return STATUS;
 	}
-	else	//GUI is in PLAY mode
-	{
-		//[1] If user clicks on the Toolbar
-		if (y >= 0 && y < UI.ToolBarHeight)
-		{
-			//Check whick Menu item was clicked
-			//==> This assumes that menu items are lined up horizontally <==
-			int ClickedItemOrder = (x / UI.MenuItemWidth);
-			//Divide x coord of the point clicked by the menu item width (int division)
-			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 
-			switch (ClickedItemOrder)
-			{
+	//[2] User clicks on the drawing area
+	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+	{
+		// TODO: Select figure
+		// Loop FigList from FigCount : 0
+		return DRAWING_AREA;
+	}
+
+	//[3] User clicks on the status bar
+	return STATUS;
+}
+
+ActionType GUI::MapInputInPlayMood(int x, int y) const
+{
+	//[1] If user clicks on the Toolbar
+	if (y >= 0 && y < UI.ToolBarHeight)
+	{
+		//Check whick Menu item was clicked
+		//==> This assumes that menu items are lined up horizontally <==
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		//Divide x coord of the point clicked by the menu item width (int division)
+		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+		switch (ClickedItemOrder)
+		{
 			case ITM_TO_DRAW: return TO_DRAW;
 
 			default: return EMPTY;	//A click on empty place in desgin toolbar
-			}
 		}
+	}
 
-		//[2] User clicks on the drawing area
-		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
-		{
-			// TODO: Select figure
-			// Loop FigList from FigCount : 0
-			return DRAWING_AREA;
-		}
+	//[2] User clicks on the drawing area
+	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+	{
+		// TODO: Select figure
+		// Loop FigList from FigCount : 0
+		return DRAWING_AREA;
+	}
 
-		//[3] User clicks on the status bar
-		return STATUS;
+	//[3] User clicks on the status bar
+	return STATUS;
 
-		return TO_PLAY;	//just for now. This should be updated
-	}	
-
+	return TO_PLAY;	//just for now. This should be updated
 }
+
 //======================================================================================//
 //								Output Functions										//
 //======================================================================================//
@@ -201,7 +212,6 @@ void GUI::ClearStatusBar() const
 void GUI::CreateDrawToolBar() const
 {
 	UI.InterfaceMode = MODE_DRAW;
-
 
 	if (UI.InterfaceMode == MODE_DRAW) { // Draw mood
 		if (isChoosingOption) {
@@ -270,7 +280,7 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 	
 	pWind->SetPen(UI.MsgColor, 50);
 	pWind->SetFont(20, BOLD , BY_NAME, "Arial");   
-	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.5), msg);
+	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.25), msg);
 }
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
@@ -295,6 +305,11 @@ int GUI::getCrntPenWidth() const		//get current pen width
 //======================================================================================//
 //								Figures Drawing Functions								//
 //======================================================================================//
+
+bool isInsideDrawingArea(int x, int y) {
+	return x > 0 && x < UI.width
+		&& y > UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight;
+}
 
 drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const
 {
@@ -358,6 +373,11 @@ void GUI::DrawHexagon(Point P1, Point P2, int radius, GfxInfo RectGfxInfo, bool 
 
 		ipX[i] = (float)P1.x + (radius * cos(angle));
 		ipY[i] = (float)P1.y + (radius * sin(angle));
+
+		if (!isInsideDrawingArea(ipX[i], ipY[i])) {
+			// TODO Show message (can't draw outside the boundaries)
+			return;
+		}
 	}
 
 	//for (int i = 0; i < 6; i++) {
