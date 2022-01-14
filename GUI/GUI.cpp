@@ -4,7 +4,7 @@
 GUI::GUI()
 {
 	//Initialize user interface parameters MODE_DRAW, MODE_PLAY
-	UI.InterfaceMode = MODE_DRAW;
+	UI.InterfaceMode = MODE_PLAY;
 	
 	UI.width = 1300;
 	UI.height = 700;
@@ -91,7 +91,6 @@ ActionType GUI::MapInputToActionType() const
 				case OPTION_CLR_BLUE: return SELECT_COLOR_BLUE;
 				case OPTION_CANCEL: return TO_DRAW;
 
-
 				default: return EMPTY;	//A click on empty place in desgin toolbar
 				}
 			}
@@ -102,11 +101,16 @@ ActionType GUI::MapInputToActionType() const
 				case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 				case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
 				case ITM_CLR_RED: return SELECT_COLOR_RED;
-				case CHNG_FILL_CLR: return CHNG_FILL_CLR;
+				//case CHNG_FILL_CLR: return CHNG_FILL_CLR;				// not created at enum
 				case ITM_SQUR: return DRAW_SQUARE;
 				case ITM_ELPS: return DRAW_ELPS;
 				case ITM_HEX: return DRAW_HEX;
 				case ITM_SLCT: return SELECT_FIGURE;
+                
+				// start 14/1/2022
+				case ITM_SWICH_PLAY: return TO_PLAY;
+				// end 14/1/2022
+
 				case ITM_EXIT: return EXIT;
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
@@ -139,9 +143,12 @@ ActionType GUI::MapInputToActionType() const
 
 			switch (ClickedItemOrder)
 			{
-			case ITM_TO_DRAW: return TO_DRAW;
+				// start 14/1/2022
+				case ITM_SWICH_DRAW: return TO_DRAW;
+				case ITM_EXIT2: return EXIT;
+				// end 14/1/2022
 
-			default: return EMPTY;	//A click on empty place in desgin toolbar
+				default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
 		}
 
@@ -156,7 +163,7 @@ ActionType GUI::MapInputToActionType() const
 		//[3] User clicks on the status bar
 		return STATUS;
 
-		return TO_PLAY;	//just for now. This should be updated
+		//return TO_PLAY;	//just for now. This should be updated
 	}	
 
 }
@@ -173,6 +180,7 @@ window* GUI::CreateWind(int w, int h, int x, int y) const
 	return pW;
 }
 // ----- * ----- * ----- * ----- * ----- * ----- //
+
 void GUI::CreateStatusBar() const
 {
 	pWind->SetPen(UI.StatusBarColor, 1);
@@ -190,6 +198,7 @@ void GUI::CreateSelectedColorSquare() const
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
+
 void GUI::ClearStatusBar() const
 {
 	//Clear Status bar by drawing a filled white Square
@@ -198,49 +207,51 @@ void GUI::ClearStatusBar() const
 	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
 }
 // ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::ClearToolBar() const
+{
+	//Clear tool bar by drawing a filled white Square
+	pWind->SetPen(UI.BkGrndColor, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, 50);
+}
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
 void GUI::CreateDrawToolBar() const
 {
 	UI.InterfaceMode = MODE_DRAW;
 
-
-	if (UI.InterfaceMode == MODE_DRAW) { // Draw mood
-		if (isChoosingOption) {
-			string OptionsItemImages[OPTOINS_MENU_COUNT];
-			OptionsItemImages[OPTION_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
-			OptionsItemImages[OPTION_CANCEL] = "images\\MenuItems\\Menu_Exit.jpg";
-
-			//Draw menu item one image at a time
-			for (int i = 0; i < OPTOINS_MENU_COUNT; i++)
-				pWind->DrawImage(OptionsItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-		}
-		else {
-			string MenuItemImages[DRAW_ITM_COUNT];
-			MenuItemImages[ITM_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
-			MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\color_icon_cyan.jpg";
-			MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\color_icon_green.jpg";
-			MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\color_icon_red.jpg";
-			MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
-			MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
-			MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
-			MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
-			MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
-
-			//Draw menu item one image at a time
-			for (int i = 0; i < DRAW_ITM_COUNT; i++)
-				pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-		}
-
-		
-	} else { // Play mode
-		printf("Draw menu for play mode");
-		string PlayItemImages[PLAY_ITM_COUNT];
-		PlayItemImages[ITM_TO_DRAW] = "images\\MenuItems\\select_icon.jpg";
+	ClearToolBar();
+	
+	if (isChoosingOption) {
+		string OptionsItemImages[OPTOINS_MENU_COUNT];
+		OptionsItemImages[OPTION_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
+		OptionsItemImages[OPTION_CANCEL] = "images\\MenuItems\\Menu_Exit.jpg";
 
 		//Draw menu item one image at a time
-		for (int i = 0; i < PLAY_ITM_COUNT; i++)
-			pWind->DrawImage(PlayItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		for (int i = 0; i < OPTOINS_MENU_COUNT; i++)
+			pWind->DrawImage(OptionsItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 	}
+	else {
+		string MenuItemImages[DRAW_ITM_COUNT];
+		MenuItemImages[ITM_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
+		MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\color_icon_cyan.jpg";
+		MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\color_icon_green.jpg";
+		MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\color_icon_red.jpg";
+		MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
+		MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
+		MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
+		MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
 
+		MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\play_icon.jpg";
+
+		MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
+
+		//Draw menu item one image at a time
+		for (int i = 0; i < DRAW_ITM_COUNT; i++)
+			pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+	}
 	
 	//Draw a line under the toolbar
 	pWind->SetPen(CYAN, 3);
@@ -251,7 +262,21 @@ void GUI::CreateDrawToolBar() const
 void GUI::CreatePlayToolBar() const
 {
 	UI.InterfaceMode = MODE_PLAY;
-	///TODO: write code to create Play mode menu
+
+	ClearToolBar();
+
+	string PlayItemImages[PLAY_ITM_COUNT];
+	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\draw_icon.jpg";
+	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\Menu_Exit.jpg";
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < PLAY_ITM_COUNT; i++)
+	pWind->DrawImage(PlayItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+	//Draw a line under the toolbar
+	pWind->SetPen(CYAN, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+
 }
 // ----- * ----- * ----- * ----- * ----- * ----- //
 

@@ -24,12 +24,14 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 
 	ITM_SQUR,		//Square item in menu
 	ITM_ELPS,		//Ellipse item in menu
-
 	ITM_HEX,		//Hexagon item in menu
 
 	ITM_SLCT,		// Select Figure item in menu
 	
 	//TODO: Add more items names here
+
+	// icon to swtich between draw mode and play mode
+	ITM_SWICH_PLAY,	   // switch item in menu
 
 	ITM_EXIT,		//Exit item
 	
@@ -44,7 +46,9 @@ enum OptionsMenuItem {
 
 enum PlayMenuItem //The items of the Play menu (you should add more items)
 {
-	ITM_TO_DRAW,
+	// icon to swtich between draw mode and play mode
+	ITM_SWICH_DRAW,	   // switch item in menu
+	ITM_EXIT2,		   //Exit item
 
 	PLAY_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 };

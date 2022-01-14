@@ -15,7 +15,7 @@ class GUI
 private:
 	//color colorPallete[ColorsCount] = { ROYALBLUE, MEDIUMSEAGREEN, INDIANRED, DARKCYAN }; // List of color pallete
 	//CFigure* colorsSquars[ColorsCount];
-	bool isChoosingOption = false;
+	bool isChoosingOption = false; // ??
 public:	
 	window* pWind;	//Pointer to the Graphics Window
 public:
@@ -35,6 +35,7 @@ public:
 	void CreateStatusBar() const;	//create the status bar
 
 	void ClearStatusBar() const;	//Clears the status bar
+	void ClearToolBar() const;      //clears the tool bar
 	void CreateSelectedColorSquare() const;
 	void ClearDrawArea() const;	//Clears the drawing area
 	
