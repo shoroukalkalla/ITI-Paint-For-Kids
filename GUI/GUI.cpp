@@ -117,9 +117,7 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 				case ITM_HEX: return DRAW_HEX;
 				case ITM_SLCT: return SELECT_FIGURE;
                 
-				// start 14/1/2022
 				case ITM_SWICH_PLAY: return TO_PLAY;
-				// end 14/1/2022
 
 				case ITM_EXIT: return EXIT;
 
@@ -154,10 +152,10 @@ ActionType GUI::MapInputInPlayMood(int x, int y) const
 
 			switch (ClickedItemOrder)
 			{
-				// start 14/1/2022
+				
 				case ITM_SWICH_DRAW: return TO_DRAW;
+				case ITM_SELECT_TYPE: return TO_PICK_TYPE;
 				case ITM_EXIT2: return EXIT;
-				// end 14/1/2022
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -256,6 +254,7 @@ void GUI::CreatePlayToolBar() const
 
 	string PlayItemImages[PLAY_ITM_COUNT];
 	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\mood_draw.jpg";
+	PlayItemImages[ITM_SELECT_TYPE] = "images\\MenuItems\\select_icon_02.jpg";
 	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\Menu_Exit.jpg";
 
 	//Draw menu item one image at a time

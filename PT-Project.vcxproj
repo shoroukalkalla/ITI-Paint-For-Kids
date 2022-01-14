@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="Actions\ActionAddEllipse.cpp" />
     <ClCompile Include="Actions\ActionAddHexagon.cpp" />
+    <ClCompile Include="Actions\ActionPickTypeFigure.cpp" />
     <ClCompile Include="Actions\ActionSelectFigure.cpp" />
     <ClCompile Include="Actions\ActionSwitchToDraw.cpp" />
     <ClCompile Include="Actions\ActionSwitchToPlay.cpp" />
@@ -182,6 +183,7 @@
   <ItemGroup>
     <ClInclude Include="Actions\ActionAddEllipse.h" />
     <ClInclude Include="Actions\ActionAddHexagon.h" />
+    <ClInclude Include="Actions\ActionPickTypeFigure.h" />
     <ClInclude Include="Actions\ActionSelectFigure.h" />
     <ClInclude Include="Actions\ActionSwitchToDraw.h" />
     <ClInclude Include="Actions\ActionSwitchToPlay.h" />
