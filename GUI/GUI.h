@@ -27,7 +27,8 @@ public:
 	void GetPointClicked(int &x, int &y) const;//Get coordinate where user clicks
 	string GetSrting() const ;	 //Returns a string entered by the user
 	ActionType MapInputToActionType() const; //Read the user click and map to an action
-
+	ActionType MapInputInDrawMood(int x, int y) const;
+	ActionType MapInputInPlayMood(int x, int y) const;
 
 	/////////// Output Functoinality  ////////////////
 	void CreateDrawToolBar() const;	//creates Draw mode toolbar & menu
