@@ -11,7 +11,7 @@ CHexagon::CHexagon(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfx
 void CHexagon::DrawMe(GUI* pGUI) const
 {
 	//Call Output::DrawRect to draw a Square on the screen	
-	pGUI->DrawHexagon(center, firstPoint, radius, FigGfxInfo, Selected);
+	pGUI->figureDrawer->DrawHexagon(center, firstPoint, radius, FigGfxInfo, Selected);
 }
 
 bool CHexagon::isPointIn(int x, int y) const
