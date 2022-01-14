@@ -15,7 +15,7 @@ class ApplicationManager
 private:
 	int FigCount;		//Actual number of figures
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
-	//CFigure* SelectedFig;	//Current selected figure
+	CFigure* SelectedFigure;		//Current selected figure
 
 	//Pointers to Input and Output classes
 	GUI* pGUI;
@@ -33,8 +33,10 @@ public:
 	
 	// -- Figures Management Functions
 	void AddFigure(CFigure* pFig); //Adds a new figure to the FigList
-	CFigure *GetFigure(int x, int y) const; //Search for a figure given a point inside the figure
-		
+	CFigure *GetFigure(int x, int y); //Search for a figure given a point inside the figure
+	void ApplicationManager::SetSelectedFigure(CFigure* figure);
+	CFigure* ApplicationManager::GetSelectedFigure();
+
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	
