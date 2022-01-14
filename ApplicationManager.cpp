@@ -5,6 +5,7 @@
 #include "Actions\ActionSelectFigure.h"
 #include "Actions\ActionSwitchToPlay.h"
 #include "Actions\ActionSwitchToDraw.h"
+#include "Actions\ActionPickTypeFigure.h"
 
 
 //Constructor
@@ -73,10 +74,15 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionSwitchToPlay(this);
 			break;
 
+		// FOR PLAY MODE
+
 		case TO_DRAW:
 			newAct = new ActionSwitchToDraw(this);
 			break;
 
+		case TO_PICK_TYPE:
+			newAct = new ActionPickTypeFigure(this);
+			break;
 
 		case EXIT:
 			///create ExitAction here
