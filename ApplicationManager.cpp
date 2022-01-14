@@ -3,6 +3,8 @@
 #include "Actions\ActionAddEllipse.h"
 #include "Actions\ActionAddHexagon.h"
 #include "Actions\ActionSelectFigure.h"
+#include "Actions\ActionSwitchToPlay.h"
+#include "Actions\ActionSwitchToDraw.h"
 
 
 //Constructor
@@ -66,6 +68,15 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 		case SELECT_FIGURE:
 			newAct = new ActionSelectFigure(this);
 			break;
+
+		case TO_PLAY:
+			newAct = new ActionSwitchToPlay(this);
+			break;
+
+		case TO_DRAW:
+			newAct = new ActionSwitchToDraw(this);
+			break;
+
 
 		case EXIT:
 			///create ExitAction here
