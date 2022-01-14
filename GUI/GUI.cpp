@@ -1,4 +1,5 @@
 #include "GUI.h"
+#include "FigureDrawer.h"
 
 //constructor make necessary initializations
 GUI::GUI()
@@ -11,31 +12,30 @@ GUI::GUI()
 	UI.wx = 5;
 	UI.wy =5;
 
-	
+	UI.ToolBarHeight = 70;
+	UI.MenuItemWidth = 70;
 	UI.StatusBarHeight = 50;
-	UI.ToolBarHeight = 50;
-	UI.MenuItemWidth = 50;
 	
 	UI.DrawColor = ROYALBLUE;		//Drawing color
 	UI.FillColor = MEDIUMSEAGREEN;	//Filling color
 	UI.MsgColor = INDIANRED;		//Messages color
 	UI.BkGrndColor = ALICEBLUE;		//Background color
 	UI.HighlightColor = ORANGERED;	//This color should NOT be used to draw figures. use if for highlight only
+	UI.PointColor = BROWN;		//The point where the user clicks to draw
 	UI.StatusBarColor = TAN;
 	UI.PenWidth = 3;	//width of the figures frames
-
 	
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, UI.wx, UI.wy);
 	//Change the title
 	pWind->ChangeTitle("Paint for Kids - Programming Techniques Project");
 	
+	figureDrawer = new FigureDrawer(this);
+
 	CreateDrawToolBar();
 	CreateStatusBar();
 
 	CreateSelectedColorSquare();
-	
-	//for ()
 }
 
 
@@ -83,8 +83,6 @@ ActionType GUI::MapInputToActionType() const
 		return MapInputInPlayMood(x, y);
 	}	
 }
-
-
 
 ActionType GUI::MapInputInDrawMood(int x, int y) const
 {
@@ -179,9 +177,14 @@ ActionType GUI::MapInputInPlayMood(int x, int y) const
 		//return TO_PLAY;	//just for now. This should be updated
 	}	
 
+
 //======================================================================================//
 //								Output Functions										//
 //======================================================================================//
+
+/* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
+ * -----> Create Tool bars and Drawing area
+ * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
 
 window* GUI::CreateWind(int w, int h, int x, int y) const
 { 
@@ -191,6 +194,7 @@ window* GUI::CreateWind(int w, int h, int x, int y) const
 	pW->DrawRectangle(0, UI.ToolBarHeight, w, h);	
 	return pW;
 }
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::CreateStatusBar() const
@@ -198,34 +202,6 @@ void GUI::CreateStatusBar() const
 	pWind->SetPen(UI.StatusBarColor, 1);
 	pWind->SetBrush(UI.StatusBarColor);
 	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
-}
-
-// ----- * ----- * ----- * ----- * ----- * ----- //
-
-void GUI::CreateSelectedColorSquare() const
-{
-	pWind->SetPen(UI.DrawColor, 3);
-	pWind->SetBrush(UI.FillColor);
-	pWind->DrawRectangle(10, UI.StatusBarHeight + 10, 40, UI.StatusBarHeight + 40);
-}
-
-// ----- * ----- * ----- * ----- * ----- * ----- //
-
-void GUI::ClearStatusBar() const
-{
-	//Clear Status bar by drawing a filled white Square
-	pWind->SetPen(UI.StatusBarColor, 1);
-	pWind->SetBrush(UI.StatusBarColor);
-	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
-}
-// ----- * ----- * ----- * ----- * ----- * ----- //
-
-void GUI::ClearToolBar() const
-{
-	//Clear tool bar by drawing a filled white Square
-	pWind->SetPen(UI.BkGrndColor, 1);
-	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, 0, UI.width, 50);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
@@ -256,7 +232,7 @@ void GUI::CreateDrawToolBar() const
 		MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
 		MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
 
-		MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\play_icon.jpg";
+		MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 
 		MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
@@ -266,9 +242,10 @@ void GUI::CreateDrawToolBar() const
 	}
 	
 	//Draw a line under the toolbar
-	pWind->SetPen(CYAN, 3);
+	pWind->SetPen(DARKCYAN, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);	
 }
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::CreatePlayToolBar() const
@@ -278,7 +255,7 @@ void GUI::CreatePlayToolBar() const
 	ClearToolBar();
 
 	string PlayItemImages[PLAY_ITM_COUNT];
-	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\draw_icon.jpg";
+	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\mood_draw.jpg";
 	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\Menu_Exit.jpg";
 
 	//Draw menu item one image at a time
@@ -290,15 +267,16 @@ void GUI::CreatePlayToolBar() const
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 }
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
-void GUI::ClearDrawArea() const
+void GUI::CreateSelectedColorSquare() const
 {
-	pWind->SetPen(UI.BkGrndColor, 1);
-	pWind->SetBrush(UI.BkGrndColor);
-	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);	
-	
+	pWind->SetPen(UI.DrawColor, 3);
+	pWind->SetBrush(UI.FillColor);
+	pWind->DrawRectangle(10, UI.ToolBarHeight + 15, 40, UI.ToolBarHeight + 45);
 }
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::PrintMessage(string msg) const	//Prints a message on status bar
@@ -309,7 +287,50 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 	pWind->SetFont(20, BOLD , BY_NAME, "Arial");   
 	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.25), msg);
 }
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
+
+/* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
+ * -----> Clear Tool bars and Drawing area
+ * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
+
+void GUI::ClearToolBar() const
+{
+	//Clear tool bar by drawing a filled Square
+	pWind->SetPen(UI.BkGrndColor, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+}
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::ClearDrawArea() const
+{
+	pWind->SetPen(UI.BkGrndColor, 1);
+	pWind->SetBrush(UI.BkGrndColor);
+	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);
+}
+
+void GUI::ResetDrawingArea() const
+{
+	ClearDrawArea();
+	CreateSelectedColorSquare();
+}
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::ClearStatusBar() const
+{
+	//Clear Status bar by drawing a filled white Square
+	pWind->SetPen(UI.StatusBarColor, 1);
+	pWind->SetBrush(UI.StatusBarColor);
+	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
+}
+
+
+/* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
+ * -----> Get and Set colors (drawing, filling)
+ * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
 
 color GUI::getCrntDrawColor() const	//get current drwawing color
 {	return UI.DrawColor;	}
@@ -319,102 +340,33 @@ void GUI::setCrntDrawColor(color c) const
 	UI.DrawColor = c;
 }
 
-// ----- * ----- * ----- * ----- * ----- * ----- //
-
 color GUI::getCrntFillColor() const	//get current filling color
 {	return UI.FillColor;	}
+
 // ----- * ----- * ----- * ----- * ----- * ----- //
 	
 int GUI::getCrntPenWidth() const		//get current pen width
 {	return UI.PenWidth;	}
 
+// ----- * ----- * ----- * ----- * ----- * ----- //
 
-//======================================================================================//
-//								Figures Drawing Functions								//
-//======================================================================================//
-
-bool isInsideDrawingArea(int x, int y) {
+// ----- * Check if a point of (x, y) is inside the drawing area * ----- //
+bool GUI::isInsideDrawingArea(int x, int y) const
+{
 	return x > 0 && x < UI.width
 		&& y > UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight;
 }
 
-drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const
+// ----- * Draw a point where the user clicks to draw a figure * ----- //
+void GUI::drawPoint(int x, int y) const
 {
-	color DrawingClr;
-	if (selected)
-		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
-	else
-		DrawingClr = RectGfxInfo.DrawClr;
-
-	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
-	//pWind->SetBrush(RectGfxInfo.FillClr);
-
-	drawstyle style;
-	if (RectGfxInfo.isFilled)
-	{
-		style = FILLED;
-		pWind->SetBrush(RectGfxInfo.FillClr);
-	}
-	else
-		style = FRAME;
-
-	return style;
-}
-
-void GUI::DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected) const
-{
-	drawstyle style = setupStyle(RectGfxInfo, selected);
-
-	pWind->DrawRectangle(P1.x, P1.y, P1.x +length, P1.y+length, style);
-	pWind->DrawLine(P1.x, P1.y, P1.x + length, P1.y + length, style);
-}
-
-void GUI::DrawEllipse(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const
-{
-	drawstyle style = setupStyle(RectGfxInfo, selected);
-
-
-	pWind->DrawEllipse(P1.x, P1.y, P2.x, P2.y, style);
-}
-
-void GUI::DrawHexagon(Point P1, Point P2, int radius, GfxInfo RectGfxInfo, bool selected) const
-{
-	drawstyle style = setupStyle(RectGfxInfo, selected);
-
-	// Center => (P1.x, P1.y)
-
-	int ipX[6];
-	int ipY[6];
-
-	//ipX[0] = P1.x + radius;
-	//ipY[0] = P1.y;
-	//float angle = 0;
-
-	// The first point => (P2.x, P2.y)
-	ipX[0] = P2.x;
-	ipY[0] = P2.y;
-	float angle = atan2((float)P2.y - (float)P1.y, (float)P2.x - (float)P1.x);
-
-	for (int i = 1; i < 6; i++) {
-		angle += (3.14159265 / 3);
-
-		ipX[i] = (float)P1.x + (radius * cos(angle));
-		ipY[i] = (float)P1.y + (radius * sin(angle));
-
-		if (!isInsideDrawingArea(ipX[i], ipY[i])) {
-			// TODO Show message (can't draw outside the boundaries)
-			return;
-		}
-	}
-
-	//for (int i = 0; i < 6; i++) {
-	//	printf("\n(x%d, y%d) : (%d, %d)", i + 1, i + 1, ipX[i], ipY[i]);
-	//}
-
-	pWind->DrawPolygon(ipX, ipY, 6, style);
+	pWind->SetPen(UI.PointColor, 2);
+	pWind->SetBrush(UI.PointColor);
+	pWind->DrawEllipse(x-7, y-7, x+7, y+7, FILLED);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
+
 GUI::~GUI()
 {
 	delete pWind;

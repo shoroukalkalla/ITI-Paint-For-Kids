@@ -4,12 +4,14 @@
 #include "..\DEFS.h"
 #include "UI_Info.h" 
 #include "..\CMUgraphicsLib\CMUgraphics.h"
+#include "FigureDrawer.h"
 
+class FigureDrawer;
 
 //This class is responsible for Grphical User Interface handling
 //All user input and program outputs MUST be done through this class
-//No other class is allowed to perform direct i/o
-class GUI	
+//No other class is allowed to perform direct I/O
+class GUI
 {
 	//enum { ColorsCount = 4 };
 private:
@@ -18,6 +20,7 @@ private:
 	bool isChoosingOption = false; // ??
 public:	
 	window* pWind;	//Pointer to the Graphics Window
+	FigureDrawer* figureDrawer;
 public:
 	GUI();	
 	~GUI();	
@@ -31,29 +34,26 @@ public:
 	ActionType MapInputInPlayMood(int x, int y) const;
 
 	/////////// Output Functoinality  ////////////////
+	void CreateStatusBar() const;	//create the status bar
 	void CreateDrawToolBar() const;	//creates Draw mode toolbar & menu
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
-	void CreateStatusBar() const;	//create the status bar
 
-	void ClearStatusBar() const;	//Clears the status bar
-	void ClearToolBar() const;      //clears the tool bar
 	void CreateSelectedColorSquare() const;
-	void ClearDrawArea() const;	//Clears the drawing area
-	
-	drawstyle GUI::setupStyle(GfxInfo RectGfxInfo, bool selected) const;
-	// -- Figures Drawing functions
-	void DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected=false) const;  //Draw a Square
-	
-	///TODO: Make similar functions for drawing all other figures.
-	void DrawEllipse(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const;
-	void GUI::DrawHexagon(Point P1, Point P2, int radius, GfxInfo RectGfxInfo, bool selected) const;
 
+	void ClearToolBar() const;      //clears the tool bar
+	void ClearDrawArea() const;	//Clears the drawing area
+	void ResetDrawingArea() const; // Clears the drawing area and draw any needed figres
+	void ClearStatusBar() const;	//Clears the status bar
+	
 	void PrintMessage(string msg) const;	//Print a message on Status bar
 
 	color getCrntDrawColor() const;			//get current drwawing color
 	void GUI::setCrntDrawColor(color c) const;
 	color getCrntFillColor() const;			//get current filling color
 	int getCrntPenWidth() const;			//get current pen width
+
+	bool isInsideDrawingArea(int x, int y) const;
+	void GUI::drawPoint(int x, int y) const;
 };
 
 
