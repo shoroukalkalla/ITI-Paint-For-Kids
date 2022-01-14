@@ -24,16 +24,22 @@ void ActionAddSquare::Execute()
 	SqrGfxInfo.FillClr = pGUI->getCrntFillColor();
 	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
 
-
 	//Step 1 - Read Square data from the user
 
 	pGUI->PrintMessage("New Square: Click at first point");	
 	//Read 1st point and store in point P1
-	pGUI->GetPointClicked(P1.x, P1.y);
+	do {
+		pGUI->GetPointClicked(P1.x, P1.y);
+	} while (!pGUI->isInsideDrawingArea(P1.x, P1.y));
+
+	// Highlight the point clicked
+	pGUI->drawPoint(P1.x, P1.y);
 
 	pGUI->PrintMessage("New Square: Click at second point");
 	//Read 2nd point and store in point P2
-	pGUI->GetPointClicked(P2.x, P2.y);
+	do {
+		pGUI->GetPointClicked(P2.x, P2.y);
+	} while (!pGUI->isInsideDrawingArea(P2.x, P2.y));
 
 	pGUI->ClearStatusBar();
 
