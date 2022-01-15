@@ -24,6 +24,8 @@ GUI::GUI()
 	UI.PointColor = BROWN;		//The point where the user clicks to draw
 	UI.StatusBarColor = TAN;
 	UI.PenWidth = 3;	//width of the figures frames
+
+	UI.isFilled = false;
 	
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, UI.wx, UI.wy);
@@ -111,11 +113,13 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 				case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 				case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
 				case ITM_CLR_RED: return SELECT_COLOR_RED;
-				//case CHNG_FILL_CLR: return CHNG_FILL_CLR;				// not created at enum
 				case ITM_SQUR: return DRAW_SQUARE;
 				case ITM_ELPS: return DRAW_ELPS;
 				case ITM_HEX: return DRAW_HEX;
 				case ITM_SLCT: return SELECT_FIGURE;
+				case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
+				case ITM_FILL_CLR: return CHNG_FILL_CLR;
+				case ITM_BK_CLR: return CHNG_BK_CLR;
                 
 				case ITM_SWICH_PLAY: return TO_PLAY;
 
@@ -229,6 +233,9 @@ void GUI::CreateDrawToolBar() const
 		MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
 		MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
 		MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
+		MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\figure_icon_frame.jpg";
+		MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\figure_icon_fill.jpg";
+		MenuItemImages[ITM_BK_CLR] = "images\\MenuItems\\icon_backgroud_color.jpg";
 
 		MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 
@@ -334,9 +341,21 @@ void GUI::ClearStatusBar() const
 color GUI::getCrntDrawColor() const	//get current drwawing color
 {	return UI.DrawColor;	}
 
+bool GUI::getCrntIsFilled() const {
+	return UI.isFilled;
+}
 void GUI::setCrntDrawColor(color c) const
 {
 	UI.DrawColor = c;
+}
+
+void GUI::setCrntBKColor(color c) const {
+	UI.BkGrndColor = c;
+}
+
+void GUI::setCrntFillColor(color c) const {
+	UI.isFilled = true;
+	UI.FillColor = c;
 }
 
 color GUI::getCrntFillColor() const	//get current filling color

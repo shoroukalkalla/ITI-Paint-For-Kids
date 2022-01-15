@@ -6,6 +6,9 @@
 #include "Actions\ActionSwitchToPlay.h"
 #include "Actions\ActionSwitchToDraw.h"
 #include "Actions\ActionPickTypeFigure.h"
+#include "Actions\ActionChangeFillColor.h"
+#include "Actions\ActionChangeDrawColor.h"
+#include "Actions\ActionChangeBKColor.h"
 
 
 //Constructor
@@ -73,6 +76,18 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionSelectFigure(this);
 			break;
 
+		case CHNG_FILL_CLR:
+			newAct = new ActionChangeFillColor(this);
+			break;	
+
+		case CHNG_DRAW_CLR:
+			newAct = new ActionChangeDrawColor(this);
+			break;
+
+		case CHNG_BK_CLR:
+			newAct = new ActionChangeBKColor(this);
+			break;
+
 		case TO_PLAY:
 			newAct = new ActionSwitchToPlay(this);
 			break;
@@ -89,9 +104,8 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case EXIT:
 			///create ExitAction here
-			
 			break;
-		
+					
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;
 			break;

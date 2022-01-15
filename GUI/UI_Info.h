@@ -27,13 +27,16 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_HEX,		//Hexagon item in menu
 
 	ITM_SLCT,		// Select Figure item in menu
+	ITM_DRAW_CLR,		// Select Draw color in the menu.
+	ITM_FILL_CLR,		//Select Fill Color in the menu,
+	ITM_BK_CLR,			//Select window background Color in the menu,
 	
 	//TODO: Add more items names here
 
 	// icon to swtich between draw mode and play mode
 	ITM_SWICH_PLAY,	   // switch item in menu
 
-	ITM_EXIT,		//Exit item
+	ITM_EXIT,		//Exit item,
 	
 	DRAW_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 };
@@ -82,6 +85,7 @@ struct UI_Info	//User Interface Info.
 	int PenWidth;			//width of the pen that draws shapes
 
 	/// Add more members if needed
+	bool isFilled;
 	
 }UI;	//create a global object UI
 
