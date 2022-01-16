@@ -16,41 +16,28 @@ void ActionChangeFillColor::Execute()
 
 	CFigure* selectedFigure = pManager->GetSelectedFigure();
 
-	ActionType ActType;
-	pGUI->PrintMessage("Select a color");
-	ActType = pGUI->MapInputToActionType();
-
-	if (selectedFigure) { // if there is a selected shape
-		switch (ActType) {
-			case SELECT_COLOR_BLUE:
-				selectedFigure->ChngFillClr(BLUE);
-				break;
-			case SELECT_COLOR_CYAN:
-				selectedFigure->ChngFillClr(CYAN);
-				break;
-			case SELECT_COLOR_GREEN:
-				selectedFigure->ChngFillClr(GREEN);
-				break;
-			case SELECT_COLOR_RED:
-				selectedFigure->ChngFillClr(RED);
-				break;
-		}
-	}
-	else { // Change all the coming fill shapes
-		switch (ActType) {
-		case SELECT_COLOR_BLUE:
-			pGUI->setCrntFillColor(BLUE);
-			break;
-		case SELECT_COLOR_CYAN:
-			pGUI->setCrntFillColor(CYAN);
-			break;
-		case SELECT_COLOR_GREEN:
-			pGUI->setCrntFillColor(GREEN);
-			break;
-		case SELECT_COLOR_RED:
-			pGUI->setCrntFillColor(RED);
-			break;
-		}
-	}
+	Point P1;
+	pGUI->PrintMessage("Select a figure to fill with the selected color OR select a color");
+	pGUI->GetPointClicked(P1.x, P1.y);
 	pGUI->ClearStatusBar();
+
+	// [1] check if the user selects a figure
+	selectedFigure = pManager->GetFigure(P1.x, P1.y);
+	if (selectedFigure != NULL) {
+		// Change the fill color
+		if (pGUI->getCrntIsFilled()) {
+			selectedFigure->ChngFillClr(pGUI->getCrntFillColor());
+		}
+		else {
+			selectedFigure->SetIsFilled(false);
+		}
+		return;
+	}
+
+	// [2] check if the user selects a color
+	int colorIndex = pGUI->getColorIndex(P1.x, P1.y);
+	if (colorIndex > -1) {
+		pGUI->UpdateCrntFillColor(colorIndex);
+		return;
+	}
 }
