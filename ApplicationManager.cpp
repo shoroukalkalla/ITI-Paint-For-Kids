@@ -9,6 +9,8 @@
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeDrawColor.h"
 #include "Actions\ActionChangeBKColor.h"
+#include "Actions\ActionBringFront.h"
+#include "Actions\ActionSendToBack.h";
 
 
 //Constructor
@@ -29,6 +31,9 @@ ApplicationManager::ApplicationManager()
 
 void ApplicationManager::Run()
 {
+
+	
+
 	ActionType ActType;
 	do
 	{		
@@ -90,6 +95,12 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case TO_PLAY:
 			newAct = new ActionSwitchToPlay(this);
+			break;
+		case BRNG_FRNT:
+			newAct = new ActionBringToFront(this);
+			break;		
+		case SEND_BACK:
+			newAct = new ActionSendToBack(this);
 			break;
 
 		// FOR PLAY MODE
@@ -162,6 +173,32 @@ void ApplicationManager::SetSelectedFigure(CFigure* figure)
 CFigure* ApplicationManager::GetSelectedFigure()
 {
 	return SelectedFigure;
+}
+
+int ApplicationManager::GetSelectedIndexFigure() {
+	for (int i = FigCount - 1; i >= 0; i--) {
+		if (FigList[i] != NULL) {
+			if (FigList[i]->IsSelected())
+				return i;
+		}
+	}
+	return -1;
+
+}
+void ApplicationManager::BringToFront(int selectedIndex) {
+	CFigure* SelectedFigure = FigList[selectedIndex];
+	for (int i = selectedIndex; i < FigCount - 1; i++)
+		FigList[i] = FigList[i + 1];
+
+	FigList[FigCount - 1] = SelectedFigure;
+}
+
+void ApplicationManager::SendToBack(int selectedIndex) {
+	CFigure* SelectedFigure = FigList[selectedIndex];
+	for (int i = selectedIndex; i > 0; i--)
+		FigList[i] = FigList[i - 1];
+
+	FigList[0] = SelectedFigure;
 }
 
 //==================================================================================//

@@ -1,5 +1,6 @@
 #include "GUI.h"
 #include "FigureDrawer.h"
+#include <iostream>
 
 //constructor make necessary initializations
 GUI::GUI()
@@ -115,6 +116,8 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 			case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
 			case ITM_FILL_CLR: return CHNG_FILL_CLR;
 			case ITM_BK_CLR: return CHNG_BK_CLR;
+			case ITM_BRNG_FRNT: return BRNG_FRNT;
+			case ITM_SEND_TO_BACK: return SEND_BACK;
                 
 			case ITM_SWICH_PLAY: return TO_PLAY;
 
@@ -230,6 +233,8 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\figure_icon_frame.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\figure_icon_fill.jpg";
 	MenuItemImages[ITM_BK_CLR] = "images\\MenuItems\\icon_backgroud_color.jpg";
+	MenuItemImages[ITM_SEND_TO_BACK] = "images\\MenuItems\\back_left_icon.jpg";
+	MenuItemImages[ITM_BRNG_FRNT] = "images\\MenuItems\\back_right_icon.jpg";
 
 	MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 

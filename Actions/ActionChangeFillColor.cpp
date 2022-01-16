@@ -3,7 +3,6 @@
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\GUI.h"
-#include <iostream>
 
 ActionChangeFillColor::ActionChangeFillColor(ApplicationManager* pApp) : Action(pApp)
 {}
@@ -22,7 +21,7 @@ void ActionChangeFillColor::Execute()
 	pGUI->ClearStatusBar();
 
 	// [1] check if the user selects a figure
-	selectedFigure = pManager->GetFigure(P1.x, P1.y);
+	//selectedFigure = pManager->GetFigure(P1.x, P1.y);
 	if (selectedFigure != NULL) {
 		// Change the fill color
 		if (pGUI->getCrntIsFilled()) {
