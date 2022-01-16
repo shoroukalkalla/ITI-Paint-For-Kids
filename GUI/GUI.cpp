@@ -13,15 +13,16 @@ GUI::GUI()
 	UI.wy =5;
 
 	UI.ToolBarHeight = 70;
+	UI.ColorsPalleteSize = 35;
 	UI.MenuItemWidth = 70;
 	UI.StatusBarHeight = 50;
 	
 	UI.DrawColor = ROYALBLUE;		//Drawing color
-	UI.FillColor = MEDIUMSEAGREEN;	//Filling color
+	UI.FillColor = WHITE;			//Filling color
 	UI.MsgColor = INDIANRED;		//Messages color
-	UI.BkGrndColor = ALICEBLUE;		//Background color
-	UI.HighlightColor = ORANGERED;	//This color should NOT be used to draw figures. use if for highlight only
-	UI.PointColor = BROWN;		//The point where the user clicks to draw
+	UI.BkGrndColor = WHITE;			//Background color
+	UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
+	UI.PointColor = BROWN;			//The point where the user clicks to draw
 	UI.StatusBarColor = TAN;
 	UI.PenWidth = 3;	//width of the figures frames
 
@@ -34,7 +35,15 @@ GUI::GUI()
 	
 	figureDrawer = new FigureDrawer(this);
 
+	ColorsCount = 12;
+	ColorsPallete = new color[ColorsCount] {
+		WHITE, ROYALBLUE, CADETBLUE, LIGHTSEAGREEN, MEDIUMBLUE,
+		INDIAN, SANDYBROWN, SALMON, ORANGERED, PALEVIOLETRED,
+		DARKCYAN, YELLOWGREEN
+	};
+
 	CreateDrawToolBar();
+	CreateColorsPallete();
 	CreateStatusBar();
 
 	CreateSelectedColorSquare();
@@ -97,42 +106,26 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 		//Divide x coord of the point clicked by the menu item width (int division)
 		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 
-		if (isChoosingOption) {
-			switch (ClickedItemOrder)
-			{
-				case OPTION_CLR_BLUE: return SELECT_COLOR_BLUE;
-				case OPTION_CANCEL: return TO_DRAW;
-
-				default: return EMPTY;	//A click on empty place in desgin toolbar
-			}
-		}
-		else {
-			switch (ClickedItemOrder)
-			{
-				case ITM_CLR_BLUE: return SELECT_COLOR_BLUE;
-				case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
-				case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
-				case ITM_CLR_RED: return SELECT_COLOR_RED;
-				case ITM_SQUR: return DRAW_SQUARE;
-				case ITM_ELPS: return DRAW_ELPS;
-				case ITM_HEX: return DRAW_HEX;
-				case ITM_SLCT: return SELECT_FIGURE;
-				case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
-				case ITM_FILL_CLR: return CHNG_FILL_CLR;
-				case ITM_BK_CLR: return CHNG_BK_CLR;
+		switch (ClickedItemOrder)
+		{
+			case ITM_SQUR: return DRAW_SQUARE;
+			case ITM_ELPS: return DRAW_ELPS;
+			case ITM_HEX: return DRAW_HEX;
+			case ITM_SLCT: return SELECT_FIGURE;
+			case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
+			case ITM_FILL_CLR: return CHNG_FILL_CLR;
+			case ITM_BK_CLR: return CHNG_BK_CLR;
                 
-				case ITM_SWICH_PLAY: return TO_PLAY;
+			case ITM_SWICH_PLAY: return TO_PLAY;
 
-				case ITM_EXIT: return EXIT;
+			case ITM_EXIT: return EXIT;
 
-				default: return EMPTY;	//A click on empty place in desgin toolbar
-			}
+			default: return EMPTY;	//A click on empty place in desgin toolbar
 		}
-
 	}
 
-	//[2] User clicks on the drawing area
-	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+	//[3] User clicks on the drawing area
+	else if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
 	{
 		// TODO: Select figure
 		// Loop FigList from FigCount : 0
@@ -141,6 +134,21 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 
 	//[3] User clicks on the status bar
 	return STATUS;
+}
+
+int GUI::getColorIndex(int x, int y) const
+{
+	// User clicks on the colors pallete
+	if (y > UI.ToolBarHeight && y < UI.ToolBarHeight + UI.ColorsPalleteSize)
+	{
+		int ClickedItemOrder = (x / UI.ColorsPalleteSize);
+
+		if (ClickedItemOrder >= 0 && ClickedItemOrder < ColorsCount) {
+			//setCrntFillColor(ColorsPallete[ClickedItemOrder]);
+			return ClickedItemOrder;
+		}
+	}
+	return -1;
 }
 
 ActionType GUI::MapInputInPlayMood(int x, int y) const
@@ -214,41 +222,57 @@ void GUI::CreateDrawToolBar() const
 
 	ClearToolBar();
 	
-	if (isChoosingOption) {
-		string OptionsItemImages[OPTOINS_MENU_COUNT];
-		OptionsItemImages[OPTION_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
-		OptionsItemImages[OPTION_CANCEL] = "images\\MenuItems\\Menu_Exit.jpg";
+	string MenuItemImages[DRAW_ITM_COUNT];
+	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
+	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
+	MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
+	MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
+	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\figure_icon_frame.jpg";
+	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\figure_icon_fill.jpg";
+	MenuItemImages[ITM_BK_CLR] = "images\\MenuItems\\icon_backgroud_color.jpg";
 
-		//Draw menu item one image at a time
-		for (int i = 0; i < OPTOINS_MENU_COUNT; i++)
-			pWind->DrawImage(OptionsItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-	}
-	else {
-		string MenuItemImages[DRAW_ITM_COUNT];
-		MenuItemImages[ITM_CLR_BLUE] = "images\\MenuItems\\color_icon_blue.jpg";
-		MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\color_icon_cyan.jpg";
-		MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\color_icon_green.jpg";
-		MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\color_icon_red.jpg";
-		MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
-		MenuItemImages[ITM_ELPS] = "images\\MenuItems\\ellipse_icon.jpg";
-		MenuItemImages[ITM_HEX] = "images\\MenuItems\\hexagon_icon.jpg";
-		MenuItemImages[ITM_SLCT] = "images\\MenuItems\\select_icon.jpg";
-		MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\figure_icon_frame.jpg";
-		MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\figure_icon_fill.jpg";
-		MenuItemImages[ITM_BK_CLR] = "images\\MenuItems\\icon_backgroud_color.jpg";
+	MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 
-		MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
+	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
-		MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
-
-		//Draw menu item one image at a time
-		for (int i = 0; i < DRAW_ITM_COUNT; i++)
-			pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-	}
+	//Draw menu item one image at a time
+	for (int i = 0; i < DRAW_ITM_COUNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 	
 	//Draw a line under the toolbar
 	pWind->SetPen(DARKCYAN, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);	
+}
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::CreateColorsPallete() const
+{
+	pWind->SetPen(UI.BkGrndColor, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize);
+
+	for (int i = 0; i < ColorsCount; i++) {
+		pWind->SetPen(ColorsPallete[i], 1);
+		pWind->SetBrush(ColorsPallete[i]);
+		pWind->DrawRectangle((i) * UI.ColorsPalleteSize, UI.ToolBarHeight,
+			((i) * UI.ColorsPalleteSize) + UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize);
+	}
+
+	CreateSelectedColorSquare();
+}
+
+
+void GUI::CreateSelectedColorSquare() const
+{
+	pWind->SetFont(30, BOLD, BY_NAME, "Arial");
+	pWind->SetPen(DARKCYAN);
+	pWind->DrawString(UI.width - (UI.ColorsPalleteSize * 8) - 5, UI.ToolBarHeight, "Selected Color");
+
+	pWind->SetPen(UI.DrawColor, 4);
+	pWind->SetBrush(UI.FillColor);
+	pWind->DrawRectangle(UI.width - (UI.ColorsPalleteSize * 3), UI.ToolBarHeight,
+		UI.width - UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
@@ -271,16 +295,6 @@ void GUI::CreatePlayToolBar() const
 	//Draw a line under the toolbar
 	pWind->SetPen(CYAN, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
-
-}
-
-// ----- * ----- * ----- * ----- * ----- * ----- //
-
-void GUI::CreateSelectedColorSquare() const
-{
-	pWind->SetPen(UI.DrawColor, 3);
-	pWind->SetBrush(UI.FillColor);
-	pWind->DrawRectangle(10, UI.ToolBarHeight + 15, 40, UI.ToolBarHeight + 45);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
@@ -294,11 +308,11 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.25), msg);
 }
 
-// ----- * ----- * ----- * ----- * ----- * ----- //
 
 /* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
  * -----> Clear Tool bars and Drawing area
  * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
+
 
 void GUI::ClearToolBar() const
 {
@@ -314,13 +328,12 @@ void GUI::ClearDrawArea() const
 {
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(UI.BkGrndColor);
-	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);
+	pWind->DrawRectangle(0, UI.ToolBarHeight + UI.ColorsPalleteSize, UI.width, UI.height - UI.StatusBarHeight);
 }
 
 void GUI::ResetDrawingArea() const
 {
 	ClearDrawArea();
-	CreateSelectedColorSquare();
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
@@ -338,28 +351,62 @@ void GUI::ClearStatusBar() const
  * -----> Get and Set colors (drawing, filling)
  * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
 
-color GUI::getCrntDrawColor() const	//get current drwawing color
-{	return UI.DrawColor;	}
-
-bool GUI::getCrntIsFilled() const {
-	return UI.isFilled;
+void GUI::UpdateCrntDrawColor(int colorIndex) const
+{
+	if (colorIndex > -1) {
+		setCrntDrawColor(ColorsPallete[colorIndex]);
+		CreateSelectedColorSquare();
+	}
 }
+
+void GUI::UpdateCrntFillColor(int colorIndex) const
+{
+	if (colorIndex > -1) {
+		setCrntFillColor(colorIndex);
+		CreateSelectedColorSquare();
+	}
+}
+
+void GUI::UpdateCrntBkColor(int colorIndex) const
+{
+	if (colorIndex > -1) {
+		setCrntBKColor(ColorsPallete[colorIndex]);
+	}
+}
+
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
 void GUI::setCrntDrawColor(color c) const
 {
 	UI.DrawColor = c;
+}
+
+color GUI::getCrntDrawColor() const	//get current drwawing color
+{	return UI.DrawColor;	}
+
+void GUI::setCrntFillColor(int colorIndex) const {
+	UI.isFilled = colorIndex != 0;
+	UI.FillColor = ColorsPallete[colorIndex];
+}
+
+color GUI::getCrntFillColor() const	//get current filling color
+{
+	return UI.FillColor;
+}
+
+bool GUI::getCrntIsFilled() const {
+	return UI.isFilled;
 }
 
 void GUI::setCrntBKColor(color c) const {
 	UI.BkGrndColor = c;
 }
 
-void GUI::setCrntFillColor(color c) const {
-	UI.isFilled = true;
-	UI.FillColor = c;
+color GUI::getCrntBKColor() const	//get current backgroud color
+{
+	return UI.BkGrndColor;
 }
 
-color GUI::getCrntFillColor() const	//get current filling color
-{	return UI.FillColor;	}
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
 	
@@ -368,14 +415,14 @@ int GUI::getCrntPenWidth() const		//get current pen width
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
-// ----- * Check if a point of (x, y) is inside the drawing area * ----- //
+// Check if a point of (x, y) is inside the drawing area * ----- //
 bool GUI::isInsideDrawingArea(int x, int y) const
 {
 	return x > 0 && x < UI.width
 		&& y > UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight;
 }
 
-// ----- * Draw a point where the user clicks to draw a figure * ----- //
+// Draw a point where the user clicks to draw a figure * ----- //
 void GUI::drawPoint(int x, int y) const
 {
 	pWind->SetPen(UI.PointColor, 2);
@@ -388,5 +435,5 @@ void GUI::drawPoint(int x, int y) const
 GUI::~GUI()
 {
 	delete pWind;
+	delete ColorsPallete;
 }
-

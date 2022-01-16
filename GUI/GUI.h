@@ -15,12 +15,14 @@ class GUI
 {
 	//enum { ColorsCount = 4 };
 private:
-	//color colorPallete[ColorsCount] = { ROYALBLUE, MEDIUMSEAGREEN, INDIANRED, DARKCYAN }; // List of color pallete
-	//CFigure* colorsSquars[ColorsCount];
-	bool isChoosingOption = false; // ??
+	int ColorsCount;
+	color* ColorsPallete;
+
 public:	
 	window* pWind;	//Pointer to the Graphics Window
 	FigureDrawer* figureDrawer;
+	
+
 public:
 	GUI();	
 	~GUI();	
@@ -31,11 +33,13 @@ public:
 	string GetSrting() const ;	 //Returns a string entered by the user
 	ActionType MapInputToActionType() const; //Read the user click and map to an action
 	ActionType MapInputInDrawMood(int x, int y) const;
+	int getColorIndex(int x, int y) const;
 	ActionType MapInputInPlayMood(int x, int y) const;
 
 	/////////// Output Functoinality  ////////////////
 	void CreateStatusBar() const;	//create the status bar
 	void CreateDrawToolBar() const;	//creates Draw mode toolbar & menu
+	void CreateColorsPallete() const; // Create a colors pallete
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
 
 	void CreateSelectedColorSquare() const;
@@ -47,11 +51,15 @@ public:
 	
 	void PrintMessage(string msg) const;	//Print a message on Status bar
 
+	void UpdateCrntDrawColor(int colorIndex) const;
+	void UpdateCrntFillColor(int colorIndex) const;
+	void UpdateCrntBkColor(int colorIndex) const;
 	color getCrntDrawColor() const;			//get current drwawing color
-	bool GUI::getCrntIsFilled() const;		// get current is filled 
-	void GUI::setCrntBKColor(color c) const;	// Set window background color
-	void GUI::setCrntDrawColor(color c) const;
-	void GUI::setCrntFillColor(color c) const;
+	bool getCrntIsFilled() const;		// get current is filled 
+	void setCrntBKColor(color c) const;	// Set window background color
+	color getCrntBKColor() const;
+	void setCrntDrawColor(color c) const;
+	void setCrntFillColor(int colorIndex) const;
 	color getCrntFillColor() const;			//get current filling color
 	int getCrntPenWidth() const;			//get current pen width
 

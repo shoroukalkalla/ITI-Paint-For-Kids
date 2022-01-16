@@ -17,10 +17,10 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 {
 	//Note: Items are ordered here as they appear in menu
 	//If you want to change the menu items order, change the order here
-	ITM_CLR_BLUE,		//Select Blue Color in the menu
-	ITM_CLR_CYAN,		//Select Cyan Color in the menu
-	ITM_CLR_GREEN,		//Select Green Color in the menu
-	ITM_CLR_RED,		//Select Red Color in the menu
+	//ITM_CLR_BLUE,		//Select Blue Color in the menu
+	//ITM_CLR_CYAN,		//Select Cyan Color in the menu
+	//ITM_CLR_GREEN,		//Select Green Color in the menu
+	//ITM_CLR_RED,		//Select Red Color in the menu
 
 	ITM_SQUR,		//Square item in menu
 	ITM_ELPS,		//Ellipse item in menu
@@ -39,6 +39,19 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_EXIT,		//Exit item,
 	
 	DRAW_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
+};
+
+enum ColorsPalleteItem {
+	COLOR_ROYALBLUE,
+	COLOR_CADETBLUE,
+	COLOR_LIGHTSEAGREEN,
+	COLOR_LIGHTYELLOW,
+	COLOR_INDIAN,
+	COLOR_SANDYBROWN,
+	COLOR_SALMON,
+	COLOR_ORANGERED,
+	COLOR_PALEVIOLETRED,
+	COLOR_DARKCYAN
 };
 
 enum OptionsMenuItem {
@@ -68,9 +81,10 @@ struct UI_Info	//User Interface Info.
 	GUI_MODE InterfaceMode;
 	
 	int	width, height,	//Window width and height
-		wx , wy,			//Window starting coordinates
+		wx, wy,			//Window starting coordinates
 		StatusBarHeight,	//Status Bar Height
 		ToolBarHeight,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
+		ColorsPalleteSize,
 		MenuItemWidth;		//Width of each item in toolbar menu
 	
 
