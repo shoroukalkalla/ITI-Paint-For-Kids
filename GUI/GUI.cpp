@@ -419,7 +419,7 @@ int GUI::getCrntPenWidth() const		//get current pen width
 bool GUI::isInsideDrawingArea(int x, int y) const
 {
 	return x > 0 && x < UI.width
-		&& y > UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight;
+		&& y > UI.ToolBarHeight + UI.ColorsPalleteSize && y < UI.height - UI.StatusBarHeight;
 }
 
 // Draw a point where the user clicks to draw a figure * ----- //
