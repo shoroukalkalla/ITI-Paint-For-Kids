@@ -233,8 +233,8 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\figure_icon_frame.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\figure_icon_fill.jpg";
 	MenuItemImages[ITM_BK_CLR] = "images\\MenuItems\\icon_backgroud_color.jpg";
-	MenuItemImages[ITM_SEND_TO_BACK] = "images\\MenuItems\\back_left_icon.jpg";
-	MenuItemImages[ITM_BRNG_FRNT] = "images\\MenuItems\\back_right_icon.jpg";
+	MenuItemImages[ITM_SEND_TO_BACK] = "images\\MenuItems\\ic5_sent_to_back.jpg";
+	MenuItemImages[ITM_BRNG_FRNT] = "images\\MenuItems\\ic5_bring_to_front.jpg";
 
 	MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 
