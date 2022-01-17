@@ -37,6 +37,10 @@ public:
 	void ApplicationManager::SetSelectedFigure(CFigure* figure);
 	CFigure* ApplicationManager::GetSelectedFigure();
 
+	int ApplicationManager::GetSelectedIndexFigure();
+	void ApplicationManager::BringToFront(int selectedIndex);
+	void ApplicationManager::SendToBack(int selectedIndex);
+
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	

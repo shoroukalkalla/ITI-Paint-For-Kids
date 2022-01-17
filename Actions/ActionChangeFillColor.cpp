@@ -3,7 +3,6 @@
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\GUI.h"
-#include <iostream>
 
 ActionChangeFillColor::ActionChangeFillColor(ApplicationManager* pApp) : Action(pApp)
 {}
@@ -25,6 +24,8 @@ void ActionChangeFillColor::Execute()
 	selectedFigure = pManager->GetFigure(P1.x, P1.y);
 	if (selectedFigure != NULL) {
 		// Change the fill color
+		printf("\n\ngetCrntIsFilled(): %d", pGUI->getCrntIsFilled());
+
 		if (pGUI->getCrntIsFilled()) {
 			selectedFigure->ChngFillClr(pGUI->getCrntFillColor());
 		}
