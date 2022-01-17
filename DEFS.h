@@ -20,7 +20,10 @@ enum ActionType //The actions supported (you can add more if needed)
 	CHNG_BK_CLR,	//Change background color
 	DEL,			//Delete a figure(s)
 	MOVE,			//Move a figure(s)
-	RESIZE,			//Resize a figure(s)
+	RESIZE_QUARTER,			//Resize a figure(s)
+	RESIZE_HALF,			//Resize a figure(s)
+	RESIZE_DOUBLE,			//Resize a figure(s)
+	RESIZE_QUADRUPLE,			//Resize a figure(s)
 	ROTATE,			//Rotate a figure(s)
 	SEND_BACK,		//Send a figure to the back of all figures
 	BRNG_FRNT,		//Bring a figure to the front of all figures

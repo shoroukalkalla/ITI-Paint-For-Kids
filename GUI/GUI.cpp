@@ -17,6 +17,11 @@ GUI::GUI()
 	UI.ColorsPalleteSize = 35;
 	UI.MenuItemWidth = 70;
 	UI.StatusBarHeight = 50;
+
+	UI.DrawingAreaTL.x = 0;
+	UI.DrawingAreaTL.y = UI.ToolBarHeight + UI.ColorsPalleteSize;
+	UI.DrawingAreaBR.x = UI.width;
+	UI.DrawingAreaBR.y = UI.height - UI.StatusBarHeight;
 	
 	UI.DrawColor = ROYALBLUE;		//Drawing color
 	UI.FillColor = WHITE;			//Filling color
@@ -116,8 +121,13 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 			case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
 			case ITM_FILL_CLR: return CHNG_FILL_CLR;
 			case ITM_BK_CLR: return CHNG_BK_CLR;
-			case ITM_BRNG_FRNT: return BRNG_FRNT;
 			case ITM_SEND_TO_BACK: return SEND_BACK;
+			case ITM_BRNG_FRNT: return BRNG_FRNT;
+
+			case ITM_RESIZE_QUARTER: return RESIZE_QUARTER;
+			case ITM_RESIZE_HALF: return RESIZE_HALF;
+			case ITM_RESIZE_DOUBLE: return RESIZE_DOUBLE;
+			case ITM_RESIZE_QUADRUPLE: return RESIZE_QUADRUPLE;
                 
 			case ITM_SWICH_PLAY: return TO_PLAY;
 
@@ -236,9 +246,14 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_SEND_TO_BACK] = "images\\MenuItems\\ic5_sent_to_back.jpg";
 	MenuItemImages[ITM_BRNG_FRNT] = "images\\MenuItems\\ic5_bring_to_front.jpg";
 
+	MenuItemImages[ITM_RESIZE_QUARTER] = "images\\MenuItems\\icon_resize_1_4.jpg";
+	MenuItemImages[ITM_RESIZE_HALF] = "images\\MenuItems\\icon_resize_1_2.jpg";
+	MenuItemImages[ITM_RESIZE_DOUBLE] = "images\\MenuItems\\Icon_resize_2.jpg";
+	MenuItemImages[ITM_RESIZE_QUADRUPLE] = "images\\MenuItems\\icon_resize_4.jpg";
+
 	MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 
-	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
+	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\icon_exit.jpg";
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < DRAW_ITM_COUNT; i++)

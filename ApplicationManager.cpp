@@ -11,6 +11,7 @@
 #include "Actions\ActionChangeBKColor.h"
 #include "Actions\ActionBringFront.h"
 #include "Actions\ActionSendToBack.h";
+#include "Actions\ActionResizeFigure.h";
 
 
 //Constructor
@@ -81,29 +82,49 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionSelectFigure(this);
 			break;
 
-		case CHNG_FILL_CLR:
-			newAct = new ActionChangeFillColor(this);
-			break;	
-
 		case CHNG_DRAW_CLR:
 			newAct = new ActionChangeDrawColor(this);
 			break;
+
+		case CHNG_FILL_CLR:
+			newAct = new ActionChangeFillColor(this);
+			break;	
 
 		case CHNG_BK_CLR:
 			newAct = new ActionChangeBKColor(this);
 			break;
 
-		case TO_PLAY:
-			newAct = new ActionSwitchToPlay(this);
-			break;
-		case BRNG_FRNT:
-			newAct = new ActionBringToFront(this);
-			break;		
 		case SEND_BACK:
 			newAct = new ActionSendToBack(this);
 			break;
 
-		// FOR PLAY MODE
+		case BRNG_FRNT:
+			newAct = new ActionBringToFront(this);
+			break;
+
+		// ----- Resize Cases -----
+
+		case RESIZE_QUARTER:
+			newAct = new ActionResizeFigure(this, 0.25);
+			break;
+
+		case RESIZE_HALF:
+			newAct = new ActionResizeFigure(this, .5);
+			break;
+
+		case RESIZE_DOUBLE:
+			newAct = new ActionResizeFigure(this, 2);
+			break;
+
+		case RESIZE_QUADRUPLE:
+			newAct = new ActionResizeFigure(this, 4);
+			break;
+
+		case TO_PLAY:
+			newAct = new ActionSwitchToPlay(this);
+			break;
+
+		// ----- FOR PLAY MODE -----
 
 		case TO_DRAW:
 			newAct = new ActionSwitchToDraw(this);
