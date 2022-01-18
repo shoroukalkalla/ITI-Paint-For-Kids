@@ -1,23 +1,17 @@
 #include "CHexagon.h"
 
-CHexagon::CHexagon(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
+CHexagon::CHexagon(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
-	center = P1;
-	firstPoint = P2;
-	radius = sqrt(pow(P1.x - P2.x, 2) + pow(P1.y - P2.y, 2));
-	// TODO: update the constructor to accept
-	// => the center point [Point]
-	// => the rotation [float]
-	// => the radius [int]
+	center = _center;
+	rotation = _rotation;
+	radius = _radius;
 }
 
 
 void CHexagon::DrawMe(GUI* pGUI) const
 {
 	//Call Output::DrawRect to draw a Square on the screen	
-	pGUI->figureDrawer->DrawHexagon(center, firstPoint, radius, FigGfxInfo, Selected);
-	// Redisign figureDrawer->DrawHexagon to accept
-	// => the center point, the radius and the rotation
+	pGUI->figureDrawer->DrawHexagon(center, rotation, radius, FigGfxInfo, Selected);
 }
 
 bool CHexagon::isPointIn(int x, int y) const
@@ -26,7 +20,21 @@ bool CHexagon::isPointIn(int x, int y) const
 	return length <= radius;
 }
 
-void CHexagon::Resize(float factor)
+bool CHexagon::Resize(float factor, GUI* pGUI)
 {
-	radius *= factor;
+	HexagonInfo hexagon;
+	hexagon.inBounds = false;
+	hexagon.center = center;
+	hexagon.rotation = rotation;
+	hexagon.radius = radius * factor;
+
+	// Get the drawing info
+	pGUI->figureDrawer->GetHexagonDrawingInfo(hexagon);
+
+	if (hexagon.inBounds) {
+		radius *= factor;
+		return true;
+	}
+
+	return false;
 }

@@ -38,7 +38,7 @@ public:
 
 
 	//virtual void Rotate() = 0;	//Rotate the figure
-	virtual void Resize(float) = 0;	//Resize the figure <---
+	virtual bool Resize(float factor, GUI*) = 0;	//Resize the figure <---
 	//virtual void Move() = 0;		//Move the figure
 
 	//virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file

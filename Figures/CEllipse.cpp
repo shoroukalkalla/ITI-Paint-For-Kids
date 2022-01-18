@@ -18,7 +18,7 @@ bool CEllipse::isPointIn(int x, int y) const
 		&& (y >= TopLeftCorner.y && y <= BottomRightCorner.y);
 }
 
-void CEllipse::Resize(float factor)
+bool CEllipse::Resize(float factor, GUI* pGUI)
 {
 	int horizontal = BottomRightCorner.x - TopLeftCorner.x;
 	int vertical = BottomRightCorner.y - TopLeftCorner.y;
@@ -42,5 +42,8 @@ void CEllipse::Resize(float factor)
 
 		BottomRightCorner.x = newBottomRightX;
 		BottomRightCorner.y = newBottomRightY;
+		return true;
 	}
+
+	return false;
 }

@@ -19,7 +19,7 @@ bool CSquare::isPointIn(int x, int y) const
 		&& (y >= TopLeftCorner.y && y <= TopLeftCorner.y + length);
 }
 
-void CSquare::Resize(float factor)
+bool CSquare::Resize(float factor, GUI* pGUI)
 {
 	int centerX = TopLeftCorner.x + (length / 2);
 	int centerY = TopLeftCorner.y + (length / 2);
@@ -37,5 +37,9 @@ void CSquare::Resize(float factor)
 		length = newLength;
 		TopLeftCorner.x = newTopLeftX;
 		TopLeftCorner.y = newTopLeftY;
+
+		return true;
 	}
+
+	return false;
 }
