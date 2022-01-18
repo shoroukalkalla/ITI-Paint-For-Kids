@@ -37,6 +37,16 @@ public:
 	void ApplicationManager::SetSelectedFigure(CFigure* figure);
 	CFigure* ApplicationManager::GetSelectedFigure();
 
+	////////////////////////////////////////////////////////////////////////////////////
+
+	int getFigCount() const;							// get figure count  //17-1-2022
+	CFigure* ApplicationManager::DrawnFigs(int i) const; // draw figure
+
+	void Loop(CFigure* deleted);
+
+
+	////////////////////////////////////////////////////////////////////////////////////
+
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	

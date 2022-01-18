@@ -5,7 +5,7 @@
 GUI::GUI()
 {
 	//Initialize user interface parameters MODE_DRAW, MODE_PLAY
-	UI.InterfaceMode = MODE_PLAY;
+	UI.InterfaceMode = MODE_DRAW;
 	
 	UI.width = 1300;
 	UI.height = 700;
@@ -167,6 +167,8 @@ ActionType GUI::MapInputInPlayMood(int x, int y) const
 				
 				case ITM_SWICH_DRAW: return TO_DRAW;
 				case ITM_SELECT_TYPE: return TO_PICK_TYPE;
+				case ITM_SELECT_FILL: return TO_PICK_FILL;
+				case ITM_SELECT_TYPE_FILL: return TO_PICK_TYPE_FILL;
 				case ITM_EXIT2: return EXIT;
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
@@ -248,6 +250,7 @@ void GUI::CreateDrawToolBar() const
 
 void GUI::CreateColorsPallete() const
 {
+
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize);
@@ -260,6 +263,7 @@ void GUI::CreateColorsPallete() const
 	}
 
 	CreateSelectedColorSquare();
+
 }
 
 
@@ -286,6 +290,8 @@ void GUI::CreatePlayToolBar() const
 	string PlayItemImages[PLAY_ITM_COUNT];
 	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\mood_draw.jpg";
 	PlayItemImages[ITM_SELECT_TYPE] = "images\\MenuItems\\select_icon_02.jpg";
+	PlayItemImages[ITM_SELECT_FILL] = "images\\MenuItems\\figure_icon_fill.jpg";
+	PlayItemImages[ITM_SELECT_TYPE_FILL] = "images\\MenuItems\\figure_icon_frame.jpg";
 	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\Menu_Exit.jpg";
 
 	//Draw menu item one image at a time

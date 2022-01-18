@@ -9,6 +9,9 @@
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeDrawColor.h"
 #include "Actions\ActionChangeBKColor.h"
+#include "Actions\ActionPickFillFigure.h"
+#include "Actions\ActionPickTypeFillFigure.h"
+
 
 
 //Constructor
@@ -102,6 +105,14 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionPickTypeFigure(this);
 			break;
 
+		case TO_PICK_FILL:
+			newAct = new ActionPickFillFigure(this);
+			break;
+
+		case TO_PICK_TYPE_FILL:
+			newAct = new ActionPickTypeFillFigure(this);
+			break;
+
 		case EXIT:
 			///create ExitAction here
 			break;
@@ -142,13 +153,20 @@ CFigure *ApplicationManager::GetFigure(int x, int y)
 
 	///Add your code here to search for a figure given a point x,y
 
-
-	for (int i = FigCount - 1; i >= 0; i--) {
+	// old ---> 17/1/2022
+	/*for (int i = FigCount - 1; i >= 0; i--) {
 		if (FigList[i] != NULL) {
 			if (FigList[i]->isPointIn(x, y)) {
 				return FigList[i];
 			}
 		}
+	}*/
+
+	// new  ---> 17/1/2022
+	for (int i = FigCount - 1; i >= 0; i--) {
+		if (FigList[i]->HiddenStatus() == false)
+			if (FigList[i]->isPointIn(x, y))
+				return FigList[i];
 	}
 
 	return NULL;
@@ -164,6 +182,42 @@ CFigure* ApplicationManager::GetSelectedFigure()
 	return SelectedFigure;
 }
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+//Transfer FigCount to playmode to avoid unnessecary loops   //17-1-2022
+int ApplicationManager::getFigCount() const
+{
+	return FigCount;
+}
+
+//Transfer figures in FigList to playmode
+CFigure* ApplicationManager::DrawnFigs(int i) const
+{
+	return FigList[i];
+}
+
+void ApplicationManager::Loop(CFigure* deleted) {
+	for (int i = 0; i < FigCount; i++)
+		if (deleted == FigList[i])
+		{
+			delete FigList[i];
+			FigList[i] = NULL;
+			//PasteFlag = SelectFlag = 0;
+			FigCount--;
+			for (int j = i; j < FigCount; j++)
+				FigList[j] = FigList[j + 1];
+			break;
+		}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
@@ -173,13 +227,23 @@ void ApplicationManager::UpdateInterface() const
 {	
 	pGUI->ResetDrawingArea();
 
-	for(int i=0; i<FigCount; i++)
-		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
+	// old ----> 17/1/2022
+	/*for (int i = 0; i < FigCount; i++)
+		FigList[i]->DrawMe(pGUI);*/		//Call Draw function (virtual member fn)
+		
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->HiddenStatus() == false)
+			FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
+	}
+
 }
+
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the interface
 GUI *ApplicationManager::GetGUI() const
 {	return pGUI; }
+
 ////////////////////////////////////////////////////////////////////////////////////
 //Destructor
 ApplicationManager::~ApplicationManager()
