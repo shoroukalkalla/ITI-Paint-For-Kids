@@ -3,7 +3,6 @@
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\GUI.h"
-#include <iostream>
 
 ActionChangeBKColor::ActionChangeBKColor(ApplicationManager* pApp) : Action(pApp)
 {}

@@ -30,8 +30,13 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_DRAW_CLR,		// Select Draw color in the menu.
 	ITM_FILL_CLR,		//Select Fill Color in the menu,
 	ITM_BK_CLR,			//Select window background Color in the menu,
-	
-	//TODO: Add more items names here
+	ITM_SEND_TO_BACK,
+	ITM_BRNG_FRNT,
+
+	ITM_RESIZE_QUARTER,		// Decrease the figrue size 4 times
+	ITM_RESIZE_HALF,		// Decrease the figrue size 2 times
+	ITM_RESIZE_DOUBLE,		// Increase the figrue size 2 times
+	ITM_RESIZE_QUADRUPLE,	// Increase the figrue size 4 times
 
 	// icon to swtich between draw mode and play mode
 	ITM_SWICH_PLAY,	   // switch item in menu
@@ -89,6 +94,8 @@ struct UI_Info	//User Interface Info.
 		ColorsPalleteSize,
 		MenuItemWidth;		//Width of each item in toolbar menu
 	
+	POINT DrawingAreaTL;	// The top left point of drawing area
+	POINT DrawingAreaBR;	// The bottom right point of drawing area
 
 	color SelectedColor;	//Current Selected Color
 	color DrawColor;		//Drawing color

@@ -136,7 +136,10 @@
     <ClCompile Include="Actions\ActionPickFillFigure.cpp" />
     <ClCompile Include="Actions\ActionPickTypeFigure.cpp" />
     <ClCompile Include="Actions\ActionPickTypeFillFigure.cpp" />
+    <ClCompile Include="Actions\ActionResizeFigure.cpp" />
     <ClCompile Include="Actions\ActionSelectFigure.cpp" />
+    <ClCompile Include="Actions\ActionBringToFront.cpp" />
+    <ClCompile Include="Actions\ActionSendToBack.cpp" />
     <ClCompile Include="Actions\ActionSwitchToDraw.cpp" />
     <ClCompile Include="Actions\ActionSwitchToPlay.cpp" />
     <ClCompile Include="Actions\ActionChangeBKColor.cpp" />
@@ -184,6 +187,7 @@
     <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StorageManager\StorageManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actions\ActionAddEllipse.h" />
@@ -193,7 +197,10 @@
     <ClInclude Include="Actions\ActionPickFillFigure.h" />
     <ClInclude Include="Actions\ActionPickTypeFigure.h" />
     <ClInclude Include="Actions\ActionPickTypeFillFigure.h" />
+    <ClInclude Include="Actions\ActionResizeFigure.h" />
     <ClInclude Include="Actions\ActionSelectFigure.h" />
+    <ClInclude Include="Actions\ActionBringFront.h" />
+    <ClInclude Include="Actions\ActionSendToBack.h" />
     <ClInclude Include="Actions\ActionSwitchToDraw.h" />
     <ClInclude Include="Actions\ActionSwitchToPlay.h" />
     <ClInclude Include="Actions\ActionChangeBKColor.h" />
@@ -228,6 +235,7 @@
     <ClInclude Include="GUI\UI_Info.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="DEFS.h" />
+    <ClInclude Include="StorageManager\StorageManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,6 @@
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\GUI.h"
-#include <iostream>
 
 ActionChangeFillColor::ActionChangeFillColor(ApplicationManager* pApp) : Action(pApp)
 {}

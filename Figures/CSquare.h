@@ -12,6 +12,7 @@ public:
 	CSquare(Point , int, GfxInfo FigureGfxInfo );
 	virtual void DrawMe(GUI* pOut) const;
 	virtual bool isPointIn(int x, int y) const;
+	void Resize(float);
 };
 
 #endif
