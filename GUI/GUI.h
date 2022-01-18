@@ -64,6 +64,7 @@ public:
 	int getCrntPenWidth() const;			//get current pen width
 
 	bool isInsideDrawingArea(int x, int y) const;
+	bool isInsideDrawingArea(int* xs, int* ys, int count) const;
 	void GUI::drawPoint(int x, int y) const;
 };
 

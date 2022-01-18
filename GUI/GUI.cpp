@@ -448,6 +448,15 @@ bool GUI::isInsideDrawingArea(int x, int y) const
 		&& y > UI.ToolBarHeight + UI.ColorsPalleteSize && y < UI.height - UI.StatusBarHeight;
 }
 
+bool GUI::isInsideDrawingArea(int* xs, int* ys, int count) const
+{
+	for (int i = 0; i < count; i++) {
+		if (!isInsideDrawingArea(xs[i], ys[i]))
+			return false;
+	}
+	return true;
+}
+
 // Draw a point where the user clicks to draw a figure * ----- //
 void GUI::drawPoint(int x, int y) const
 {
