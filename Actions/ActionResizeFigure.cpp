@@ -15,14 +15,26 @@ void ActionResizeFigure::Execute()
 	GUI* pGUI = pManager->GetGUI();
 	CFigure* fig = pManager->GetSelectedFigure();
 
+	if (fig == NULL) {
+		pGUI->PrintMessage("Select a shape to resize");
+		Point point;
+		pGUI->GetPointClicked(point.x, point.y);
+		fig = pManager->GetFigure(point.x, point.y);
+	}
+
 	if (fig != NULL)
 	{
-		fig->Resize(resizeFactor);
-		pManager->UpdateInterface();
-		pGUI->PrintMessage("Shape Resized Successfully");
+		bool canResize = fig->Resize(resizeFactor, pGUI);
+		if (canResize) {
+			pManager->UpdateInterface();
+			pGUI->PrintMessage("Shape Resized Successfully ^_^");
+		}
+		else {
+			pGUI->PrintMessage("Can't resize the shape outsize the bounds!");
+		}
 	}
 	else
 	{
-		pGUI->PrintMessage("select the shape first");
+		pGUI->PrintMessage("You must select a figure first!");
 	}
 }
