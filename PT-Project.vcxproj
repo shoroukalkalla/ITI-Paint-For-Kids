@@ -231,6 +231,7 @@
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\ActionAddSquare.h" />
     <ClInclude Include="GUI\FigureDrawer.h" />
+    <ClInclude Include="GUI\FiguresInfo.h" />
     <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="GUI\UI_Info.h" />
     <ClInclude Include="ApplicationManager.h" />

@@ -337,5 +337,8 @@
     <ClInclude Include="Actions\ActionResizeFigure.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\FiguresInfo.h">
+      <Filter>GUI Classes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
