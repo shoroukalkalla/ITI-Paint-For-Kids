@@ -16,6 +16,8 @@ void ActionAddEllipse::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+	pGUI->HighlightButton(ITM_ELPS);
+
 
 	GfxInfo SqrGfxInfo;
 	SqrGfxInfo.isFilled = pGUI->getCrntIsFilled();	//default is not filled
@@ -61,4 +63,6 @@ void ActionAddEllipse::Execute()
 
 	//Step 4 - Add the Square to the list of figures
 	pManager->AddFigure(R);
+
+	pGUI->RemoveButtonHighlight(ITM_ELPS);
 }

@@ -13,6 +13,8 @@ void ActionChangeFillColor::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+	pGUI->HighlightButton(ITM_FILL_CLR);
+
 	CFigure* selectedFigure = pManager->GetSelectedFigure();
 
 	Point P1;
@@ -30,6 +32,8 @@ void ActionChangeFillColor::Execute()
 		else {
 			selectedFigure->SetIsFilled(false);
 		}
+
+		pGUI->RemoveButtonHighlight(ITM_FILL_CLR);
 		return;
 	}
 
@@ -37,6 +41,7 @@ void ActionChangeFillColor::Execute()
 	int colorIndex = pGUI->getColorIndex(P1.x, P1.y);
 	if (colorIndex > -1) {
 		pGUI->UpdateCrntFillColor(colorIndex);
-		return;
 	}
+
+	pGUI->RemoveButtonHighlight(ITM_FILL_CLR);
 }

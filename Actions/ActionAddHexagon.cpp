@@ -16,6 +16,8 @@ void ActionAddHexagon::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+	pGUI->HighlightButton(ITM_HEX);
+
 	//get drawing, filling colors and pen width from the interface
 	GfxInfo SqrGfxInfo;
 	SqrGfxInfo.isFilled = pGUI->getCrntIsFilled();
@@ -62,4 +64,6 @@ void ActionAddHexagon::Execute()
 	else {
 		pGUI->PrintMessage("Can't draw outsite the drawing area!");
 	}
+
+	pGUI->RemoveButtonHighlight(ITM_HEX);
 }

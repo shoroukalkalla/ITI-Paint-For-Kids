@@ -15,7 +15,7 @@ void ActionSwitchToDraw::Execute()
 
 	pGUI->PrintMessage("welcome to Draw mode !");
 
-	pGUI->CreateDrawToolBar();
+	pGUI->CreateDrawToolBar(-1);
 
 
 }

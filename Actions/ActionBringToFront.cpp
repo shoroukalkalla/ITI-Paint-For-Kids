@@ -19,7 +19,7 @@ void ActionBringToFront::Execute()
 		pManager->BringToFront(selectedIndexFigure);
 		pGUI->PrintMessage("The shape was brought to Front");
 	}
-		
-
-
+	else {
+		pGUI->PrintMessage("Select a shape first!");
+	}
 }
