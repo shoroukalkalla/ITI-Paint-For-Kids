@@ -14,6 +14,13 @@ protected:
 	
 	/// Add more parameters if needed.
 
+	///~
+	color storedColorOfDraw, storedColorOfFill;
+	bool IsFilled;
+
+	// for play mode
+	bool figHidden;
+
 public:
 	CFigure(GfxInfo FigureGfxInfo);
 	void SetSelected(bool );	//select/unselect the figure
@@ -41,6 +48,21 @@ public:
 	//virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file
 
 	//virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
+
+
+	// for play mod
+	void Hide();
+	void Show();
+	bool HiddenStatus();			//Shows Current Figure status in playmode.
+
+
+	//
+	void SetFigInfo();
+	void setStored();
+	void assignStored();
+	void SetGfxInfo(GfxInfo&);
+	bool IsFigFilled() ;
+	color getFilledColor();
 };
 
 #endif

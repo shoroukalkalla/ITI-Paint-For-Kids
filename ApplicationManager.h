@@ -21,6 +21,8 @@ private:
 	GUI* pGUI;
 	
 
+
+
 public:	
 	ApplicationManager(); 
 	~ApplicationManager();
@@ -36,6 +38,19 @@ public:
 	CFigure *GetFigure(int x, int y); //Search for a figure given a point inside the figure
 	void ApplicationManager::SetSelectedFigure(CFigure* figure);
 	CFigure* ApplicationManager::GetSelectedFigure();
+
+	////////////////////////////////////////////////////////////////////////////////////
+
+	int getFigCount() const;							// get figure count  //17-1-2022
+	CFigure* ApplicationManager::DrawnFigs(int i) const; // draw figure
+
+	void Loop(CFigure* deleted);
+
+	int GetFilledFigCount();
+	color* GetFilledFigColor();
+	bool IsEqualColor(color& a, color& b);
+	int GetColorIndex(color& c);
+	////////////////////////////////////////////////////////////////////////////////////
 
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface

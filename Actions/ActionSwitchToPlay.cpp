@@ -2,7 +2,6 @@
 #include "..\ApplicationManager.h"
 #include "..\GUI\GUI.h"
 
-#include <fstream>
 
 ActionSwitchToPlay::ActionSwitchToPlay(ApplicationManager* pApp) :Action(pApp)
 {}
@@ -16,8 +15,6 @@ void ActionSwitchToPlay::Execute()
 	// to do code
 	pGUI->ClearStatusBar();
 	pGUI->PrintMessage("welcome to play mode !");
-
-
 
 	pGUI->CreatePlayToolBar();
 

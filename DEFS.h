@@ -36,7 +36,10 @@ enum ActionType //The actions supported (you can add more if needed)
 	TO_PLAY,		//Switch interface to Play mode
 
 	// for play mode
-	TO_PICK_TYPE	//to selecte type
+	TO_PICK_TYPE,		//to selecte figure by type
+	TO_PICK_FILL,		//to selecte figure by fill
+	TO_PICK_TYPE_FILL	//to selecte figure by type and fill
+
 
 };
 
