@@ -15,6 +15,8 @@ void ActionSelectFigure::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+	pGUI->HighlightButton(ITM_SLCT);
+
 	pGUI->PrintMessage("Select Figure: Click to select a figure");
 	//Read point to select a figure
 	do {
@@ -41,6 +43,8 @@ void ActionSelectFigure::Execute()
 		selected->SetSelected(true);
 		pManager->SetSelectedFigure(selected);
 	}
+
+	pGUI->RemoveButtonHighlight(ITM_SLCT);
 }
 
 void ActionSelectFigure::DeselectFigure(CFigure* lastSelected) const

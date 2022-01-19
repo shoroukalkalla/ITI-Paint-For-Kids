@@ -7,12 +7,13 @@ class CHexagon : public CFigure
 {
 private:
 	Point center;
-	Point firstPoint;
+	float rotation;
 	int radius;
 public:
-	CHexagon(Point, Point, GfxInfo FigureGfxInfo);
+	CHexagon(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo);
 	virtual void DrawMe(GUI* pOut) const;
 	virtual bool isPointIn(int x, int y) const;
+	bool Resize(float factor, GUI* pGUI);
 };
 
 #endif

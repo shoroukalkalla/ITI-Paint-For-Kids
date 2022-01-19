@@ -3,7 +3,6 @@
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\GUI.h"
-#include <iostream>
 
 ActionChangeBKColor::ActionChangeBKColor(ApplicationManager* pApp) : Action(pApp)
 {}
@@ -14,6 +13,8 @@ void ActionChangeBKColor::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+	pGUI->HighlightButton(ITM_BK_CLR);
+
 	Point P1;
 	pGUI->PrintMessage("Select a color to fill the background");
 	pGUI->GetPointClicked(P1.x, P1.y);
@@ -22,6 +23,7 @@ void ActionChangeBKColor::Execute()
 	int colorIndex = pGUI->getColorIndex(P1.x, P1.y);
 	if (colorIndex > -1) {
 		pGUI->UpdateCrntBkColor(colorIndex);
-		return;
 	}
+
+	pGUI->RemoveButtonHighlight(ITM_BK_CLR);
 }

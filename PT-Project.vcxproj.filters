@@ -19,6 +19,9 @@
     <Filter Include="Application Manager">
       <UniqueIdentifier>{be3a4e10-d854-4bf8-9add-2f85904b4103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Storage Manager">
+      <UniqueIdentifier>{f2e377df-f39d-4401-aa14-1518b785b16d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
@@ -184,6 +187,18 @@
     <ClCompile Include="Actions\ActionPickTypeFillFigure.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\ActionBringToFront.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionSendToBack.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="StorageManager\StorageManager.cpp">
+      <Filter>Storage Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionResizeFigure.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
@@ -309,6 +324,21 @@
     </ClInclude>
     <ClInclude Include="Actions\ActionPickTypeFillFigure.h">
       <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionBringFront.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionSendToBack.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="StorageManager\StorageManager.h">
+      <Filter>Storage Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionResizeFigure.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\FiguresInfo.h">
+      <Filter>GUI Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

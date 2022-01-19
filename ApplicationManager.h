@@ -39,6 +39,10 @@ public:
 	void ApplicationManager::SetSelectedFigure(CFigure* figure);
 	CFigure* ApplicationManager::GetSelectedFigure();
 
+	int ApplicationManager::GetSelectedIndexFigure();
+	void ApplicationManager::BringToFront(int selectedIndex);
+	void ApplicationManager::SendToBack(int selectedIndex);
+
 	////////////////////////////////////////////////////////////////////////////////////
 
 	int getFigCount() const;							// get figure count  //17-1-2022

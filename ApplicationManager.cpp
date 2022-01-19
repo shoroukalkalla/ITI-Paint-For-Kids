@@ -9,6 +9,9 @@
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeDrawColor.h"
 #include "Actions\ActionChangeBKColor.h"
+#include "Actions\ActionBringFront.h"
+#include "Actions\ActionSendToBack.h";
+#include "Actions\ActionResizeFigure.h";
 #include "Actions\ActionPickFillFigure.h"
 #include "Actions\ActionPickTypeFillFigure.h"
 
@@ -32,6 +35,9 @@ ApplicationManager::ApplicationManager()
 
 void ApplicationManager::Run()
 {
+
+	
+
 	ActionType ActType;
 	do
 	{		
@@ -79,23 +85,49 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionSelectFigure(this);
 			break;
 
-		case CHNG_FILL_CLR:
-			newAct = new ActionChangeFillColor(this);
-			break;	
-
 		case CHNG_DRAW_CLR:
 			newAct = new ActionChangeDrawColor(this);
 			break;
 
+		case CHNG_FILL_CLR:
+			newAct = new ActionChangeFillColor(this);
+			break;	
+
 		case CHNG_BK_CLR:
 			newAct = new ActionChangeBKColor(this);
+			break;
+
+		case SEND_BACK:
+			newAct = new ActionSendToBack(this);
+			break;
+
+		case BRNG_FRNT:
+			newAct = new ActionBringToFront(this);
+			break;
+
+		// ----- Resize Cases -----
+
+		case RESIZE_QUARTER:
+			newAct = new ActionResizeFigure(this, 0.25);
+			break;
+
+		case RESIZE_HALF:
+			newAct = new ActionResizeFigure(this, .5);
+			break;
+
+		case RESIZE_DOUBLE:
+			newAct = new ActionResizeFigure(this, 2);
+			break;
+
+		case RESIZE_QUADRUPLE:
+			newAct = new ActionResizeFigure(this, 4);
 			break;
 
 		case TO_PLAY:
 			newAct = new ActionSwitchToPlay(this);
 			break;
 
-		// FOR PLAY MODE
+		// ----- FOR PLAY MODE -----
 
 		case TO_DRAW:
 			newAct = new ActionSwitchToDraw(this);
@@ -260,10 +292,38 @@ bool ApplicationManager::IsEqualColor(color& a, color& b) {
 
 	return a.ucRed == b.ucRed && a.ucBlue == b.ucBlue && a.ucGreen == b.ucGreen;
 }
+
+
 ////////////////////////////////////////////////////////////////////////////////////
 
 
 
+
+int ApplicationManager::GetSelectedIndexFigure() {
+	for (int i = FigCount - 1; i >= 0; i--) {
+		if (FigList[i] != NULL) {
+			if (FigList[i]->IsSelected())
+				return i;
+		}
+	}
+	return -1;
+
+}
+void ApplicationManager::BringToFront(int selectedIndex) {
+	CFigure* SelectedFigure = FigList[selectedIndex];
+	for (int i = selectedIndex; i < FigCount - 1; i++)
+		FigList[i] = FigList[i + 1];
+
+	FigList[FigCount - 1] = SelectedFigure;
+}
+
+void ApplicationManager::SendToBack(int selectedIndex) {
+	CFigure* SelectedFigure = FigList[selectedIndex];
+	for (int i = selectedIndex; i > 0; i--)
+		FigList[i] = FigList[i - 1];
+
+	FigList[0] = SelectedFigure;
+}
 
 //==================================================================================//
 //							Interface Management Functions							//

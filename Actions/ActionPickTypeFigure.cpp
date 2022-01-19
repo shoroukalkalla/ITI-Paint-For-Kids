@@ -76,6 +76,8 @@ void ActionPickTypeFigure::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+	pGUI->HighlightButton(ITM_SELECT_TYPE);
+
 	pGUI->ClearStatusBar();
 
 	ReadParameters();
@@ -190,6 +192,7 @@ void ActionPickTypeFigure::Execute()
 
 	
 
+	pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE);
 }
 
 
