@@ -27,7 +27,7 @@ GUI::GUI()
 	UI.FillColor = WHITE;			//Filling color
 	UI.MsgColor = INDIANRED;		//Messages color
 	UI.BkGrndColor = WHITE;			//Background color
-	UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
+	UI.HighlightColor = GOLD;		//This color should NOT be used to draw figures. use if for highlight only
 	UI.PointColor = BROWN;			//The point where the user clicks to draw
 	UI.StatusBarColor = TAN;
 	UI.PenWidth = 3;	//width of the figures frames
@@ -48,7 +48,7 @@ GUI::GUI()
 		DARKCYAN, YELLOWGREEN
 	};
 
-	CreateDrawToolBar();
+	CreateDrawToolBar(-1);
 	CreateColorsPallete();
 	CreateStatusBar();
 
@@ -231,11 +231,9 @@ void GUI::CreateStatusBar() const
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
-void GUI::CreateDrawToolBar() const
+void GUI::CreateDrawToolBar(int buttonIndex) const
 {
 	UI.InterfaceMode = MODE_DRAW;
-
-	ClearToolBar();
 	
 	string MenuItemImages[DRAW_ITM_COUNT];
 	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\square_icon.jpg";
@@ -257,33 +255,40 @@ void GUI::CreateDrawToolBar() const
 
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\icon_exit.jpg";
 
-	//Draw menu item one image at a time
-	for (int i = 0; i < DRAW_ITM_COUNT; i++)
-		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-	
-	//Draw a line under the toolbar
-	pWind->SetPen(DARKCYAN, 3);
-	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);	
+	if (buttonIndex == -1) {
+		ClearToolBar();
+		CreateColorsPallete();
+
+		//Draw menu item one image at a time
+		for (int i = 0; i < DRAW_ITM_COUNT; i++)
+			pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+		//Draw a line under the toolbar
+		pWind->SetPen(DARKCYAN, 3);
+		pWind->DrawLine(0, UI.ToolBarHeight+1, UI.width, UI.ToolBarHeight+1);
+	}
+	else {
+		pWind->DrawImage(MenuItemImages[buttonIndex], buttonIndex * UI.MenuItemWidth,
+			0, UI.MenuItemWidth, UI.ToolBarHeight);
+	}
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
 void GUI::CreateColorsPallete() const
 {
-
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize);
+	pWind->DrawRectangle(0, UI.ToolBarHeight + 3, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
 
 	for (int i = 0; i < ColorsCount; i++) {
 		pWind->SetPen(ColorsPallete[i], 1);
 		pWind->SetBrush(ColorsPallete[i]);
-		pWind->DrawRectangle((i) * UI.ColorsPalleteSize, UI.ToolBarHeight,
-			((i) * UI.ColorsPalleteSize) + UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize);
+		pWind->DrawRectangle((i) * UI.ColorsPalleteSize, UI.ToolBarHeight + 3,
+			((i) * UI.ColorsPalleteSize) + UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
 	}
 
 	CreateSelectedColorSquare();
-
 }
 
 
@@ -291,21 +296,19 @@ void GUI::CreateSelectedColorSquare() const
 {
 	pWind->SetFont(30, BOLD, BY_NAME, "Arial");
 	pWind->SetPen(DARKCYAN);
-	pWind->DrawString(UI.width - (UI.ColorsPalleteSize * 8) - 5, UI.ToolBarHeight, "Selected Color");
+	pWind->DrawString(UI.width - (UI.ColorsPalleteSize * 8) - 5, UI.ToolBarHeight + 3, "Selected Color");
 
 	pWind->SetPen(UI.DrawColor, 4);
 	pWind->SetBrush(UI.FillColor);
-	pWind->DrawRectangle(UI.width - (UI.ColorsPalleteSize * 3), UI.ToolBarHeight,
-		UI.width - UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize);
+	pWind->DrawRectangle(UI.width - (UI.ColorsPalleteSize * 3), UI.ToolBarHeight + 3,
+		UI.width - UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
-void GUI::CreatePlayToolBar() const
+void GUI::CreatePlayToolBar(int buttonIndex) const
 {
 	UI.InterfaceMode = MODE_PLAY;
-
-	ClearToolBar();
 
 	string PlayItemImages[PLAY_ITM_COUNT];
 	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\mood_draw.jpg";
@@ -313,14 +316,22 @@ void GUI::CreatePlayToolBar() const
 	PlayItemImages[ITM_SELECT_FILL] = "images\\MenuItems\\figure_icon_fill.jpg";
 	PlayItemImages[ITM_SELECT_TYPE_FILL] = "images\\MenuItems\\figure_icon_frame.jpg";
 	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\Menu_Exit.jpg";
+	
+	if (buttonIndex == -1) {
+		ClearToolBar();
 
-	//Draw menu item one image at a time
-	for (int i = 0; i < PLAY_ITM_COUNT; i++)
-	pWind->DrawImage(PlayItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		//Draw menu item one image at a time
+		for (int i = 0; i < PLAY_ITM_COUNT; i++)
+		pWind->DrawImage(PlayItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 
-	//Draw a line under the toolbar
-	pWind->SetPen(CYAN, 3);
-	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+		//Draw a line under the toolbar
+		pWind->SetPen(CYAN, 3);
+		pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+	}
+	else {
+		pWind->DrawImage(PlayItemImages[buttonIndex], buttonIndex * UI.MenuItemWidth,
+			0, UI.MenuItemWidth, UI.ToolBarHeight);
+	}
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
@@ -334,6 +345,26 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.25), msg);
 }
 
+// ----- * ----- * ----- * ----- * ----- * ----- //
+
+void GUI::HighlightButton(int buttonIndex)
+{
+	pWind->SetPen(UI.HighlightColor, 3);
+
+	pWind->DrawRectangle(buttonIndex * UI.MenuItemWidth + 2, 2,
+		(buttonIndex * UI.MenuItemWidth) + UI.MenuItemWidth - 2, UI.ToolBarHeight - 2, FRAME);
+}
+
+void GUI::RemoveButtonHighlight(int buttonIndex)
+{
+	if (UI.InterfaceMode == MODE_DRAW) {
+		CreateDrawToolBar(buttonIndex);
+	}
+	else {
+		CreatePlayToolBar(buttonIndex);
+	}
+}
+
 
 /* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
  * -----> Clear Tool bars and Drawing area
@@ -345,7 +376,7 @@ void GUI::ClearToolBar() const
 	//Clear tool bar by drawing a filled Square
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
 }
 
 // ----- * ----- * ----- * ----- * ----- * ----- //
@@ -354,7 +385,7 @@ void GUI::ClearDrawArea() const
 {
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(UI.BkGrndColor);
-	pWind->DrawRectangle(0, UI.ToolBarHeight + UI.ColorsPalleteSize, UI.width, UI.height - UI.StatusBarHeight);
+	pWind->DrawRectangle(0, UI.ToolBarHeight + UI.ColorsPalleteSize + 3, UI.width, UI.height - UI.StatusBarHeight);
 }
 
 void GUI::ResetDrawingArea() const

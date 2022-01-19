@@ -38,9 +38,9 @@ public:
 
 	/////////// Output Functoinality  ////////////////
 	void CreateStatusBar() const;	//create the status bar
-	void CreateDrawToolBar() const;	//creates Draw mode toolbar & menu
+	void CreateDrawToolBar(int buttonIndex) const;	//creates Draw mode toolbar & menu
 	void CreateColorsPallete() const; // Create a colors pallete
-	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
+	void CreatePlayToolBar(int buttonIndex) const;	//creates Play mode toolbar & menu
 
 	void CreateSelectedColorSquare() const;
 
@@ -48,8 +48,11 @@ public:
 	void ClearDrawArea() const;	//Clears the drawing area
 	void ResetDrawingArea() const; // Clears the drawing area and draw any needed figres
 	void ClearStatusBar() const;	//Clears the status bar
-	
+
 	void PrintMessage(string msg) const;	//Print a message on Status bar
+
+	void HighlightButton(int buttonIndex);
+	void RemoveButtonHighlight(int buttonIndex);
 
 	void UpdateCrntDrawColor(int colorIndex) const;
 	void UpdateCrntFillColor(int colorIndex) const;
