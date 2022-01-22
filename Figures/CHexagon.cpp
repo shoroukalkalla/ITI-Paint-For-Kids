@@ -1,5 +1,9 @@
 #include "CHexagon.h"
 
+#include <iostream>
+#include <fstream>
+
+
 CHexagon::CHexagon(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	center = _center;
@@ -37,4 +41,28 @@ bool CHexagon::Resize(float factor, GUI* pGUI)
 	}
 
 	return false;
+}
+
+void CHexagon::Save(ofstream& OutFile) {
+	// Figure	center.x	center.y	rotation	radius	drawColor	isFilled	fillColor
+
+	if (OutFile.is_open()) {
+		// FigureType
+		OutFile << TYPE_HEXAGON << "\t";
+		// center.x		center.y
+		OutFile << center.x << "\t" << center.y << "\t";
+		// rotation		radius
+		OutFile << rotation << "\t" << radius << "\t";
+		// drawColor
+		OutFile << (int)FigGfxInfo.DrawClr.ucRed << "\t" << (int)FigGfxInfo.DrawClr.ucGreen << "\t" << (int)FigGfxInfo.DrawClr.ucBlue << "\t";
+		// isFilled, fillColor
+		OutFile << FigGfxInfo.isFilled;
+		if (FigGfxInfo.isFilled) {
+			OutFile << "\t" << (int)FigGfxInfo.FillClr.ucRed << "\t" << (int)FigGfxInfo.FillClr.ucGreen << "\t" << (int)FigGfxInfo.FillClr.ucBlue;
+		}
+	}
+}
+
+void CHexagon::Load(ifstream& Infile) {
+
 }

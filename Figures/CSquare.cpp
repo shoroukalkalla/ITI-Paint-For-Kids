@@ -1,5 +1,9 @@
 #include "CSquare.h"
 
+#include <iostream>
+#include <fstream>
+
+
 CSquare::CSquare(Point P1, int len, GfxInfo FigureGfxInfo):CFigure(FigureGfxInfo)
 {
 	TopLeftCorner = P1;
@@ -42,4 +46,28 @@ bool CSquare::Resize(float factor, GUI* pGUI)
 	}
 
 	return false;
+}
+
+void CSquare::Save(ofstream& OutFile) {
+	// Figure	ID	TopLeftCorner.x		TopLeftCorner.y		length	drawColor	fillColor
+	// SQR		1	100					200					300		RBG			RBG
+
+	if (OutFile.is_open()) {
+		// FigureType
+		OutFile << TYPE_SQUARE << "\t";
+		// TopLeftCorner.x,	TopLeftCorner.y	length
+		OutFile << TopLeftCorner.x << "\t" << TopLeftCorner.y << "\t" << length << "\t";
+		// drawColor
+		OutFile << (int)FigGfxInfo.DrawClr.ucRed << "\t" << (int)FigGfxInfo.DrawClr.ucGreen << "\t" << (int)FigGfxInfo.DrawClr.ucBlue << "\t";
+		// isFilled, fillColor
+		OutFile << FigGfxInfo.isFilled;
+		if (FigGfxInfo.isFilled) {
+			OutFile << "\t" << (int)FigGfxInfo.FillClr.ucRed << "\t" << (int)FigGfxInfo.FillClr.ucGreen << "\t" << (int)FigGfxInfo.FillClr.ucBlue;
+		}
+	}
+}
+
+void CSquare::Load(ifstream& Infile)
+{
+
 }

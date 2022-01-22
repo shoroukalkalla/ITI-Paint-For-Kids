@@ -1,5 +1,9 @@
 #include "CEllipse.h"
 
+#include <iostream>
+#include <fstream>
+
+
 CEllipse::CEllipse(Point P1, Point P2, GfxInfo FigureGfxInfo) : CFigure(FigureGfxInfo)
 {
 	TopLeftCorner = P1;
@@ -46,4 +50,28 @@ bool CEllipse::Resize(float factor, GUI* pGUI)
 	}
 
 	return false;
+}
+
+void CEllipse::Save(ofstream& OutFile) {
+	// Figure	TopLeftCorner.x		TopLeftCorner.y		BottomRightCorner.x		BottomRightCorner.y		drawColor	isFilled	fillColor	
+
+	if (OutFile.is_open()) {
+		// FigureType
+		OutFile << TYPE_ELLIPSE << "\t";
+		// TopLeftCorner.x		TopLeftCorner.y
+		OutFile << TopLeftCorner.x << "\t" << TopLeftCorner.y << "\t";
+		// BottomRightCorner.x	BottomRightCorner.y
+		OutFile << BottomRightCorner.x << "\t" << BottomRightCorner.y << "\t";
+		// drawColor
+		OutFile << (int)FigGfxInfo.DrawClr.ucRed << "\t" << (int)FigGfxInfo.DrawClr.ucGreen << "\t" << (int)FigGfxInfo.DrawClr.ucBlue << "\t";
+		// isFilled, fillColor
+		OutFile << FigGfxInfo.isFilled;
+		if (FigGfxInfo.isFilled) {
+			OutFile << "\t" << (int)FigGfxInfo.FillClr.ucRed << "\t" << (int)FigGfxInfo.FillClr.ucGreen << "\t" << (int)FigGfxInfo.FillClr.ucBlue;
+		}
+	}
+}
+
+void CEllipse::Load(ifstream& Infile) {
+
 }

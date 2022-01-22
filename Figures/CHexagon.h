@@ -14,6 +14,9 @@ public:
 	virtual void DrawMe(GUI* pOut) const;
 	virtual bool isPointIn(int x, int y) const;
 	bool Resize(float factor, GUI* pGUI);
+
+	virtual void Save(ofstream& OutFile);
+	virtual void Load(ifstream& Infile);
 };
 
 #endif
