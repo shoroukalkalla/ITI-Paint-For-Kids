@@ -2,22 +2,21 @@
 #include "..\Figures\CEllipse.h"
 
 #include "..\ApplicationManager.h"
-
 #include "..\GUI\GUI.h"
 
+#include <fstream>
+
 ActionAddEllipse::ActionAddEllipse(ApplicationManager* pApp) : Action(pApp)
-{}
+{
+	pGUI = pApp->GetGUI();
+}
 
 //Execute the action
 void ActionAddEllipse::Execute()
 {
 	Point P1, P2;
 
-	//Get a Pointer to the Interface
-	GUI* pGUI = pManager->GetGUI();
-
 	pGUI->HighlightButton(ITM_ELPS);
-
 
 	GfxInfo SqrGfxInfo;
 	SqrGfxInfo.isFilled = pGUI->getCrntIsFilled();	//default is not filled
@@ -46,9 +45,7 @@ void ActionAddEllipse::Execute()
 
 	pGUI->ClearStatusBar();
 
-
-	//Step 2 - prepare Ellipse data Test Edit
-	//User has entered two points P1&P2
+	//Step 2 - prepare Ellipse
 	//2.1- Identify the Top left corner of the Ellipse
 	Point topLeft;
 	topLeft.x = P1.x < P2.x ? P1.x : P2.x;
@@ -58,11 +55,44 @@ void ActionAddEllipse::Execute()
 	bottomRight.x = P1.x > P2.x ? P1.x : P2.x;
 	bottomRight.y = P1.y > P2.y ? P1.y : P2.y;
 
-	//Step 3 - Create a Ellipse with the parameters read from the user
-	CEllipse* R = new CEllipse(topLeft, bottomRight, SqrGfxInfo);
-
-	//Step 4 - Add the Square to the list of figures
-	pManager->AddFigure(R);
+	CreateFigure(topLeft, bottomRight, SqrGfxInfo);
 
 	pGUI->RemoveButtonHighlight(ITM_ELPS);
+}
+
+void ActionAddEllipse::CreateFigure(Point topLeft, Point bottomRight, GfxInfo SqrGfxInfo)
+{
+	//Step 3 - Create a Ellipse with the parameters read from the user
+	CEllipse* ellipse = new CEllipse(topLeft, bottomRight, SqrGfxInfo);
+
+	//Step 4 - Add the Square to the list of figures
+	pManager->AddFigure(ellipse);
+}
+
+void ActionAddEllipse::Load(ifstream& input)
+{
+	// TopLeftCorner.x		TopLeftCorner.y
+	// BottomRightCorner.x		BottomRightCorner.y	
+	// drawColor	isFilled	fillColor	
+
+	Point TopLeftCorner, BottomRightCorner;
+	GfxInfo SqrGfxInfo;
+	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
+
+	input >> TopLeftCorner.x >> TopLeftCorner.y;
+	input >> BottomRightCorner.x >> BottomRightCorner.y;
+	
+	int drawC[3];
+	input >> drawC[0] >> drawC[1] >> drawC[2];
+	SqrGfxInfo.DrawClr = color((char)drawC[0], (char)drawC[1], (char)drawC[2]);
+
+	input >> SqrGfxInfo.isFilled;
+
+	if (SqrGfxInfo.isFilled) {
+		int fillC[3];
+		input >> fillC[0] >> fillC[1] >> fillC[2];
+		SqrGfxInfo.FillClr = color((char)fillC[0], (char)fillC[1], (char)fillC[2]);
+	}
+
+	CreateFigure(TopLeftCorner, BottomRightCorner, SqrGfxInfo);
 }

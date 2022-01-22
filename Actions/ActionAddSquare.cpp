@@ -2,19 +2,19 @@
 #include "..\Figures\CSquare.h"
 
 #include "..\ApplicationManager.h"
-
 #include "..\GUI\GUI.h"
 
+#include <fstream>
+
 ActionAddSquare::ActionAddSquare(ApplicationManager * pApp):Action(pApp)
-{}
+{
+	pGUI = pApp->GetGUI();
+}
 
 //Execute the action
 void ActionAddSquare::Execute() 
 {
 	Point P1,P2;
-
-	//Get a Pointer to the Interface
-	GUI* pGUI = pManager->GetGUI();
 
 	pGUI->HighlightButton(ITM_SQUR);
 
@@ -56,12 +56,44 @@ void ActionAddSquare::Execute()
 	//The square side length would be the longer distance between the two points coordinates
 	int SideLength = max(abs(P1.x-P2.x), abs(P1.y-P2.y));
 
-		
-	//Step 3 - Create a Square with the parameters read from the user
-	CSquare *R=new CSquare(topLeft, SideLength, SqrGfxInfo);
-
-	//Step 4 - Add the Square to the list of figures
-	pManager->AddFigure(R);
+	CreateFigure(topLeft, SideLength, SqrGfxInfo);
 
 	pGUI->RemoveButtonHighlight(ITM_SQUR);
+}
+
+void ActionAddSquare::CreateFigure(Point topLeft, int SideLength, GfxInfo SqrGfxInfo)
+{
+	//Step 3 - Create a Square with the parameters read from the user
+	CSquare* squere = new CSquare(topLeft, SideLength, SqrGfxInfo);
+
+	//Step 4 - Add the Square to the list of figures
+	pManager->AddFigure(squere);
+}
+
+void ActionAddSquare::Load(ifstream& input)
+{
+	// TopLeftCorner.x		TopLeftCorner.y		length
+	// drawColor
+	// isFilled		fillColor
+
+	Point topLeft;
+	int SideLength;
+	GfxInfo SqrGfxInfo;
+	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
+
+	input >> topLeft.x >> topLeft.y >> SideLength;
+
+	int drawC[3];
+	input >> drawC[0] >> drawC[1] >> drawC[2];
+	SqrGfxInfo.DrawClr = color((char)drawC[0], (char)drawC[1], (char)drawC[2]);
+
+	input >> SqrGfxInfo.isFilled;
+
+	if (SqrGfxInfo.isFilled) {
+		int fillC[3];
+		input >> fillC[0] >> fillC[1] >> fillC[2];
+		SqrGfxInfo.FillClr = color((char)fillC[0], (char)fillC[1], (char)fillC[2]);
+	}
+
+	CreateFigure(topLeft, SideLength, SqrGfxInfo);
 }

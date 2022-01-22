@@ -2,11 +2,14 @@
 #include "..\Figures\CHexagon.h"
 
 #include "..\ApplicationManager.h"
-
 #include "..\GUI\GUI.h"
 
+#include <fstream>
+
 ActionAddHexagon::ActionAddHexagon(ApplicationManager* pApp) :Action(pApp)
-{}
+{
+	pGUI = pApp->GetGUI();
+}
 
 //Execute the action
 void ActionAddHexagon::Execute()
@@ -14,8 +17,7 @@ void ActionAddHexagon::Execute()
 	Point Center, FirstVertex;
 
 	//Get a Pointer to the Interface
-	GUI* pGUI = pManager->GetGUI();
-
+	
 	pGUI->HighlightButton(ITM_HEX);
 
 	//get drawing, filling colors and pen width from the interface
@@ -55,15 +57,49 @@ void ActionAddHexagon::Execute()
 	pGUI->figureDrawer->GetHexagonDrawingInfo(hexagon);
 
 	if (hexagon.inBounds) {
-		//Step 3 - Create a Hexagon with the parameters read from the user
-		CHexagon* R = new CHexagon(hexagon.center, hexagon.rotation, hexagon.radius, SqrGfxInfo);
-
-		//Step 4 - Add the Square to the list of figures
-		pManager->AddFigure(R);
+		CreateFigure(hexagon.center, hexagon.rotation, hexagon.radius, SqrGfxInfo);
 	}
 	else {
 		pGUI->PrintMessage("Can't draw outsite the drawing area!");
 	}
 
 	pGUI->RemoveButtonHighlight(ITM_HEX);
+}
+
+void ActionAddHexagon::CreateFigure(Point Center, float Rotation, int Radius, GfxInfo SqrGfxInfo)
+{
+	//Step 3 - Create a Hexagon with the parameters read from the user
+	CHexagon* R = new CHexagon(Center, Rotation, Radius, SqrGfxInfo);
+
+	//Step 4 - Add the Square to the list of figures
+	pManager->AddFigure(R);
+}
+
+void ActionAddHexagon::Load(ifstream& input)
+{
+	// Center.x		Center.y	Rotation	Radius
+	// drawColor
+	// isFilled		fillColor
+
+	Point Center;
+	float Rotation;
+	int Radius;
+	GfxInfo SqrGfxInfo;
+	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
+
+	input >> Center.x >> Center.y >> Rotation >> Radius;
+	
+	int drawC[3];
+	input >> drawC[0] >> drawC[1] >> drawC[2];
+	SqrGfxInfo.DrawClr = color((char)drawC[0], (char)drawC[1], (char)drawC[2]);
+
+	input >> SqrGfxInfo.isFilled;
+
+	if (SqrGfxInfo.isFilled) {
+		int fillC[3];
+		input >> fillC[0] >> fillC[1] >> fillC[2];
+		SqrGfxInfo.FillClr = color((char)fillC[0], (char)fillC[1], (char)fillC[2]);
+	}
+
+	CreateFigure(Center, Rotation, Radius, SqrGfxInfo);
 }
