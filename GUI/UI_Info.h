@@ -38,6 +38,11 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_RESIZE_DOUBLE,		// Increase the figrue size 2 times
 	ITM_RESIZE_QUADRUPLE,	// Increase the figrue size 4 times
 
+	ITM_DELETE_SELECTED,	// Delete selected figures
+
+	ITM_SAVE_GRAPH,			// Save the current graph
+	ITM_LOAD_GRAPH,			// Save the current graph
+
 	// icon to swtich between draw mode and play mode
 	ITM_SWICH_PLAY,	   // switch item in menu
 

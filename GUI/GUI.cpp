@@ -128,6 +128,11 @@ ActionType GUI::MapInputInDrawMood(int x, int y) const
 			case ITM_RESIZE_HALF: return RESIZE_HALF;
 			case ITM_RESIZE_DOUBLE: return RESIZE_DOUBLE;
 			case ITM_RESIZE_QUADRUPLE: return RESIZE_QUADRUPLE;
+
+			case ITM_DELETE_SELECTED: return DEL;
+
+			case ITM_SAVE_GRAPH: return SAVE;
+			case ITM_LOAD_GRAPH: return LOAD;
                 
 			case ITM_SWICH_PLAY: return TO_PLAY;
 
@@ -250,6 +255,11 @@ void GUI::CreateDrawToolBar(int buttonIndex) const
 	MenuItemImages[ITM_RESIZE_HALF] = "images\\MenuItems\\icon_resize_1_2.jpg";
 	MenuItemImages[ITM_RESIZE_DOUBLE] = "images\\MenuItems\\Icon_resize_2.jpg";
 	MenuItemImages[ITM_RESIZE_QUADRUPLE] = "images\\MenuItems\\icon_resize_4.jpg";
+	
+	MenuItemImages[ITM_DELETE_SELECTED] = "images\\MenuItems\\delete_icon.jpg";
+
+	MenuItemImages[ITM_SAVE_GRAPH] = "images\\MenuItems\\icon_a1_save.jpg";
+	MenuItemImages[ITM_LOAD_GRAPH] = "images\\MenuItems\\icon_a1_load.jpg";
 
 	MenuItemImages[ITM_SWICH_PLAY] = "images\\MenuItems\\mood_play.jpg";
 
@@ -407,6 +417,25 @@ void GUI::ClearStatusBar() const
 /* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
  * -----> Get and Set colors (drawing, filling)
  * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
+
+void GUI::RestoreColors(color drawColor, color fillColor, color backgroudColor) const
+{
+	UpdateCrntDrawColor(FindColorIndex(drawColor));
+	UpdateCrntFillColor(FindColorIndex(fillColor));
+	UpdateCrntBkColor(FindColorIndex(backgroudColor));
+}
+
+int GUI::FindColorIndex(color c) const
+{
+	for (int i = 0; i < ColorsCount; i++) {
+		if ((int) ColorsPallete[i].ucRed == (int) c.ucRed &&
+			(int) ColorsPallete[i].ucGreen == (int) c.ucGreen &&
+			(int) ColorsPallete[i].ucBlue == (int) c.ucBlue) {
+			return i;
+		}
+	}
+	return -1;
+}
 
 void GUI::UpdateCrntDrawColor(int colorIndex) const
 {

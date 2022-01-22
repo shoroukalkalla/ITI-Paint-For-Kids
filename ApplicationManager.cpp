@@ -1,3 +1,6 @@
+#include <fstream>
+#include <iostream>
+
 #include "ApplicationManager.h"
 #include "Actions\ActionAddSquare.h"
 #include "Actions\ActionAddEllipse.h"
@@ -14,7 +17,9 @@
 #include "Actions\ActionResizeFigure.h";
 #include "Actions\ActionPickFillFigure.h"
 #include "Actions\ActionPickTypeFillFigure.h"
-
+#include "Actions\ActionStoreGraph.h"
+#include "Actions\ActionDeleteFigure.h"
+#include "Actions\ActionRestoreGraph.h"
 
 
 //Constructor
@@ -23,21 +28,11 @@ ApplicationManager::ApplicationManager()
 	//Create Input and output
 	pGUI = new GUI;
 	
-	FigCount = 0;
-
-	// (-1) means there is no selected figure
-	SelectedFigure = NULL;
-		
-	//Create an array of figure pointers and set them to NULL		
-	for(int i=0; i<MaxFigCount; i++)
-		FigList[i] = NULL;	
+	ClearAllFigures();
 }
 
 void ApplicationManager::Run()
 {
-
-	
-
 	ActionType ActType;
 	do
 	{		
@@ -121,6 +116,18 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case RESIZE_QUADRUPLE:
 			newAct = new ActionResizeFigure(this, 4);
+			break;
+
+		case DEL:
+			newAct = new ActionDeleteFigure(this);
+			break;
+
+		case SAVE:
+			newAct = new ActionStoreGraph(this);
+			break;
+
+		case LOAD:
+			newAct = new ActionRestoreGraph(this);
 			break;
 
 		case TO_PLAY:
@@ -214,7 +221,51 @@ CFigure* ApplicationManager::GetSelectedFigure()
 	return SelectedFigure;
 }
 
+void ApplicationManager::DeleteSelectedFigures()
+{
+	for (int j = 0; j < FigCount; j++)
+	{
+		if (FigList[j]->IsSelected())
+		{
+			delete FigList[j];
+			FigList[j] = NULL;
+			for (int i = j; i < FigCount - 1; i++)
+				FigList[i] = FigList[i + 1];
+			FigList[FigCount - 1] = NULL;
+			FigCount--;
+		}
+	}
+	SetSelectedFigure(NULL);
+}
 
+void ApplicationManager::ClearAllFigures()
+{
+	FigCount = 0;
+
+	// (-1) means there is no selected figure
+	SelectedFigure = NULL;
+
+	//Create an array of figure pointers and set them to NULL		
+	for (int i = 0; i < MaxFigCount; i++)
+		FigList[i] = NULL;
+}
+
+void ApplicationManager::StoreGraphData(ofstream& OutFile)
+{
+	// Draw_Color
+	OutFile << (int)UI.DrawColor.ucRed << "\t" << (int)UI.DrawColor.ucGreen << "\t" << (int)UI.DrawColor.ucBlue << "\t";
+	// Fill_Color
+	OutFile << (int)UI.FillColor.ucRed << "\t" << (int)UI.FillColor.ucGreen << "\t" << (int)UI.FillColor.ucBlue << "\t";
+	// Background_Color
+	OutFile << (int)UI.BkGrndColor.ucRed << "\t" << (int)UI.BkGrndColor.ucGreen << "\t" << (int)UI.BkGrndColor.ucBlue << "\n";
+	// Number_of_Figures
+	OutFile << FigCount;
+
+	for (int i = 0; i < FigCount; ++i) {
+		OutFile << "\n";
+		FigList[i]->Save(OutFile);
+	}
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -247,9 +298,6 @@ void ApplicationManager::Loop(CFigure* deleted) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
 int ApplicationManager::GetSelectedIndexFigure() {
 	for (int i = FigCount - 1; i >= 0; i--) {
 		if (FigList[i] != NULL) {
@@ -260,6 +308,7 @@ int ApplicationManager::GetSelectedIndexFigure() {
 	return -1;
 
 }
+
 void ApplicationManager::BringToFront(int selectedIndex) {
 	CFigure* SelectedFigure = FigList[selectedIndex];
 	for (int i = selectedIndex; i < FigCount - 1; i++)
@@ -275,6 +324,7 @@ void ApplicationManager::SendToBack(int selectedIndex) {
 
 	FigList[0] = SelectedFigure;
 }
+
 
 //==================================================================================//
 //							Interface Management Functions							//

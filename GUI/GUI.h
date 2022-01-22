@@ -54,6 +54,8 @@ public:
 	void HighlightButton(int buttonIndex);
 	void RemoveButtonHighlight(int buttonIndex);
 
+	void RestoreColors(color drawing, color filling, color bkColor) const;
+	int FindColorIndex(color c) const;
 	void UpdateCrntDrawColor(int colorIndex) const;
 	void UpdateCrntFillColor(int colorIndex) const;
 	void UpdateCrntBkColor(int colorIndex) const;

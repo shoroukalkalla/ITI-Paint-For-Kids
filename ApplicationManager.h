@@ -37,6 +37,11 @@ public:
 	void ApplicationManager::SetSelectedFigure(CFigure* figure);
 	CFigure* ApplicationManager::GetSelectedFigure();
 
+	void DeleteSelectedFigures();
+	void ClearAllFigures();
+
+	void StoreGraphData(ofstream& OutFile);
+
 	int ApplicationManager::GetSelectedIndexFigure();
 	void ApplicationManager::BringToFront(int selectedIndex);
 	void ApplicationManager::SendToBack(int selectedIndex);
