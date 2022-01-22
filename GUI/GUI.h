@@ -71,6 +71,10 @@ public:
 	bool isInsideDrawingArea(int x, int y) const;
 	bool isInsideDrawingArea(int* xs, int* ys, int count) const;
 	void GUI::drawPoint(int x, int y) const;
+
+
+	color getColorFromPallet(int colorIndex); 
+	int GetColorsCount();
 };
 
 

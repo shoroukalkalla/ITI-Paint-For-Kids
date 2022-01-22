@@ -16,7 +16,12 @@ void ActionSwitchToPlay::Execute()
 	pGUI->ClearStatusBar();
 	pGUI->PrintMessage("welcome to play mode !");
 
+
+	//pGUI->CreatePlayToolBar();
+
+
 	pGUI->CreatePlayToolBar(-1);
+
 }
 
 

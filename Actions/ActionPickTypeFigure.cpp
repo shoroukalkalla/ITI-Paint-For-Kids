@@ -190,6 +190,8 @@ void ActionPickTypeFigure::Execute()
 	}
 	pManager->UpdateInterface();
 
+	
+
 	pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE);
 }
 

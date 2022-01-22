@@ -53,7 +53,10 @@ GUI::GUI()
 	CreateStatusBar();
 
 	CreateSelectedColorSquare();
+
+	
 }
+
 
 
 //======================================================================================//
@@ -287,6 +290,7 @@ void GUI::CreateDrawToolBar(int buttonIndex) const
 
 void GUI::CreateColorsPallete() const
 {
+
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, UI.ToolBarHeight + 3, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
@@ -299,6 +303,7 @@ void GUI::CreateColorsPallete() const
 	}
 
 	CreateSelectedColorSquare();
+
 }
 
 
@@ -416,7 +421,15 @@ void GUI::ClearStatusBar() const
 
 /* ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- *
  * -----> Get and Set colors (drawing, filling)
+ *
  * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- */
+color GUI::getColorFromPallet(int colorIndex)
+{
+	return ColorsPallete[colorIndex];
+}
+
+
+
 
 void GUI::RestoreColors(color drawColor, color fillColor, color backgroudColor) const
 {
@@ -525,6 +538,10 @@ void GUI::drawPoint(int x, int y) const
 	pWind->DrawEllipse(x-7, y-7, x+7, y+7, FILLED);
 }
 
+int GUI::GetColorsCount() {
+	return ColorsCount;
+
+}
 // ----- * ----- * ----- * ----- * ----- * ----- //
 
 GUI::~GUI()

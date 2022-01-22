@@ -21,6 +21,8 @@ private:
 	GUI* pGUI;
 	
 
+
+
 public:	
 	ApplicationManager(); 
 	~ApplicationManager();
@@ -53,7 +55,10 @@ public:
 
 	void Loop(CFigure* deleted);
 
-
+	int GetFilledFigCount();
+	color* GetFilledFigColor();
+	bool IsEqualColor(color& a, color& b);
+	int GetColorIndex(color& c);
 	////////////////////////////////////////////////////////////////////////////////////
 
 	// -- Interface Management Functions	

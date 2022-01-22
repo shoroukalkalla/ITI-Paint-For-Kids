@@ -25,8 +25,40 @@ void CFigure::ChngFillClr(color Fclr)
 
 void CFigure::SetIsFilled(bool isFilled) {
 	FigGfxInfo.isFilled = isFilled;
+
 }
 
+bool CFigure::IsFigFilled() 
+{
+	return FigGfxInfo.isFilled;
+}
+
+color CFigure::getFilledColor() {
+	return FigGfxInfo.FillClr;
+}
+
+/////~
+
+void CFigure::setStored()
+{
+	storedColorOfFill = FigGfxInfo.FillClr;
+	storedColorOfDraw = FigGfxInfo.DrawClr;
+	IsFilled = FigGfxInfo.isFilled;
+}
+
+void CFigure::assignStored()
+{
+	FigGfxInfo.isFilled = IsFilled;
+	FigGfxInfo.FillClr = storedColorOfFill;
+	FigGfxInfo.DrawClr = storedColorOfDraw;
+}
+
+void CFigure::SetGfxInfo(GfxInfo& PickFigureInfo)
+{
+	PickFigureInfo.isFilled = IsFilled;
+	PickFigureInfo.FillClr = storedColorOfFill;
+	PickFigureInfo.DrawClr = storedColorOfDraw;
+}
 
 //---------------------> for play mode		//17-1-2022
 

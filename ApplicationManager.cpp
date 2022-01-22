@@ -282,19 +282,68 @@ CFigure* ApplicationManager::DrawnFigs(int i) const
 	return FigList[i];
 }
 
-void ApplicationManager::Loop(CFigure* deleted) {
-	for (int i = 0; i < FigCount; i++)
-		if (deleted == FigList[i])
-		{
-			delete FigList[i];
-			FigList[i] = NULL;
-			//PasteFlag = SelectFlag = 0;
-			FigCount--;
-			for (int j = i; j < FigCount; j++)
-				FigList[j] = FigList[j + 1];
-			break;
+//void ApplicationManager::Loop(CFigure* deleted) {
+//	for (int i = 0; i < FigCount; i++)
+//		if (deleted == FigList[i])
+//		{
+//			delete FigList[i];
+//			FigList[i] = NULL;
+//			//PasteFlag = SelectFlag = 0;
+//			FigCount--;
+//			for (int j = i; j < FigCount; j++)
+//				FigList[j] = FigList[j + 1];
+//			break;
+//		}
+//}
+
+int ApplicationManager::GetFilledFigCount()
+{
+	int count=0;
+
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i]->IsFigFilled()) {
+			count++;
+
 		}
+
+	}
+	return count;
 }
+
+color* ApplicationManager::GetFilledFigColor()
+{
+	int count = GetFilledFigCount();
+	color* colors= new color[count];
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i]->IsFigFilled()) {
+			colors[i]= FigList[i]->getFilledColor();
+			
+		}
+
+	}
+	return colors;
+}
+
+int ApplicationManager::GetColorIndex(color& c) {
+	
+	
+	for (int i=0; i < pGUI->GetColorsCount(); i++) {
+		if (IsEqualColor(c, pGUI->getColorFromPallet(i)))
+		{
+			return i;
+		}
+
+	}
+	return -1;
+}
+
+
+bool ApplicationManager::IsEqualColor(color& a, color& b) {
+
+
+	return a.ucRed == b.ucRed && a.ucBlue == b.ucBlue && a.ucGreen == b.ucGreen;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -361,3 +410,7 @@ ApplicationManager::~ApplicationManager()
 	delete pGUI;
 	
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////

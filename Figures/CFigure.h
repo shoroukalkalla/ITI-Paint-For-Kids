@@ -14,6 +14,11 @@ protected:
 	
 	/// Add more parameters if needed.
 
+	///~
+	color storedColorOfDraw, storedColorOfFill;
+	bool IsFilled;
+
+	// for play mode
 
 	// for play mod
 	bool figHidden;
@@ -51,6 +56,17 @@ public:
 	void Hide();
 	void Show();
 	bool HiddenStatus();			//Shows Current Figure status in playmode.
+
+
+	//
+	void SetFigInfo();
+	void setStored();
+	void assignStored();
+	void SetGfxInfo(GfxInfo&);
+	bool IsFigFilled() ;
+	color getFilledColor();
+
+
 };
 
 #endif
