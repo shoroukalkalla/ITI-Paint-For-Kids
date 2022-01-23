@@ -8,7 +8,7 @@ class ActionResizeFigure : public Action
 private:
 	float resizeFactor;
 public:
-	ActionResizeFigure(ApplicationManager* pApp, float);
+	ActionResizeFigure(ApplicationManager* pApp, float factor);
 
 	virtual void Execute();
 };

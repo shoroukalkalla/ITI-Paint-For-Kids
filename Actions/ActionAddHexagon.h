@@ -1,18 +1,17 @@
 #ifndef ACTION_ADD_HEXAGON_H
 #define ACTION_ADD_HEXAGON_H
 
-#include "Action.h"
+#include "ActionAddFigure.h"
 #include "..\GUI\GUI.h"
 
 
-class ActionAddHexagon : public Action
+class ActionAddHexagon : public ActionAddFigure
 {
-	GUI* pGUI;
 public:
 	ActionAddHexagon(ApplicationManager* pApp);
 
-	//Add Hexagon to the ApplicationManager
-	virtual void Execute();
+	virtual int GetMenuItemIndex();
+	virtual void AddFigure();
 	void CreateFigure(Point Center, float Rotation, int Radius, GfxInfo SqrGfxInfo);
 	void Load(ifstream& input);
 };
