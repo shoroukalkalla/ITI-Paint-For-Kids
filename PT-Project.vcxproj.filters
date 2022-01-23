@@ -13,14 +13,26 @@
     <Filter Include="Action Classes">
       <UniqueIdentifier>{cc2f4f46-2b97-4337-b924-0771e382c57b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI Classes">
-      <UniqueIdentifier>{03fd4e0d-92e0-4271-bb9b-d6e9f21ec35f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application Manager">
       <UniqueIdentifier>{be3a4e10-d854-4bf8-9add-2f85904b4103}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Storage Manager">
-      <UniqueIdentifier>{f2e377df-f39d-4401-aa14-1518b785b16d}</UniqueIdentifier>
+    <Filter Include="Action Classes\Add Figures">
+      <UniqueIdentifier>{ce4f343e-ae32-46f7-ab5d-03f97544e0d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action Classes\Change Colors">
+      <UniqueIdentifier>{322dfdc4-eb7a-4135-a162-6596e4ce3035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action Classes\Store and Restore">
+      <UniqueIdentifier>{17e9ee80-f5f4-40bb-bb7a-16d72ceadc42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action Classes\Play Mood">
+      <UniqueIdentifier>{2ba5b0c8-5882-4bbb-a8b4-3a8e70dc7643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action Classes\Drawing Tools">
+      <UniqueIdentifier>{d1ef6fd6-5263-4363-b538-db17a5bb816b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI Classes">
+      <UniqueIdentifier>{85a13cc4-d210-4cb6-9d11-0622c825963f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,26 +151,11 @@
     <ClCompile Include="Figures\CSquare.cpp">
       <Filter>Figures Classes</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\GUI.cpp">
-      <Filter>GUI Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionAddSquare.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionAddEllipse.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Figures\CEllipse.cpp">
       <Filter>Figures Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ActionAddHexagon.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Figures\CHexagon.cpp">
       <Filter>Figures Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionSelectFigure.cpp">
-      <Filter>Action Classes</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ActionSwitchToPlay.cpp">
       <Filter>Action Classes</Filter>
@@ -166,19 +163,7 @@
     <ClCompile Include="Actions\ActionSwitchToDraw.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\FigureDrawer.cpp">
-      <Filter>GUI Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Actions\ActionPickTypeFigure.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionChangeFillColor.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionChangeDrawColor.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionChangeBKColor.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ActionPickFillFigure.cpp">
@@ -187,26 +172,53 @@
     <ClCompile Include="Actions\ActionPickTypeFillFigure.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ActionBringToFront.cpp">
-      <Filter>Action Classes</Filter>
+    <ClCompile Include="Actions\ActionAddEllipse.cpp">
+      <Filter>Action Classes\Add Figures</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ActionSendToBack.cpp">
-      <Filter>Action Classes</Filter>
+    <ClCompile Include="Actions\ActionAddFigure.cpp">
+      <Filter>Action Classes\Add Figures</Filter>
     </ClCompile>
-    <ClCompile Include="StorageManager\StorageManager.cpp">
-      <Filter>Storage Manager</Filter>
+    <ClCompile Include="Actions\ActionAddHexagon.cpp">
+      <Filter>Action Classes\Add Figures</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ActionResizeFigure.cpp">
-      <Filter>Action Classes</Filter>
+    <ClCompile Include="Actions\ActionAddSquare.cpp">
+      <Filter>Action Classes\Add Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionChangeBKColor.cpp">
+      <Filter>Action Classes\Change Colors</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionChangeDrawColor.cpp">
+      <Filter>Action Classes\Change Colors</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionChangeFillColor.cpp">
+      <Filter>Action Classes\Change Colors</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ActionStoreGraph.cpp">
-      <Filter>Action Classes</Filter>
+      <Filter>Action Classes\Store and Restore</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ActionRestoreGraph.cpp">
-      <Filter>Action Classes</Filter>
+      <Filter>Action Classes\Store and Restore</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionBringToFront.cpp">
+      <Filter>Action Classes\Drawing Tools</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ActionDeleteFigure.cpp">
-      <Filter>Action Classes</Filter>
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionResizeFigure.cpp">
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionSelectFigure.cpp">
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionSendToBack.cpp">
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\FigureDrawer.cpp">
+      <Filter>GUI Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GUI.cpp">
+      <Filter>GUI Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -276,9 +288,6 @@
     <ClInclude Include="Actions\Action.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\UI_Info.h">
-      <Filter>GUI Classes</Filter>
-    </ClInclude>
     <ClInclude Include="ApplicationManager.h">
       <Filter>Application Manager</Filter>
     </ClInclude>
@@ -286,26 +295,11 @@
     <ClInclude Include="Figures\CSquare.h">
       <Filter>Figures Classes</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\GUI.h">
-      <Filter>GUI Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionAddSquare.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionAddEllipse.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Figures\CEllipse.h">
       <Filter>Figures Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ActionAddHexagon.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Figures\CHexagon.h">
       <Filter>Figures Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionSelectFigure.h">
-      <Filter>Action Classes</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ActionSwitchToPlay.h">
       <Filter>Action Classes</Filter>
@@ -313,19 +307,7 @@
     <ClInclude Include="Actions\ActionSwitchToDraw.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\FigureDrawer.h">
-      <Filter>GUI Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\ActionPickTypeFigure.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionChangeFillColor.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionChangeDrawColor.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionChangeBKColor.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ActionPickFillFigure.h">
@@ -334,29 +316,59 @@
     <ClInclude Include="Actions\ActionPickTypeFillFigure.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Actions\ActionAddEllipse.h">
+      <Filter>Action Classes\Add Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionAddFigure.h">
+      <Filter>Action Classes\Add Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionAddHexagon.h">
+      <Filter>Action Classes\Add Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionAddSquare.h">
+      <Filter>Action Classes\Add Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionChangeBKColor.h">
+      <Filter>Action Classes\Change Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionChangeDrawColor.h">
+      <Filter>Action Classes\Change Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionChangeFillColor.h">
+      <Filter>Action Classes\Change Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionStoreGraph.h">
+      <Filter>Action Classes\Store and Restore</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionRestoreGraph.h">
+      <Filter>Action Classes\Store and Restore</Filter>
+    </ClInclude>
     <ClInclude Include="Actions\ActionBringFront.h">
-      <Filter>Action Classes</Filter>
+      <Filter>Action Classes\Drawing Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ActionSendToBack.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="StorageManager\StorageManager.h">
-      <Filter>Storage Manager</Filter>
+    <ClInclude Include="Actions\ActionDeleteFigure.h">
+      <Filter>Action Classes\Drawing Tools</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ActionResizeFigure.h">
-      <Filter>Action Classes</Filter>
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionSelectFigure.h">
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionSendToBack.h">
+      <Filter>Action Classes\Drawing Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\FigureDrawer.h">
+      <Filter>GUI Classes</Filter>
     </ClInclude>
     <ClInclude Include="GUI\FiguresInfo.h">
       <Filter>GUI Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ActionStoreGraph.h">
-      <Filter>Action Classes</Filter>
+    <ClInclude Include="GUI\GUI.h">
+      <Filter>GUI Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ActionRestoreGraph.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionDeleteFigure.h">
-      <Filter>Action Classes</Filter>
+    <ClInclude Include="GUI\UI_Info.h">
+      <Filter>GUI Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
