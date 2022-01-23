@@ -1,6 +1,7 @@
 #include "CSquare.h"
 
-#include <iostream>
+#include "..\GUI\GUI.h"
+
 #include <fstream>
 
 
@@ -65,9 +66,4 @@ void CSquare::Save(ofstream& OutFile) {
 			OutFile << "\t" << (int)FigGfxInfo.FillClr.ucRed << "\t" << (int)FigGfxInfo.FillClr.ucGreen << "\t" << (int)FigGfxInfo.FillClr.ucBlue;
 		}
 	}
-}
-
-void CSquare::Load(ifstream& Infile)
-{
-
 }
