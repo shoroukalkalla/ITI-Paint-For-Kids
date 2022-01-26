@@ -24,9 +24,9 @@ void ActionChangeFillColor::Execute()
 
 	// [1] check if the user selects a figure
 	selectedFigure = pManager->GetFigure(P1.x, P1.y);
-	if (selectedFigure != NULL) {
+	if (selectedFigure != NULL) { // The user clicks a figure
 		// Change the fill color
-		if (pGUI->getCrntIsFilled()) {
+		if (pGUI->getCrntIsFilled()) { // UI.isFilled
 			selectedFigure->ChngFillClr(pGUI->getCrntFillColor());
 		}
 		else {

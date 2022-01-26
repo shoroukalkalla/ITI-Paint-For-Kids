@@ -103,12 +103,6 @@ void ActionPickTypeFigure::Execute()
 			pGUI->PrintMessage("Pick up all the Ellipses !");
 
 		}
-		/*else if (dynamic_cast<CHexagon*>(Fig))
-		{
-			picked_fig_no = figs[2];
-			pGUI->PrintMessage("Pick up all the Hexagons !");
-
-		}*/
 		else
 		{
 			picked_fig_no = figs[2];
@@ -121,63 +115,55 @@ void ActionPickTypeFigure::Execute()
 			{
 				pGUI->GetPointClicked(p.x, p.y);
 				
-				if (p.y > UI.ToolBarHeight || p.x > (UI.MenuItemWidth * PLAY_ITM_COUNT))
+				clickedFig = pManager->GetFigure(p.x, p.y);
+
+				if (clickedFig != NULL)
 				{
-					clickedFig = pManager->GetFigure(p.x, p.y);
 
-					if (clickedFig != NULL)
+					if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
 					{
-
-						if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
-						{
-							calcScore(1);
-							//pManager->Loop(clickedFig);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-							picked_fig_no--;
-						}
-						else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(Fig)))
-						{
-							calcScore(1);
-							//pManager->Loop(clickedFig);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-							picked_fig_no--;
-						}
-						else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(Fig)))
-						{
-							calcScore(1);
-							//pManager->Loop(clickedFig);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-							picked_fig_no--;
-						}
-						else
-						{
-							calcScore(2);
-							//pManager->Loop(clickedFig);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-						}
+						calcScore(1);
+						//pManager->Loop(clickedFig);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_fig_no--;
+					}
+					else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(Fig)))
+					{
+						calcScore(1);
+						//pManager->Loop(clickedFig);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_fig_no--;
+					}
+					else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(Fig)))
+					{
+						calcScore(1);
+						//pManager->Loop(clickedFig);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_fig_no--;
 					}
 					else
 					{
-						pGUI->PrintMessage("Toolbar clicked, game aborted.");
-						picked_fig_no = -1;
+						calcScore(2);
+						//pManager->Loop(clickedFig);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
 					}
-				
 				}
-
+				else
+				{
+					pGUI->PrintMessage("Toolbar clicked, game aborted.");
+					picked_fig_no = -1;
+				}
 			}
-
 
 			if (picked_fig_no == 0)
 			{
 				calcScore(3);
 			}
 		}
-
-
 	}
 	else
 	{
@@ -190,19 +176,8 @@ void ActionPickTypeFigure::Execute()
 	}
 	pManager->UpdateInterface();
 
-	
-
 	pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE);
 }
-
-
-
-
-
-
-
-
-
 
 
 ActionPickTypeFigure::~ActionPickTypeFigure() {
