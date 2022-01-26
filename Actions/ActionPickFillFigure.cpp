@@ -21,6 +21,7 @@ void ActionPickFillFigure::ReadActionParameters()
 	GUI* pGUI = pManager->GetGUI();
 
 
+
 	pGUI->GetPointClicked(p.x, p.y); //Get user's click
 }
 

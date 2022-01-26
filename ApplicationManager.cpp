@@ -321,6 +321,9 @@ color* ApplicationManager::GetFilledFigColor()
 		}
 
 	}
+	
+
+
 	return colors;
 }
 

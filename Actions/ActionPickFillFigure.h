@@ -10,10 +10,12 @@ class ActionPickFillFigure : public Action
 	CFigure* Fig;
 	CFigure* pickFigureInfo;
 	Point p;
-	
+	int correct = 0;
+	int incorrect = 0;
 	int Result;
 	void ReadActionParameters();
-	
+	void messagePrint(bool);
+
 public:
 	ActionPickFillFigure(ApplicationManager* pApp);
 	void PrintGameMessg(int type, GUI* pGUI);
