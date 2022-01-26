@@ -40,7 +40,16 @@ void ActionAddSquare::AddFigure()
 	//The square side length would be the longer distance between the two points coordinates
 	int SideLength = max(abs(P1.x-P2.x), abs(P1.y-P2.y));
 
-	CreateFigure(topLeft, SideLength, figGfxInfo);
+	int bottomRightX = topLeft.x + SideLength;
+	int bottomRightY = topLeft.y + SideLength;
+
+	if (pGUI->isInsideDrawingArea(topLeft.x, topLeft.y) &&
+		pGUI->isInsideDrawingArea(bottomRightX, bottomRightY)){
+		CreateFigure(topLeft, SideLength, figGfxInfo);
+	}
+	else {
+		pGUI->PrintMessage("Can't draw outsite the drawing area!");
+	}
 }
 
 void ActionAddSquare::CreateFigure(Point topLeft, int SideLength, GfxInfo figGfxInfo)
