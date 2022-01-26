@@ -9,18 +9,13 @@
 class GUI;
 ActionPickFillFigure::ActionPickFillFigure(ApplicationManager* pApp) :Action(pApp)
 {
-
 }
 
 
 
 void ActionPickFillFigure::ReadActionParameters()
 {
-	//Get a Pointer to the Input Interfaces
-
 	GUI* pGUI = pManager->GetGUI();
-
-
 
 	pGUI->GetPointClicked(p.x, p.y); //Get user's click
 }
@@ -29,74 +24,43 @@ void ActionPickFillFigure::ReadActionParameters()
 int ActionPickFillFigure::Random_Color(int& Result)
 {
 	GUI* pGUI = pManager->GetGUI();
-//	GfxInfo PickFigureInfo;
-//	int randColorIndex(0);
-//	int count = pManager->getFigCount();
 	int FigCount = pManager->getFigCount();
-	//int type;
 	
 	int figureFillCount = pManager->GetFilledFigCount();
 	if (FigCount != 0 && figureFillCount >= 2)
 	{
-		//do
-		//{
-		//    //type =  rand() % FigCount ; //0-9
-		//	
-		//	
-		//	pManager->DrawnFigs(type)->SetGfxInfo(PickFigureInfo);
-		//	printf("type %d   count %d   pickfig %d" , type , count , PickFigureInfo.isFilled);
-
-
-		//	count--;
-		//}
-		//while (!PickFigureInfo.isFilled);
- 
-		
 		color* colors= pManager->GetFilledFigColor(); //return colors arr
 		int RandIndex = rand() % figureFillCount; //rand fig fill 
 		color c = colors[RandIndex]; 
-		
 
 		for (int i = 0; i < FigCount; i++)
 		{
-		
-			
-
 			if (IsEqualColor(pManager->DrawnFigs(i)->getFilledColor(), c))
 				Result++;
-
 		}
 		
 		return pManager->GetColorIndex(c);
 	}
-	
 
 	return 0;
 }
 
 void ActionPickFillFigure::Execute()
 {
-
-
 	GUI* pGUI = pManager->GetGUI();
-	//GfxInfo PickFigureInfo;
 	Result = 0;
 
+	pGUI->HighlightButton(ITM_SELECT_FILL);
 
-	/**
-	
-		ColorsPallete = new color[ColorsCount] {
+	/*
+		ColorsPalletE:
 		WHITE, ROYALBLUE, CADETBLUE, LIGHTSEAGREEN, MEDIUMBLUE,
 		INDIAN, SANDYBROWN, SALMON, ORANGERED, PALEVIOLETRED,
 		DARKCYAN, YELLOWGREEN
-	};
 	*/
 	int colorIndex = Random_Color(Result);
 	color c = pGUI->getColorFromPallet(colorIndex);
 	PrintGameMessg(colorIndex ,pGUI);
-
-
-	//pManager->UpdateInterface();
 
 	if (colorIndex != 0)
 	{
@@ -120,42 +84,35 @@ void ActionPickFillFigure::Execute()
 				{
 					i++;
 
-					/*Fig->SetGfxInfo(PickFigureInfo);*/
 					if (Fig->IsFigFilled() && IsEqualColor(Fig->getFilledColor(), c))
 					{
 						correct++;
-							Result--;
+						Result--;
 					}
 					else {
 						incorrect++;
 					}
 					if (Result==0) {
-						for (int i = 0; i < pManager->getFigCount(); i++)
-						{
-							pManager->DrawnFigs(i)->Show();
-						}
-						pManager->UpdateInterface();
 						break;
 					}
 
-					/*pManager->Loop(Fig);*/
 					Fig->Hide();
 					pManager->UpdateInterface();
 					Fig = NULL;
 				}
-				
 			}
 			else 
 			{
 				break;
 			}
-
 			AllCounter++;
-			
 		}
+		pManager->ShowAllFigures();
+		pManager->UpdateInterface();
 		pGUI->PrintMessage("Congratulation , EndGame "+ to_string(correct) + " Correct & " + to_string(incorrect) + " InCorrect");
 	}
 
+	pGUI->RemoveButtonHighlight(ITM_SELECT_FILL);
 }
 
 

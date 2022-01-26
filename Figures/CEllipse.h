@@ -16,7 +16,6 @@ public:
 	bool Resize(float factor, GUI* pGUI);
 
 	virtual void Save(ofstream& OutFile);
-	virtual void Load(ifstream& Infile);
 };
 
 #endif

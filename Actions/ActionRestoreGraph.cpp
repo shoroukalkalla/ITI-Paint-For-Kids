@@ -40,10 +40,12 @@ void ActionRestoreGraph::Execute()
 			int fillC[3];
 			int backC[3];
 			
+			//				Red		  Green			Blue
 			inputFile >> drawC[0] >> drawC[1] >> drawC[2];
 			inputFile >> fillC[0] >> fillC[1] >> fillC[2];
 			inputFile >> backC[0] >> backC[1] >> backC[2];
 
+			//					Red				  Green			Blue
 			color drawColor((char)drawC[0], (char)drawC[1], (char)drawC[2]);
 			color fillColor((char)fillC[0], (char)fillC[1], (char)fillC[2]);
 			color backgroudColor((char)backC[0], (char)backC[1], (char)backC[2]);

@@ -352,58 +352,62 @@ void ActionPickTypeFillFigure::randomShape(color& c)
     }
 
 }
+
 bool ActionPickTypeFillFigure::IsEqualColor(color& a, color& b) {
-
-
     return a.ucRed == b.ucRed && a.ucBlue == b.ucBlue && a.ucGreen == b.ucGreen;
 }
+
 void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
 {
     GUI* pGUI = pManager->GetGUI();
+
+    pGUI->HighlightButton(ITM_SELECT_TYPE_FILL);
+
     while (randomShapeCount > 0)
     {
         pGUI->GetPointClicked(p.x, p.y);
-        if (p.y > UI.ToolBarHeight || p.x > (UI.MenuItemWidth * PLAY_ITM_COUNT))
-        {
-            clickedFig = pManager->GetFigure(p.x, p.y);
-            if (!clickedFig) {
-                pGUI->PrintMessage(" game aborted.");
-                return;
-            }
-            clickedFigColor = clickedFig->getFilledColor();
-            if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
-            {
-                rightSelect++;
-                messagePrint(true);
-                hideshape();
-                randomShapeCount--;
-            }
-            else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
-            {
-                rightSelect++;
-                messagePrint(true);
-                hideshape();
-                randomShapeCount--;
-            }
-            else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
-            {
-                rightSelect++;
-                messagePrint(true);
-                hideshape();
-                randomShapeCount--;
-            }
-            else
-            {
-                wrongSelect++;
-                messagePrint(false);
-                hideshape();
-            }
-            if (randomShapeCount == 0) {
-                string Message = "YOU WIN!, Your score is: " + to_string(rightSelect) + " Right, and " + to_string(wrongSelect) + " Wrong.";
-                pGUI->PrintMessage(Message);
-            }
+        clickedFig = pManager->GetFigure(p.x, p.y);
+        if (clickedFig == NULL) {
+            pGUI->PrintMessage(" game aborted.");
+            showShapes();
+            pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
+            return;
         }
+        clickedFigColor = clickedFig->getFilledColor();
+        if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
+        {
+            rightSelect++;
+            messagePrint(true);
+            hideshape();
+            randomShapeCount--;
+        }
+        else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
+        {
+            rightSelect++;
+            messagePrint(true);
+            hideshape();
+            randomShapeCount--;
+        }
+        else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
+        {
+            rightSelect++;
+            messagePrint(true);
+            hideshape();
+            randomShapeCount--;
+        }
+        else
+        {
+            wrongSelect++;
+            messagePrint(false);
+            hideshape();
+        }
+        if (randomShapeCount == 0) {
+            string Message = "YOU WIN!, Your score is: " + to_string(rightSelect) + " Right, and " + to_string(wrongSelect) + " Wrong.";
+            pGUI->PrintMessage(Message);
+        }
+
     }
+    pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
 }
 void ActionPickTypeFillFigure::hideshape()
 {
@@ -430,6 +434,4 @@ void ActionPickTypeFillFigure::Execute()
 	randomShape(c);
 	match(picked_fig_no, c);
 	showShapes();
-
-
 }

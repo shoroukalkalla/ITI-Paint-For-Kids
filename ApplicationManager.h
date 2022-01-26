@@ -59,6 +59,10 @@ public:
 	color* GetFilledFigColor();
 	bool IsEqualColor(color& a, color& b);
 	int GetColorIndex(color& c);
+
+	void ShowAllFigures();
+
+	int ShowConfirmMessage();
 	////////////////////////////////////////////////////////////////////////////////////
 
 	// -- Interface Management Functions	

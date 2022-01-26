@@ -1,18 +1,17 @@
 #ifndef ACTION_ADD_SQUARE_H
 #define ACTION_ADD_SQUARE_H
 
-#include "Action.h"
+#include "ActionAddFigure.h"
 #include "..\GUI\GUI.h"
 
 
-class ActionAddSquare: public Action
+class ActionAddSquare : public ActionAddFigure
 {
-	GUI* pGUI;
 public:
 	ActionAddSquare(ApplicationManager *pApp);
 	
-	//Add Square to the ApplicationManager
-	virtual void Execute() ;
+	virtual int GetMenuItemIndex();
+	virtual void AddFigure() ;
 	void CreateFigure(Point topLeft, int SideLength, GfxInfo SqrGfxInfo);
 	void Load(ifstream& input);
 };
