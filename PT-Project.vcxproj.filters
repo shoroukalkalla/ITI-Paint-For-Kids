@@ -163,15 +163,6 @@
     <ClCompile Include="Actions\ActionSwitchToDraw.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ActionPickTypeFigure.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionPickFillFigure.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionPickTypeFillFigure.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Actions\ActionAddEllipse.cpp">
       <Filter>Action Classes\Add Figures</Filter>
     </ClCompile>
@@ -219,6 +210,15 @@
     </ClCompile>
     <ClCompile Include="GUI\GUI.cpp">
       <Filter>GUI Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionPickFillFigure.cpp">
+      <Filter>Action Classes\Play Mood</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionPickTypeFigure.cpp">
+      <Filter>Action Classes\Play Mood</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ActionPickTypeFillFigure.cpp">
+      <Filter>Action Classes\Play Mood</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,15 +307,6 @@
     <ClInclude Include="Actions\ActionSwitchToDraw.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ActionPickTypeFigure.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionPickFillFigure.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionPickTypeFillFigure.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\ActionAddEllipse.h">
       <Filter>Action Classes\Add Figures</Filter>
     </ClInclude>
@@ -369,6 +360,15 @@
     </ClInclude>
     <ClInclude Include="GUI\UI_Info.h">
       <Filter>GUI Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionPickFillFigure.h">
+      <Filter>Action Classes\Play Mood</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionPickTypeFigure.h">
+      <Filter>Action Classes\Play Mood</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ActionPickTypeFillFigure.h">
+      <Filter>Action Classes\Play Mood</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

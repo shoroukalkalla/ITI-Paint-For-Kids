@@ -48,7 +48,7 @@ void ApplicationManager::Run()
 		//4- Update the interface
 		UpdateInterface();
 
-	} while(ActType != EXIT);
+	} while(true /*ActType != EXIT*/);
 	
 }
 
@@ -153,7 +153,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case EXIT:
-			///create ExitAction here
+			ShowConfirmMessage();
 			break;
 					
 		case STATUS:	//a click on the status bar ==> no action
@@ -187,21 +187,6 @@ void ApplicationManager::AddFigure(CFigure* pFig)
 ////////////////////////////////////////////////////////////////////////////////////
 CFigure *ApplicationManager::GetFigure(int x, int y)
 {
-	//If a figure is found return a pointer to it.
-	//if this point (x,y) does not belong to any figure return NULL
-
-	///Add your code here to search for a figure given a point x,y
-
-	// old ---> 17/1/2022
-	/*for (int i = FigCount - 1; i >= 0; i--) {
-		if (FigList[i] != NULL) {
-			if (FigList[i]->isPointIn(x, y)) {
-				return FigList[i];
-			}
-		}
-	}*/
-
-	// new  ---> 17/1/2022
 	for (int i = FigCount - 1; i >= 0; i--) {
 		if (FigList[i]->HiddenStatus() == false)
 			if (FigList[i]->isPointIn(x, y))
@@ -303,9 +288,7 @@ int ApplicationManager::GetFilledFigCount()
 	for (int i = 0; i < FigCount; i++) {
 		if (FigList[i]->IsFigFilled()) {
 			count++;
-
 		}
-
 	}
 	return count;
 }
@@ -372,6 +355,31 @@ void ApplicationManager::SendToBack(int selectedIndex) {
 		FigList[i] = FigList[i - 1];
 
 	FigList[0] = SelectedFigure;
+}
+
+void ApplicationManager::ShowAllFigures()
+{
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i]->IsFigFilled()) {
+			FigList[i]->Show();
+		}
+	}
+}
+
+int ApplicationManager::ShowConfirmMessage()
+{
+	int msgboxID = MessageBox(
+		NULL,
+		"Are you sure?\nMake sure your graph is saved!",
+		"Exit",
+		MB_OKCANCEL | MB_DEFBUTTON2 | MB_ICONWARNING
+	);
+
+	if (msgboxID == IDOK) {
+		exit(0);
+	}
+
+	return msgboxID;
 }
 
 
