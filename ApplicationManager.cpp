@@ -33,6 +33,7 @@ ApplicationManager::ApplicationManager()
 
 void ApplicationManager::Run()
 {
+
 	ActionType ActType;
 	do
 	{		
@@ -187,6 +188,9 @@ void ApplicationManager::AddFigure(CFigure* pFig)
 ////////////////////////////////////////////////////////////////////////////////////
 CFigure *ApplicationManager::GetFigure(int x, int y)
 {
+	//If a figure is found return a pointer to it.
+	//if this point (x,y) does not belong to any figure return NULL
+
 	for (int i = FigCount - 1; i >= 0; i--) {
 		if (FigList[i]->HiddenStatus() == false)
 			if (FigList[i]->isPointIn(x, y))
@@ -255,7 +259,7 @@ void ApplicationManager::StoreGraphData(ofstream& OutFile)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-//Transfer FigCount to playmode to avoid unnessecary loops   //17-1-2022
+//Transfer FigCount to playmode to avoid unnessecary loops  
 int ApplicationManager::getFigCount() const
 {
 	return FigCount;
@@ -267,19 +271,6 @@ CFigure* ApplicationManager::DrawnFigs(int i) const
 	return FigList[i];
 }
 
-//void ApplicationManager::Loop(CFigure* deleted) {
-//	for (int i = 0; i < FigCount; i++)
-//		if (deleted == FigList[i])
-//		{
-//			delete FigList[i];
-//			FigList[i] = NULL;
-//			//PasteFlag = SelectFlag = 0;
-//			FigCount--;
-//			for (int j = i; j < FigCount; j++)
-//				FigList[j] = FigList[j + 1];
-//			break;
-//		}
-//}
 
 int ApplicationManager::GetFilledFigCount()
 {
@@ -296,13 +287,13 @@ int ApplicationManager::GetFilledFigCount()
 color* ApplicationManager::GetFilledFigColor()
 {
 	int count = GetFilledFigCount();
-	color* colors= new color[count];
-	for (int i = 0; i < FigCount; i++) {
-		if (FigList[i]->IsFigFilled()) {
-			colors[i]= FigList[i]->getFilledColor();
-			
-		}
 
+	color* colors= new color[count];
+	
+	for (int i = 0; i < count; i++) {
+		if (FigList[i]->IsFigFilled()) {
+			colors[i] = FigList[i]->getFilledColor();
+		}
 	}
 	return colors;
 }
@@ -315,7 +306,6 @@ int ApplicationManager::GetColorIndex(color& c) {
 		{
 			return i;
 		}
-
 	}
 	return -1;
 }
@@ -391,11 +381,7 @@ int ApplicationManager::ShowConfirmMessage()
 void ApplicationManager::UpdateInterface() const
 {	
 	pGUI->ResetDrawingArea();
-
-	// old ----> 17/1/2022
-	/*for (int i = 0; i < FigCount; i++)
-		FigList[i]->DrawMe(pGUI);*/		//Call Draw function (virtual member fn)
-		
+	
 	for (int i = 0; i < FigCount; i++)
 	{
 		if (FigList[i]->HiddenStatus() == false)
@@ -418,7 +404,5 @@ ApplicationManager::~ApplicationManager()
 	delete pGUI;
 	
 }
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////

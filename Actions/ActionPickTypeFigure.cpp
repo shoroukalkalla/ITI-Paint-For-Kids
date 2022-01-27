@@ -27,6 +27,7 @@ void ActionPickTypeFigure::calcScore(int num)
 
 	//
 	string Message;
+	
 	if (num == 1)
 	{
 		rightSelect++;
@@ -39,14 +40,25 @@ void ActionPickTypeFigure::calcScore(int num)
 	}
 	else
 	{
-		Message = "YOU WIN!, Your score is: " + to_string(rightSelect) + " Right, and " + to_string(wrongSelect) + " Wrong.";
+		if (rightSelect > wrongSelect)
+		{
+			Message = "Well done You win!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+		}
+		else if (rightSelect == wrongSelect && rightSelect != 0)
+		{
+			Message = "Try again it's Draw!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+		}
+		else
+		{
+			Message = "Hard Luke you lose !, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+		}
+	
 	}
 	
 	pGUI->PrintMessage(Message);
 
 
 }
-
 
 void ActionPickTypeFigure::ReadParameters()
 {
@@ -69,7 +81,6 @@ void ActionPickTypeFigure::ReadParameters()
 	}
 }
 
-
 //Execute the action
 void ActionPickTypeFigure::Execute()
 {
@@ -91,6 +102,7 @@ void ActionPickTypeFigure::Execute()
 		// counting fig instances
 		Fig = pManager->DrawnFigs(rand_fig_no);
 		
+	
 		if(dynamic_cast<CSquare*>(Fig))
 		{
 			picked_fig_no = figs[0];
@@ -123,7 +135,6 @@ void ActionPickTypeFigure::Execute()
 					if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
 					{
 						calcScore(1);
-						//pManager->Loop(clickedFig);
 						clickedFig->Hide();
 						pManager->UpdateInterface();
 						picked_fig_no--;
@@ -131,7 +142,6 @@ void ActionPickTypeFigure::Execute()
 					else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(Fig)))
 					{
 						calcScore(1);
-						//pManager->Loop(clickedFig);
 						clickedFig->Hide();
 						pManager->UpdateInterface();
 						picked_fig_no--;
@@ -139,7 +149,6 @@ void ActionPickTypeFigure::Execute()
 					else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(Fig)))
 					{
 						calcScore(1);
-						//pManager->Loop(clickedFig);
 						clickedFig->Hide();
 						pManager->UpdateInterface();
 						picked_fig_no--;
@@ -147,15 +156,10 @@ void ActionPickTypeFigure::Execute()
 					else
 					{
 						calcScore(2);
-						//pManager->Loop(clickedFig);
 						clickedFig->Hide();
 						pManager->UpdateInterface();
 					}
-				}
-				else
-				{
-					pGUI->PrintMessage("Toolbar clicked, game aborted.");
-					picked_fig_no = -1;
+				
 				}
 			}
 
@@ -167,7 +171,7 @@ void ActionPickTypeFigure::Execute()
 	}
 	else
 	{
-		pGUI->PrintMessage("You must have at least two figures to play by figure ! ");
+		pGUI->PrintMessage("You must have at least two types of figures to play ! ");
 	}
 
 	for (int i = 0; i < pManager->getFigCount(); i++)

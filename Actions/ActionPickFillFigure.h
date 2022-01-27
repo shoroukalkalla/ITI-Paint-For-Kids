@@ -13,6 +13,8 @@ class ActionPickFillFigure : public Action
 	
 	int Result;
 	void ReadActionParameters();
+	void CalacScore(int correct, int incorrect);
+
 	
 public:
 	ActionPickFillFigure(ApplicationManager* pApp);

@@ -185,10 +185,11 @@ ActionType GUI::MapInputInPlayMood(int x, int y) const
 
 			switch (ClickedItemOrder)
 			{
-				case ITM_SWICH_DRAW: return TO_DRAW;
+				
 				case ITM_SELECT_TYPE: return TO_PICK_TYPE;
 				case ITM_SELECT_FILL: return TO_PICK_FILL;
 				case ITM_SELECT_TYPE_FILL: return TO_PICK_TYPE_FILL;
+				case ITM_SWICH_DRAW: return TO_DRAW;
 				case ITM_EXIT2: return EXIT;
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
@@ -323,11 +324,11 @@ void GUI::CreatePlayToolBar(int buttonIndex) const
 	UI.InterfaceMode = MODE_PLAY;
 
 	string PlayItemImages[PLAY_ITM_COUNT];
-	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\mood_draw.jpg";
 	PlayItemImages[ITM_SELECT_TYPE] = "images\\MenuItems\\select_icon_02.jpg";
 	PlayItemImages[ITM_SELECT_FILL] = "images\\MenuItems\\figure_icon_fill.jpg";
 	PlayItemImages[ITM_SELECT_TYPE_FILL] = "images\\MenuItems\\figure_icon_frame.jpg";
-	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\Menu_Exit.jpg";
+	PlayItemImages[ITM_SWICH_DRAW] = "images\\MenuItems\\mood_draw.jpg";
+	PlayItemImages[ITM_EXIT2] = "images\\MenuItems\\icon_exit.jpg";
 	
 	if (buttonIndex == -1) {
 		ClearToolBar();

@@ -13,7 +13,7 @@ class ActionPickTypeFillFigure : public Action
 	color c;
 	Point p;
 	int  rand_fig_no = 0, picked_fig_no = 0, wrongSelect = 0, rightSelect = 0, numOfFig = 0;
-	int combinations[32];
+	int combinations[33];
 	void randomShape(color&);
 	void showShapes();
 	void match(int&, color);
