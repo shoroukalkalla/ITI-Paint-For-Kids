@@ -185,7 +185,6 @@ ActionType GUI::MapInputInPlayMood(int x, int y) const
 
 			switch (ClickedItemOrder)
 			{
-				
 				case ITM_SWICH_DRAW: return TO_DRAW;
 				case ITM_SELECT_TYPE: return TO_PICK_TYPE;
 				case ITM_SELECT_FILL: return TO_PICK_FILL;
@@ -290,20 +289,18 @@ void GUI::CreateDrawToolBar(int buttonIndex) const
 
 void GUI::CreateColorsPallete() const
 {
-
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, UI.ToolBarHeight + 3, UI.width, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
 
 	for (int i = 0; i < ColorsCount; i++) {
-		pWind->SetPen(ColorsPallete[i], 1);
+		pWind->SetPen(BLACK, 2);
 		pWind->SetBrush(ColorsPallete[i]);
-		pWind->DrawRectangle((i) * UI.ColorsPalleteSize, UI.ToolBarHeight + 3,
-			((i) * UI.ColorsPalleteSize) + UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
+		pWind->DrawEllipse((i)*UI.ColorsPalleteSize, UI.ToolBarHeight + 3,
+			((i)*UI.ColorsPalleteSize) + UI.ColorsPalleteSize, UI.ToolBarHeight + UI.ColorsPalleteSize + 3);
 	}
 
 	CreateSelectedColorSquare();
-
 }
 
 
