@@ -33,7 +33,6 @@ ApplicationManager::ApplicationManager()
 
 void ApplicationManager::Run()
 {
-	//ActionType ActType{};
 
 	ActionType ActType;
 	do
