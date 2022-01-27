@@ -9,7 +9,7 @@
 
 ActionPickTypeFillFigure::ActionPickTypeFillFigure(ApplicationManager* pApp) :Action(pApp)
 {
-	for (int i = 0; i < 32; i++)
+	for (int i = 0; i < 33; i++)
 	{
 		combinations[i] = 0;
 	}
@@ -348,7 +348,7 @@ void ActionPickTypeFillFigure::randomShape(color& c)
     }
     else
     {
-        pGUI->PrintMessage("you must draw two types of fill figures at least");
+        pGUI->PrintMessage("You must have at least two filled  types of figures to play ! ");
     }
 
 }
@@ -398,8 +398,22 @@ void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
                 messagePrint(false);
                 hideshape();
             }
+
             if (randomShapeCount == 0) {
-                string Message = "YOU WIN!, Your score is: " + to_string(rightSelect) + " Right, and " + to_string(wrongSelect) + " Wrong.";
+                string Message;
+                if (rightSelect > wrongSelect)
+                {
+                    Message = "Well done You win!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+                }
+                else if (rightSelect == wrongSelect)
+                {
+                    Message = "Try again it's Draw!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+                }
+                else
+                {
+                    Message = "Hard Luke you lose !, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+                }
+
                 pGUI->PrintMessage(Message);
             }
         }
@@ -425,11 +439,14 @@ void ActionPickTypeFillFigure::Execute()
 	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
 
+    pGUI->HighlightButton(ITM_SELECT_TYPE_FILL);
+
 	pGUI->ClearStatusBar();
 	ReadActionParameters();
 	randomShape(c);
 	match(picked_fig_no, c);
 	showShapes();
 
+    pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
 
 }
