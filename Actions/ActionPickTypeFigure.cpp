@@ -44,7 +44,7 @@ void ActionPickTypeFigure::calcScore(int num)
 		{
 			Message = "Well done You win!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
 		}
-		else if (rightSelect == wrongSelect)
+		else if (rightSelect == wrongSelect && rightSelect != 0)
 		{
 			Message = "Try again it's Draw!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
 		}
@@ -134,47 +134,32 @@ void ActionPickTypeFigure::Execute()
 
 					if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
 					{
-
-						if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
-						{
-							calcScore(1);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-							picked_fig_no--;
-						}
-						else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(Fig)))
-						{
-							calcScore(1);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-							picked_fig_no--;
-						}
-						else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(Fig)))
-						{
-							calcScore(1);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-							picked_fig_no--;
-						}
-						else
-						{
-							calcScore(2);
-							clickedFig->Hide();
-							pManager->UpdateInterface();
-						}
+						calcScore(1);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_fig_no--;
+					}
+					else if ((dynamic_cast<CEllipse*>(clickedFig)) && (dynamic_cast<CEllipse*>(Fig)))
+					{
+						calcScore(1);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_fig_no--;
+					}
+					else if ((dynamic_cast<CHexagon*>(clickedFig)) && (dynamic_cast<CHexagon*>(Fig)))
+					{
+						calcScore(1);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_fig_no--;
 					}
 					else
 					{
 						calcScore(2);
-						//pManager->Loop(clickedFig);
 						clickedFig->Hide();
 						pManager->UpdateInterface();
 					}
-				}
-				else
-				{
-					pGUI->PrintMessage("Toolbar clicked, game aborted.");
-					picked_fig_no = -1;
+				
 				}
 			}
 

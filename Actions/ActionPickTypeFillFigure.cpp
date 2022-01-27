@@ -416,7 +416,7 @@ void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
                 {
                     Message = "Well done You win!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
                 }
-                else if (rightSelect == wrongSelect)
+                else if (rightSelect == wrongSelect && rightSelect != 0)
                 {
                     Message = "Try again it's Draw!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
                 }

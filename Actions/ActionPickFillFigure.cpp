@@ -49,7 +49,7 @@ void ActionPickFillFigure::CalacScore(int correct, int incorrect)
 	{
 		pGUI->PrintMessage("Well done You win !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
 	}
-	else if (correct == incorrect)
+	else if (correct == incorrect && correct != 0)
 	{
 		pGUI->PrintMessage("Try again it's Draw !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
 	}
