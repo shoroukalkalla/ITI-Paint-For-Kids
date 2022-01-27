@@ -6,45 +6,61 @@
 #include "..\Figures\CHexagon.h"
 #include "..\Figures\CFigure.h"
 
-class GUI;
+//class GUI;
 ActionPickFillFigure::ActionPickFillFigure(ApplicationManager* pApp) :Action(pApp)
 {
 }
 
-
-
 void ActionPickFillFigure::ReadActionParameters()
 {
+	//Get a Pointer to the Input Interfaces
 	GUI* pGUI = pManager->GetGUI();
-
-
 	pGUI->GetPointClicked(p.x, p.y); //Get user's click
 }
-
 
 int ActionPickFillFigure::Random_Color(int& Result)
 {
 	GUI* pGUI = pManager->GetGUI();
-	int FigCount = pManager->getFigCount();
-	
-	int figureFillCount = pManager->GetFilledFigCount();
+	int FigCount = pManager->getFigCount();				 // number of figer
+	int figureFillCount = pManager->GetFilledFigCount(); // number of filled figer
+
 	if (FigCount != 0 && figureFillCount >= 2)
 	{
 		color* colors= pManager->GetFilledFigColor(); //return colors arr
-		int RandIndex = rand() % figureFillCount; //rand fig fill 
-		color c = colors[RandIndex]; 
+		int RandIndex = rand() % figureFillCount;     //rand fig fill 
+		color c = colors[RandIndex];
 
 		for (int i = 0; i < FigCount; i++)
 		{
 			if (IsEqualColor(pManager->DrawnFigs(i)->getFilledColor(), c))
 				Result++;
 		}
-		
 		return pManager->GetColorIndex(c);
 	}
-
+	
 	return 0;
 }
+
+void ActionPickFillFigure::CalacScore(int correct, int incorrect)
+{
+	GUI* pGUI = pManager->GetGUI();
+
+	if (correct > incorrect)
+	{
+		pGUI->PrintMessage("Well done You win !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
+	}
+	else if (correct == incorrect && correct != 0)
+	{
+		pGUI->PrintMessage("Try again it's Draw !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
+	}
+	else if (correct < incorrect)
+	{
+		pGUI->PrintMessage("Hard Luke you lose !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
+	}else{
+		Execute();
+	}
+}
+
 
 void ActionPickFillFigure::Execute()
 {
@@ -52,22 +68,18 @@ void ActionPickFillFigure::Execute()
 	Result = 0;
 
 	pGUI->HighlightButton(ITM_SELECT_FILL);
-
-	/*
-		ColorsPalletE:
-		WHITE, ROYALBLUE, CADETBLUE, LIGHTSEAGREEN, MEDIUMBLUE,
-		INDIAN, SANDYBROWN, SALMON, ORANGERED, PALEVIOLETRED,
-		DARKCYAN, YELLOWGREEN
-	*/
+	
 	int colorIndex = Random_Color(Result);
+	
 	color c = pGUI->getColorFromPallet(colorIndex);
+	
 	PrintGameMessg(colorIndex ,pGUI);
 
 	if (colorIndex != 0)
 	{
 		int actualFigCount= pManager->getFigCount();
-		int i, AllCounter = 0;
-		int Res = Result;
+		int i;
+		int Res= Result;
 		int correct = 0;
 		int incorrect = 0;
 		for (i = 0; i < actualFigCount; )
@@ -88,11 +100,15 @@ void ActionPickFillFigure::Execute()
 					if (Fig->IsFigFilled() && IsEqualColor(Fig->getFilledColor(), c))
 					{
 						correct++;
+						pGUI->PrintMessage("Right!, Your score is : " + to_string(correct) + " Right, and " + to_string(incorrect) + " Wrong.");
 						Result--;
 					}
 					else {
 						incorrect++;
+						pGUI->PrintMessage("Wrong!, Your score is : " + to_string(correct) + " Right, and " + to_string(incorrect) + " Wrong.");
+
 					}
+					
 					if (Result==0) {
 						break;
 					}
@@ -100,30 +116,31 @@ void ActionPickFillFigure::Execute()
 					Fig->Hide();
 					pManager->UpdateInterface();
 					Fig = NULL;
-				}
+
+				}				
 			}
-			else 
+			else
 			{
 				break;
 			}
-			AllCounter++;
 		}
 		pManager->ShowAllFigures();
 		pManager->UpdateInterface();
-		pGUI->PrintMessage("Congratulation , EndGame "+ to_string(correct) + " Correct & " + to_string(incorrect) + " InCorrect");
+		CalacScore(correct, incorrect);
+		
 	}
 
 	pGUI->RemoveButtonHighlight(ITM_SELECT_FILL);
+
 }
 
 
 void  ActionPickFillFigure::PrintGameMessg(int type ,GUI* pGUI) {
 	
 	if (type == 0)
-		pGUI->PrintMessage("Please Draw some Filled shapes !");
+		pGUI->PrintMessage("You must have at least two filled figures to play ! ");
 
 	else  if (type == 1)
-		
 		pGUI->PrintMessage("Pick all Blue shapes !");
 
 	else if (type == 2)
@@ -137,6 +154,7 @@ void  ActionPickFillFigure::PrintGameMessg(int type ,GUI* pGUI) {
 
 	else if (type == 5)
 		pGUI->PrintMessage("Pick all Red shapes !");
+
 	else if (type == 6)
 		pGUI->PrintMessage("Pick all SandyBrown shapes!");
 
@@ -148,17 +166,15 @@ void  ActionPickFillFigure::PrintGameMessg(int type ,GUI* pGUI) {
 
 	else if (type == 9)
 		pGUI->PrintMessage("Pick all Violet shapes !");
+
 	else if (type == 10)
 		pGUI->PrintMessage("Pick all Cyan shapes !");
 
 	else if (type == 11)
 		pGUI->PrintMessage("Pick all YELLOWGREEN shapes !");
 
-	
-
 }
 bool ActionPickFillFigure::IsEqualColor(color &a ,color &b) {
-
 
 	return a.ucRed == b.ucRed && a.ucBlue == b.ucBlue && a.ucGreen == b.ucGreen;
 }

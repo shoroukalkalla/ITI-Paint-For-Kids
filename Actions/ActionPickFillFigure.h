@@ -14,8 +14,9 @@ class ActionPickFillFigure : public Action
 	int incorrect = 0;
 	int Result;
 	void ReadActionParameters();
-	void messagePrint(bool);
+	void CalacScore(int correct, int incorrect);
 
+	
 public:
 	ActionPickFillFigure(ApplicationManager* pApp);
 	void PrintGameMessg(int type, GUI* pGUI);
