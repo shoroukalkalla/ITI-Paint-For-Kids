@@ -127,11 +127,12 @@ void ActionPickTypeFigure::Execute()
 			{
 				pGUI->GetPointClicked(p.x, p.y);
 				
-				if (p.y > UI.ToolBarHeight || p.x > (UI.MenuItemWidth * PLAY_ITM_COUNT))
-				{
-					clickedFig = pManager->GetFigure(p.x, p.y);
+				clickedFig = pManager->GetFigure(p.x, p.y);
 
-					if (clickedFig != NULL)
+				if (clickedFig != NULL)
+				{
+
+					if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
 					{
 
 						if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(Fig)))
@@ -164,22 +165,24 @@ void ActionPickTypeFigure::Execute()
 					}
 					else
 					{
-						pGUI->PrintMessage("Toolbar clicked, game aborted.");
-						picked_fig_no = -1;
+						calcScore(2);
+						//pManager->Loop(clickedFig);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
 					}
-				
 				}
-
+				else
+				{
+					pGUI->PrintMessage("Toolbar clicked, game aborted.");
+					picked_fig_no = -1;
+				}
 			}
-
 
 			if (picked_fig_no == 0)
 			{
 				calcScore(3);
 			}
 		}
-
-
 	}
 	else
 	{

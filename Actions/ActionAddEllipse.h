@@ -1,18 +1,17 @@
 #ifndef ACTION_ADD_ELLIPSE_H
 #define ACTION_ADD_ELLIPSE_H
 
-#include "Action.h"
+#include "ActionAddFigure.h"
 #include "..\GUI\GUI.h"
 
 
-class ActionAddEllipse : public Action
+class ActionAddEllipse : public ActionAddFigure
 {
-	GUI* pGUI;
 public:
 	ActionAddEllipse(ApplicationManager* pApp);
 
-	//Add Ellipse to the gApplicationManager
-	virtual void Execute();
+	virtual int GetMenuItemIndex();
+	virtual void AddFigure();
 	void CreateFigure(Point topLeft, Point bottomRight, GfxInfo SqrGfxInfo);
 	void Load(ifstream& input);
 };

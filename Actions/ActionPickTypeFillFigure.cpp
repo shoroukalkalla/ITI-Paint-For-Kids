@@ -352,18 +352,29 @@ void ActionPickTypeFillFigure::randomShape(color& c)
     }
 
 }
+
 bool ActionPickTypeFillFigure::IsEqualColor(color& a, color& b) {
-
-
     return a.ucRed == b.ucRed && a.ucBlue == b.ucBlue && a.ucGreen == b.ucGreen;
 }
+
 void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
 {
     GUI* pGUI = pManager->GetGUI();
+
+    pGUI->HighlightButton(ITM_SELECT_TYPE_FILL);
+
     while (randomShapeCount > 0)
     {
         pGUI->GetPointClicked(p.x, p.y);
-        if (p.y > UI.ToolBarHeight || p.x > (UI.MenuItemWidth * PLAY_ITM_COUNT))
+        clickedFig = pManager->GetFigure(p.x, p.y);
+        if (clickedFig == NULL) {
+            pGUI->PrintMessage(" game aborted.");
+            showShapes();
+            pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
+            return;
+        }
+        clickedFigColor = clickedFig->getFilledColor();
+        if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
         {
             clickedFig = pManager->GetFigure(p.x, p.y);
             if (!clickedFig) {
@@ -417,7 +428,9 @@ void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
                 pGUI->PrintMessage(Message);
             }
         }
+
     }
+    pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
 }
 void ActionPickTypeFillFigure::hideshape()
 {

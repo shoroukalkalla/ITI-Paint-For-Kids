@@ -49,7 +49,7 @@ void ApplicationManager::Run()
 		//4- Update the interface
 		UpdateInterface();
 
-	} while(ActType != EXIT);
+	} while(true /*ActType != EXIT*/);
 	
 }
 
@@ -154,7 +154,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case EXIT:
-			///create ExitAction here
+			ShowConfirmMessage();
 			break;
 					
 		case STATUS:	//a click on the status bar ==> no action
@@ -345,6 +345,31 @@ void ApplicationManager::SendToBack(int selectedIndex) {
 		FigList[i] = FigList[i - 1];
 
 	FigList[0] = SelectedFigure;
+}
+
+void ApplicationManager::ShowAllFigures()
+{
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i]->IsFigFilled()) {
+			FigList[i]->Show();
+		}
+	}
+}
+
+int ApplicationManager::ShowConfirmMessage()
+{
+	int msgboxID = MessageBox(
+		NULL,
+		"Are you sure?\nMake sure your graph is saved!",
+		"Exit",
+		MB_OKCANCEL | MB_DEFBUTTON2 | MB_ICONWARNING
+	);
+
+	if (msgboxID == IDOK) {
+		exit(0);
+	}
+
+	return msgboxID;
 }
 
 

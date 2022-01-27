@@ -62,7 +62,3 @@ void CHexagon::Save(ofstream& OutFile) {
 		}
 	}
 }
-
-void CHexagon::Load(ifstream& Infile) {
-
-}

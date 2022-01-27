@@ -6,65 +6,56 @@
 
 #include <fstream>
 
-ActionAddSquare::ActionAddSquare(ApplicationManager * pApp):Action(pApp)
+ActionAddSquare::ActionAddSquare(ApplicationManager * pApp) : ActionAddFigure(pApp)
+{ }
+
+int ActionAddSquare::GetMenuItemIndex()
 {
-	pGUI = pApp->GetGUI();
+	return ITM_SQUR;
 }
 
-//Execute the action
-void ActionAddSquare::Execute() 
+void ActionAddSquare::AddFigure()
 {
 	Point P1,P2;
 
-	pGUI->HighlightButton(ITM_SQUR);
-
-	GfxInfo SqrGfxInfo;
-	SqrGfxInfo.isFilled = pGUI->getCrntIsFilled();	//default is not filled
-	//get drawing, filling colors and pen width from the interface
-	SqrGfxInfo.DrawClr = pGUI->getCrntDrawColor();
-	SqrGfxInfo.FillClr = pGUI->getCrntFillColor();
-	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
+	GfxInfo figGfxInfo;
+	InitGfxInfo(figGfxInfo);
 
 	//Step 1 - Read Square data from the user
 
-	pGUI->PrintMessage("New Square: Click at first point");	
 	//Read 1st point and store in point P1
-	do {
-		pGUI->GetPointClicked(P1.x, P1.y);
-	} while (!pGUI->isInsideDrawingArea(P1.x, P1.y));
+	ReadPoint(P1.x, P1.y, "New Square: Click at first point", true);
 
-	// Highlight the point clicked
-	pGUI->drawPoint(P1.x, P1.y);
-
-	pGUI->PrintMessage("New Square: Click at second point");
 	//Read 2nd point and store in point P2
-	do {
-		pGUI->GetPointClicked(P2.x, P2.y);
-	} while (!pGUI->isInsideDrawingArea(P2.x, P2.y));
-
-	pGUI->ClearStatusBar();
-
+	ReadPoint(P2.x, P2.y, "New Square: Click at second point", false);
 
 	//Step 2 - prepare square data
 	//User has entered two points P1&P2
-	//2.1- Identify the Top left corner of the square
+	//2.1. Identify the Top left corner of the square
 	Point topLeft ;
 	topLeft.x = min(P1.x, P2.x);
 	topLeft.y = min(P1.y, P2.y);
 
-	//2.2- Calcuate square side legnth
+	//2.2. Calcuate square side legnth
 	//The square side length would be the longer distance between the two points coordinates
 	int SideLength = max(abs(P1.x-P2.x), abs(P1.y-P2.y));
 
-	CreateFigure(topLeft, SideLength, SqrGfxInfo);
+	int bottomRightX = topLeft.x + SideLength;
+	int bottomRightY = topLeft.y + SideLength;
 
-	pGUI->RemoveButtonHighlight(ITM_SQUR);
+	if (pGUI->isInsideDrawingArea(topLeft.x, topLeft.y) &&
+		pGUI->isInsideDrawingArea(bottomRightX, bottomRightY)){
+		CreateFigure(topLeft, SideLength, figGfxInfo);
+	}
+	else {
+		pGUI->PrintMessage("Can't draw outsite the drawing area!");
+	}
 }
 
-void ActionAddSquare::CreateFigure(Point topLeft, int SideLength, GfxInfo SqrGfxInfo)
+void ActionAddSquare::CreateFigure(Point topLeft, int SideLength, GfxInfo figGfxInfo)
 {
 	//Step 3 - Create a Square with the parameters read from the user
-	CSquare* squere = new CSquare(topLeft, SideLength, SqrGfxInfo);
+	CSquare* squere = new CSquare(topLeft, SideLength, figGfxInfo);
 
 	//Step 4 - Add the Square to the list of figures
 	pManager->AddFigure(squere);
@@ -78,22 +69,22 @@ void ActionAddSquare::Load(ifstream& input)
 
 	Point topLeft;
 	int SideLength;
-	GfxInfo SqrGfxInfo;
-	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
+	GfxInfo figGfxInfo;
+	figGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
 
 	input >> topLeft.x >> topLeft.y >> SideLength;
 
 	int drawC[3];
 	input >> drawC[0] >> drawC[1] >> drawC[2];
-	SqrGfxInfo.DrawClr = color((char)drawC[0], (char)drawC[1], (char)drawC[2]);
+	figGfxInfo.DrawClr = color((char)drawC[0], (char)drawC[1], (char)drawC[2]);
 
-	input >> SqrGfxInfo.isFilled;
+	input >> figGfxInfo.isFilled;
 
-	if (SqrGfxInfo.isFilled) {
+	if (figGfxInfo.isFilled) {
 		int fillC[3];
 		input >> fillC[0] >> fillC[1] >> fillC[2];
-		SqrGfxInfo.FillClr = color((char)fillC[0], (char)fillC[1], (char)fillC[2]);
+		figGfxInfo.FillClr = color((char)fillC[0], (char)fillC[1], (char)fillC[2]);
 	}
 
-	CreateFigure(topLeft, SideLength, SqrGfxInfo);
+	CreateFigure(topLeft, SideLength, figGfxInfo);
 }

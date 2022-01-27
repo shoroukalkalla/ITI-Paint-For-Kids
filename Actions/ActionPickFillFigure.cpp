@@ -9,7 +9,6 @@
 //class GUI;
 ActionPickFillFigure::ActionPickFillFigure(ApplicationManager* pApp) :Action(pApp)
 {
-
 }
 
 void ActionPickFillFigure::ReadActionParameters()
@@ -108,11 +107,6 @@ void ActionPickFillFigure::Execute()
 					}
 					
 					if (Result==0) {
-						for (int i = 0; i < pManager->getFigCount(); i++)
-						{
-							pManager->DrawnFigs(i)->Show();
-						}
-						pManager->UpdateInterface();
 						break;
 					}
 

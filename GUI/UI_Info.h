@@ -17,11 +17,6 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 {
 	//Note: Items are ordered here as they appear in menu
 	//If you want to change the menu items order, change the order here
-	//ITM_CLR_BLUE,		//Select Blue Color in the menu
-	//ITM_CLR_CYAN,		//Select Cyan Color in the menu
-	//ITM_CLR_GREEN,		//Select Green Color in the menu
-	//ITM_CLR_RED,		//Select Red Color in the menu
-
 	ITM_SQUR,		//Square item in menu
 	ITM_ELPS,		//Ellipse item in menu
 	ITM_HEX,		//Hexagon item in menu
@@ -81,10 +76,6 @@ enum PlayMenuItem //The items of the Play menu (you should add more items)
 
 	PLAY_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 };
-
-
-
-
 
 __declspec(selectany) //This line to prevent "redefinition error"
 
