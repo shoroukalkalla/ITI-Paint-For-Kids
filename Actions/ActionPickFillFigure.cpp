@@ -15,7 +15,8 @@ void ActionPickFillFigure::ReadActionParameters()
 {
 	//Get a Pointer to the Input Interfaces
 	GUI* pGUI = pManager->GetGUI();
-	pGUI->GetPointClicked(p.x, p.y); //Get user's click
+	 //Get user's click
+	pGUI->GetPointClicked(p.x, p.y);
 }
 
 int ActionPickFillFigure::Random_Color(int& Result)
@@ -38,26 +39,24 @@ int ActionPickFillFigure::Random_Color(int& Result)
 		return pManager->GetColorIndex(c);
 	}
 	
-	return 0;
+	
 }
 
 void ActionPickFillFigure::CalacScore(int correct, int incorrect)
 {
 	GUI* pGUI = pManager->GetGUI();
 
-	if (correct > incorrect)
+	if ( correct > incorrect )
 	{
 		pGUI->PrintMessage("Well done You win !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
 	}
 	else if (correct == incorrect && correct != 0)
 	{
-		pGUI->PrintMessage("Try again it's Draw !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
+		pGUI->PrintMessage("Try again , Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
 	}
 	else if (correct < incorrect)
 	{
 		pGUI->PrintMessage("Hard Luke you lose !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
-	}else{
-		Execute();
 	}
 }
 
@@ -79,7 +78,6 @@ void ActionPickFillFigure::Execute()
 	{
 		int actualFigCount= pManager->getFigCount();
 		int i;
-		int Res= Result;
 		int correct = 0;
 		int incorrect = 0;
 		for (i = 0; i < actualFigCount; )
@@ -87,10 +85,22 @@ void ActionPickFillFigure::Execute()
 			if (Result == 0)
 				break;
 
-			ReadActionParameters();
+			
+			
+			
+				
+			/*if (Fig == NULL) {
+				pGUI->PrintMessage(" game aborted.");
+				showShapes();
+				pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
+				return;
 
-			if (pGUI->isInsideDrawingArea(p.x,p.y) )
-			{
+			}*/
+			
+			
+			/*if (pGUI->isInsideDrawingArea(p.x,p.y) )
+			{*/
+			ReadActionParameters();
 				Fig = pManager->GetFigure(p.x, p.y);
 
 				if (Fig != NULL)
@@ -100,33 +110,37 @@ void ActionPickFillFigure::Execute()
 					if (Fig->IsFigFilled() && IsEqualColor(Fig->getFilledColor(), c))
 					{
 						correct++;
+						hideshape();
 						pGUI->PrintMessage("Right!, Your score is : " + to_string(correct) + " Right, and " + to_string(incorrect) + " Wrong.");
 						Result--;
+
+
 					}
 					else {
 						incorrect++;
+						hideshape();
 						pGUI->PrintMessage("Wrong!, Your score is : " + to_string(correct) + " Right, and " + to_string(incorrect) + " Wrong.");
 
 					}
 					
 					if (Result==0) {
+						showShapes();
+						pManager->UpdateInterface();
+						CalacScore(correct, incorrect);
+				
 						break;
 					}
 
-					Fig->Hide();
+					/*hideshape();*/
 					pManager->UpdateInterface();
 					Fig = NULL;
+				
 
-				}				
-			}
-			else
-			{
-				break;
-			}
+				}	
+			
+			
 		}
-		pManager->ShowAllFigures();
-		pManager->UpdateInterface();
-		CalacScore(correct, incorrect);
+		
 		
 	}
 
@@ -134,7 +148,19 @@ void ActionPickFillFigure::Execute()
 
 }
 
+void ActionPickFillFigure::hideshape()
+{
+	Fig->Hide();
+	pManager->UpdateInterface();
 
+}
+void ActionPickFillFigure::showShapes()
+{
+	for (int i = 0; i < pManager->getFigCount(); i++) {
+		pManager->DrawnFigs(i)->Show();
+	}
+	pManager->UpdateInterface();
+}
 void  ActionPickFillFigure::PrintGameMessg(int type ,GUI* pGUI) {
 	
 	if (type == 0)
