@@ -3,32 +3,24 @@
 
 
 #include "Action.h"
+#include "..\Figures\CFigure.h"
 #include "..\ApplicationManager.h"
 
 class ActionPickFillFigure : public Action
 {
 	CFigure* Fig;
-	CFigure* pickFigureInfo;
 	Point p;
-	int correct = 0;
-	int incorrect = 0;
-	int Result;
-	int Res;
-	void ReadActionParameters();
-	void CalacScore(int correct, int incorrect);
-	void hideshape();
-	void showShapes();
+	int  no_colors, rand_fig_no, picked_color_no, wrongSelect, rightSelect;
+	int colors[12];
+
+	color coloreSelected(CFigure*);
+	void calcScore(int);
+	void GetFilledShape();
 	
 public:
 	ActionPickFillFigure(ApplicationManager* pApp);
-	void PrintGameMessg(int type, GUI* pGUI);
-	bool IsEqualColor(color& a, color& b);
-	int Random_Color(int&);
-
-
-
 	virtual void Execute();
-
+	~ActionPickFillFigure();
 };
 
 #endif

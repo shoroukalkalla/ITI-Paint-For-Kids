@@ -10,12 +10,10 @@ class ActionPickTypeFigure : public Action
 	int  no_figs, rand_fig_no, picked_fig_no, wrongSelect, rightSelect;
 	int figs[3];
 	void calcScore(int);
-	void ReadParameters();
+	void GetShape();
 
 public:
 	ActionPickTypeFigure(ApplicationManager* pApp);
-
 	virtual void Execute();
-
 	~ActionPickTypeFigure();
 };

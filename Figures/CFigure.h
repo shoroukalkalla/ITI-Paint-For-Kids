@@ -56,7 +56,7 @@ public:
 	void Hide();
 	void Show();
 	bool HiddenStatus();			//Shows Current Figure status in playmode.
-
+	GfxInfo CFigure::GetGfxInfo();
 
 	//
 	void SetFigInfo();

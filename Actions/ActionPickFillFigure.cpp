@@ -1,206 +1,289 @@
 #include "ActionPickFillFigure.h"
 #include "..\ApplicationManager.h"
+#include "..\CMUgraphicsLib\colors.cpp" 
 #include "..\GUI\GUI.h"
 #include "..\Figures\CEllipse.h"
 #include "..\Figures\CSquare.h"
 #include "..\Figures\CHexagon.h"
 #include "..\Figures\CFigure.h"
 
-//class GUI;
 ActionPickFillFigure::ActionPickFillFigure(ApplicationManager* pApp) :Action(pApp)
 {
-}
+	no_colors = 0;
+	rightSelect = 0;
+	wrongSelect = 0;
 
-void ActionPickFillFigure::ReadActionParameters()
-{
-	//Get a Pointer to the Input Interfaces
-	GUI* pGUI = pManager->GetGUI();
-	 //Get user's click
-	pGUI->GetPointClicked(p.x, p.y);
-}
-
-int ActionPickFillFigure::Random_Color(int& Result)
-{
-	GUI* pGUI = pManager->GetGUI();
-	int FigCount = pManager->getFigCount();				 // number of figer
-	int figureFillCount = pManager->GetFilledFigCount(); // number of filled figer
-
-	if (FigCount != 0 && figureFillCount >= 2)
+	for (int i = 0; i < 12; i++)
 	{
-		color* colors= pManager->GetFilledFigColor(); //return colors arr
-		int RandIndex = rand() % figureFillCount;     //rand fig fill 
-		color c = colors[RandIndex];
+		colors[i] = 0;		// set all elemente with 0
+	}
+}
 
-		for (int i = 0; i < FigCount; i++)
+color ActionPickFillFigure::coloreSelected(CFigure* Fig)
+{
+	if (Fig->GetGfxInfo().isFilled)
+	{
+		if (Fig->GetGfxInfo().FillClr == ROYALBLUE)
+			return ROYALBLUE;
+		else if (Fig->GetGfxInfo().FillClr == CADETBLUE)
+			return CADETBLUE;
+		else if (Fig->GetGfxInfo().FillClr == LIGHTSEAGREEN)
+			return LIGHTSEAGREEN;
+		else if (Fig->GetGfxInfo().FillClr == MEDIUMBLUE)
+			return MEDIUMBLUE;
+		else if (Fig->GetGfxInfo().FillClr == INDIAN)
+			return INDIAN;
+		else if (Fig->GetGfxInfo().FillClr == SANDYBROWN)
+			return SANDYBROWN;
+		else if (Fig->GetGfxInfo().FillClr == SALMON)
+			return SALMON;
+		else if (Fig->GetGfxInfo().FillClr == ORANGERED)
+			return ORANGERED;
+		else if (Fig->GetGfxInfo().FillClr == PALEVIOLETRED)
+			return PALEVIOLETRED;
+		else if (Fig->GetGfxInfo().FillClr == DARKCYAN)
+			return DARKCYAN;
+		else if (Fig->GetGfxInfo().FillClr == YELLOWGREEN)
+			return YELLOWGREEN;
+	}
+	return BLACK;
+}
+
+//Calculate the Score
+void ActionPickFillFigure::calcScore(int num)
+{
+	//Get a Pointer to the Interface
+	GUI* pGUI = pManager->GetGUI();
+
+	//
+	string Message;
+
+	if (num == 1)
+	{
+		rightSelect++;
+		Message = "Right!, Your score is: " + to_string(rightSelect) + " Right, and " + to_string(wrongSelect) + " Wrong.";
+	}
+	else if (num == 2)
+	{
+		wrongSelect++;
+		Message = "Wrong!, Your score is: " + to_string(rightSelect) + " Right, and " + to_string(wrongSelect) + " Wrong.";
+	}
+	else
+	{
+		if (rightSelect > wrongSelect)
 		{
-			if (IsEqualColor(pManager->DrawnFigs(i)->getFilledColor(), c))
-				Result++;
+			Message = "Well done You win!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
 		}
-		return pManager->GetColorIndex(c);
+		else if (rightSelect == wrongSelect)
+		{
+			Message = "Try again it's Draw!, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+		}
+		else
+		{
+			Message = "Hard Luke you lose !, Your score is : " + to_string(rightSelect) + " Right, and : " + to_string(wrongSelect) + " Wrong.";
+		}
+
 	}
-	
-	
+
+	pGUI->PrintMessage(Message);
+
+
 }
 
-void ActionPickFillFigure::CalacScore(int correct, int incorrect)
+void ActionPickFillFigure::GetFilledShape()
 {
-	GUI* pGUI = pManager->GetGUI();
+	for (int i = 0; i < pManager->getFigCount(); i++) {
+		Fig = pManager->DrawnFigs(i);
 
-	if ( correct > incorrect )
-	{
-		pGUI->PrintMessage("Well done You win !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
+		// counting colors exists
+		if (Fig->GetGfxInfo().isFilled)
+		{
+			if (Fig->GetGfxInfo().FillClr == ROYALBLUE)
+				colors[0]++;
+			else if (Fig->GetGfxInfo().FillClr == CADETBLUE)
+				colors[1]++;
+			else if (Fig->GetGfxInfo().FillClr == LIGHTSEAGREEN)
+				colors[2]++;
+			else if (Fig->GetGfxInfo().FillClr == MEDIUMBLUE)
+				colors[3]++;
+			else if (Fig->GetGfxInfo().FillClr == INDIAN)
+				colors[4]++;
+			else if (Fig->GetGfxInfo().FillClr == SANDYBROWN)
+				colors[5]++;
+			else if (Fig->GetGfxInfo().FillClr == SALMON)
+				colors[6]++;
+			else if (Fig->GetGfxInfo().FillClr == ORANGERED)
+				colors[7]++;
+			else if (Fig->GetGfxInfo().FillClr == PALEVIOLETRED)
+				colors[8]++;
+			else if (Fig->GetGfxInfo().FillClr == DARKCYAN)
+				colors[9]++;
+			else if (Fig->GetGfxInfo().FillClr == YELLOWGREEN)
+				colors[10]++;
+		}
+		else
+		{
+			colors[11]++;
+		}
 	}
-	else if (correct == incorrect && correct != 0)
-	{
-		pGUI->PrintMessage("Try again , Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
-	}
-	else if (correct < incorrect)
-	{
-		pGUI->PrintMessage("Hard Luke you lose !, Your score is : " + to_string(correct) + " Right, and : " + to_string(incorrect) + " Wrong.");
-	}
+
+	for (int i = 0; i < 11; i++)
+		if (colors[i] != 0)
+		{
+			no_colors++;
+		}
 }
-
 
 void ActionPickFillFigure::Execute()
 {
+	//Get a Pointer to the Interface
 	GUI* pGUI = pManager->GetGUI();
-	Result = 0;
 
 	pGUI->HighlightButton(ITM_SELECT_FILL);
-	
-	int colorIndex = Random_Color(Result);
-	
-	color c = pGUI->getColorFromPallet(colorIndex);
-	
-	PrintGameMessg(colorIndex ,pGUI);
 
-	if (colorIndex != 0)
+	pGUI->ClearStatusBar();
+
+	GetFilledShape();
+
+	if (no_colors > 1)
 	{
-		int actualFigCount= pManager->getFigCount();
-		int i;
-		int correct = 0;
-		int incorrect = 0;
-		for (i = 0; i < actualFigCount; )
+		CFigure* clickedFig;
+
+		// get random number in the range 0 to figCount
+		rand_fig_no = rand() % pManager->getFigCount();
+
+		//Counting the the color instances.
+		Fig = pManager->DrawnFigs(rand_fig_no);
+
+		if (Fig->GetGfxInfo().isFilled)
 		{
-			if (Result == 0)
-				break;
-
-			
-			
-			
-				
-			/*if (Fig == NULL) {
-				pGUI->PrintMessage(" game aborted.");
-				showShapes();
-				pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
-				return;
-
-			}*/
-			
-			
-			/*if (pGUI->isInsideDrawingArea(p.x,p.y) )
-			{*/
-			ReadActionParameters();
-				Fig = pManager->GetFigure(p.x, p.y);
-
-				if (Fig != NULL)
-				{
-					i++;
-
-					if (Fig->IsFigFilled() && IsEqualColor(Fig->getFilledColor(), c))
-					{
-						correct++;
-						hideshape();
-						pGUI->PrintMessage("Right!, Your score is : " + to_string(correct) + " Right, and " + to_string(incorrect) + " Wrong.");
-						Result--;
-
-
-					}
-					else {
-						incorrect++;
-						hideshape();
-						pGUI->PrintMessage("Wrong!, Your score is : " + to_string(correct) + " Right, and " + to_string(incorrect) + " Wrong.");
-
-					}
-					
-					if (Result==0) {
-						showShapes();
-						pManager->UpdateInterface();
-						CalacScore(correct, incorrect);
-				
-						break;
-					}
-
-					/*hideshape();*/
-					pManager->UpdateInterface();
-					Fig = NULL;
-				
-
-				}	
-			
-			
+			if (Fig->GetGfxInfo().FillClr == ROYALBLUE)
+			{
+				picked_color_no = colors[0];
+				pGUI->PrintMessage("Pick all ROYALBLUE shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == CADETBLUE)
+			{
+				picked_color_no = colors[1];
+				pGUI->PrintMessage("Pick all CADETBLUE shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == LIGHTSEAGREEN)
+			{
+				picked_color_no = colors[2];
+				pGUI->PrintMessage("Pick all LIGHTSEAGREEN shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == MEDIUMBLUE)
+			{
+				picked_color_no = colors[3];
+				pGUI->PrintMessage("Pick all MEDIUMBLUE shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == INDIAN)
+			{
+				picked_color_no = colors[4];
+				pGUI->PrintMessage("Pick all INDIAN shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == SANDYBROWN)
+			{
+				picked_color_no = colors[5];
+				pGUI->PrintMessage("Pick all SANDYBROWN shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == SALMON)
+			{
+				picked_color_no = colors[6];
+				pGUI->PrintMessage("Pick all SALMON shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == ORANGERED)
+			{
+				picked_color_no = colors[7];
+				pGUI->PrintMessage("Pick all ORANGERED shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == PALEVIOLETRED)
+			{
+				picked_color_no = colors[8];
+				pGUI->PrintMessage("Pick all PALEVIOLETRED shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == DARKCYAN)
+			{
+				picked_color_no = colors[9];
+				pGUI->PrintMessage("Pick all DARKCYAN shapes !");
+			}
+			else if (Fig->GetGfxInfo().FillClr == YELLOWGREEN)
+			{
+				picked_color_no = colors[10];
+				pGUI->PrintMessage("Pick all YELLOWGREEN shapes !");
+			}
 		}
-		
-		
+		else
+		{
+			picked_color_no = colors[11];
+			pGUI->PrintMessage("Pick all UNFILLED shapes !");
+		}
+
+
+		while (picked_color_no > 0)
+		{
+			pGUI->GetPointClicked(p.x, p.y);
+			
+			if (p.y > UI.ToolBarHeight || p.x > (UI.MenuItemWidth * PLAY_ITM_COUNT))
+			{
+				clickedFig = pManager->GetFigure(p.x, p.y);
+				if (clickedFig != NULL)
+				{
+					// unfilled shape
+					if (!(Fig->GetGfxInfo().isFilled) && !(clickedFig->GetGfxInfo().isFilled )) 
+					{
+						calcScore(1);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_color_no--;
+					}
+
+					// filled color with specific color
+					else if (clickedFig->GetGfxInfo().isFilled && clickedFig->GetGfxInfo().FillClr == coloreSelected(Fig))
+					{
+						calcScore(1);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+						picked_color_no--;
+					}
+					else
+					{
+						calcScore(2);
+						clickedFig->Hide();
+						pManager->UpdateInterface();
+					}
+				}
+			}
+			else {
+				picked_color_no = -1;
+				pGUI->ClearStatusBar();
+			}
+		}
+
+		//end Clicked
+		if (picked_color_no == 0)
+		{
+			calcScore(3);
+		}
 	}
+	
+	else 
+	{
+		pGUI->PrintMessage("You must have at least two filled figures to play ! ");
+	}
+
+	for (int i = 0; i < pManager->getFigCount(); i++)
+	{
+		pManager->DrawnFigs(i)->Show();
+	}
+
+	pManager->UpdateInterface();
 
 	pGUI->RemoveButtonHighlight(ITM_SELECT_FILL);
 
-}
-
-void ActionPickFillFigure::hideshape()
-{
-	Fig->Hide();
-	pManager->UpdateInterface();
 
 }
-void ActionPickFillFigure::showShapes()
-{
-	for (int i = 0; i < pManager->getFigCount(); i++) {
-		pManager->DrawnFigs(i)->Show();
-	}
-	pManager->UpdateInterface();
-}
-void  ActionPickFillFigure::PrintGameMessg(int type ,GUI* pGUI) {
-	
-	if (type == 0)
-		pGUI->PrintMessage("You must have at least two filled figures to play ! ");
 
-	else  if (type == 1)
-		pGUI->PrintMessage("Pick all Blue shapes !");
-
-	else if (type == 2)
-		pGUI->PrintMessage("Pick all SkyBlue shapes!");
-
-	else if (type == 3)
-		pGUI->PrintMessage("Pick all Green shapes !");
-
-	else if (type == 4)
-		pGUI->PrintMessage("Pick all DarkBlue shapes !");
-
-	else if (type == 5)
-		pGUI->PrintMessage("Pick all Red shapes !");
-
-	else if (type == 6)
-		pGUI->PrintMessage("Pick all SandyBrown shapes!");
-
-	else if (type == 7)
-		pGUI->PrintMessage("Pick all Brown shapes !");
-
-	else if (type == 8)
-		pGUI->PrintMessage("Pick all Orange shapes !");
-
-	else if (type == 9)
-		pGUI->PrintMessage("Pick all Violet shapes !");
-
-	else if (type == 10)
-		pGUI->PrintMessage("Pick all Cyan shapes !");
-
-	else if (type == 11)
-		pGUI->PrintMessage("Pick all YELLOWGREEN shapes !");
-
-}
-bool ActionPickFillFigure::IsEqualColor(color &a ,color &b) {
-
-	return a.ucRed == b.ucRed && a.ucBlue == b.ucBlue && a.ucGreen == b.ucGreen;
+ActionPickFillFigure::~ActionPickFillFigure() {
+	//
 }

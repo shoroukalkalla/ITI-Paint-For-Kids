@@ -60,7 +60,7 @@ void ActionPickTypeFigure::calcScore(int num)
 
 }
 
-void ActionPickTypeFigure::ReadParameters()
+void ActionPickTypeFigure::GetShape()
 {
 	for (int i = 0; i < pManager->getFigCount(); i++)
 	{
@@ -71,7 +71,6 @@ void ActionPickTypeFigure::ReadParameters()
 			figs[1]++;
 		else if (dynamic_cast<CHexagon*>(Fig))
 			figs[2]++;
-		//else figs[3]++;
 	}		
 	
 	for (int i = 0; i < 3; i++)
@@ -91,7 +90,7 @@ void ActionPickTypeFigure::Execute()
 
 	pGUI->ClearStatusBar();
 
-	ReadParameters();
+	GetShape();
 
 	if (no_figs > 1)
 	{
@@ -124,9 +123,9 @@ void ActionPickTypeFigure::Execute()
 
 		while (picked_fig_no > 0)
 		{
+			pGUI->GetPointClicked(p.x, p.y);
+			if (p.y > UI.ToolBarHeight || p.x > (UI.MenuItemWidth * PLAY_ITM_COUNT))
 			{
-				pGUI->GetPointClicked(p.x, p.y);
-				
 				clickedFig = pManager->GetFigure(p.x, p.y);
 
 				if (clickedFig != NULL)
@@ -162,13 +161,19 @@ void ActionPickTypeFigure::Execute()
 				
 				}
 			}
-
-			if (picked_fig_no == 0)
+			else
 			{
-				calcScore(3);
+				picked_fig_no = -1;
+				pGUI->ClearStatusBar();
 			}
 		}
+		// end Clicked
+		if (picked_fig_no == 0)
+		{
+			calcScore(3);
+		}
 	}
+
 	else
 	{
 		pGUI->PrintMessage("You must have at least two types of figures to play ! ");
@@ -182,7 +187,6 @@ void ActionPickTypeFigure::Execute()
 
 	pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE);
 }
-
 
 ActionPickTypeFigure::~ActionPickTypeFigure() {
 	//

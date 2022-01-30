@@ -9,11 +9,12 @@
 
 ActionPickTypeFillFigure::ActionPickTypeFillFigure(ApplicationManager* pApp) :Action(pApp)
 {
-	for (int i = 0; i < 33; i++)
+	for (int i = 0; i < 36; i++)
 	{
 		combinations[i] = 0;
 	}
 }
+
 void ActionPickTypeFillFigure::messagePrint(bool message)
 {
 	//Get a Pointer to the Interface
@@ -27,14 +28,14 @@ void ActionPickTypeFillFigure::messagePrint(bool message)
 
 
 }
-void ActionPickTypeFillFigure::ReadActionParameters()
+
+void ActionPickTypeFillFigure::GetFilledTypeShape()
 {
     GUI* pGUI = pManager->GetGUI();
     for (int i = 0; i < pManager->getFigCount(); i++) {
         Fig = pManager->DrawnFigs(i);
         if (Fig->IsFigFilled()) //counts combinations occurance.
         {
-
             if (IsEqualColor(Fig->getFilledColor(), pGUI->getColorFromPallet(1)))
             {
                 if (dynamic_cast<CSquare*>(Fig))
@@ -135,8 +136,18 @@ void ActionPickTypeFillFigure::ReadActionParameters()
                     combinations[32]++;
             }
         }
+        else
+        {
+            if (dynamic_cast<CSquare*>(Fig))
+                combinations[33]++;
+            else if (dynamic_cast<CHexagon*>(Fig))
+                combinations[34]++;
+            else
+                combinations[35]++;
+        }
     }
 }
+
 void ActionPickTypeFillFigure::randomShape(color& c)
 {
     GUI* pGUI = pManager->GetGUI();
@@ -152,17 +163,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[0];
-                pGUI->PrintMessage("Pick all Blue square !");
+                pGUI->PrintMessage("Pick all ROYALBLUE square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[1];
-                pGUI->PrintMessage("Pick all Blue Hexagon !");
+                pGUI->PrintMessage("Pick all ROYALBLUE Hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[2];
-                pGUI->PrintMessage("Pick all Blue ellipse !");
+                pGUI->PrintMessage("Pick all ROYALBLUE ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(2)))
@@ -170,17 +181,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[3];
-                pGUI->PrintMessage("Pick all SkyBlue square!");
+                pGUI->PrintMessage("Pick all CADETBLUE square!");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[4];
-                pGUI->PrintMessage("Pick all SkyBlue hexagon!");
+                pGUI->PrintMessage("Pick all CADETBLUE hexagon!");
             }
             else
             {
                 picked_fig_no = combinations[5];
-                pGUI->PrintMessage("Pick all SkyBlue ellipse !");
+                pGUI->PrintMessage("Pick all CADETBLUE ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(3)))
@@ -188,17 +199,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[6];
-                pGUI->PrintMessage("Pick all Green square !");
+                pGUI->PrintMessage("Pick all LIGHTSEAGREEN square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[7];
-                pGUI->PrintMessage("Pick all Green hexagon !");
+                pGUI->PrintMessage("Pick all LIGHTSEAGREEN hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[8];
-                pGUI->PrintMessage("Pick all Green ellipse !");
+                pGUI->PrintMessage("Pick all LIGHTSEAGREEN ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(4)))
@@ -206,17 +217,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[9];
-                pGUI->PrintMessage("Pick all DarkBlue square !");
+                pGUI->PrintMessage("Pick all MEDIUMBLUE square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[10];
-                pGUI->PrintMessage("Pick all DarkBlue hexagon !");
+                pGUI->PrintMessage("Pick all MEDIUMBLUE hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[11];
-                pGUI->PrintMessage("Pick all DarkBlue ellipse !");
+                pGUI->PrintMessage("Pick all MEDIUMBLUE ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(5)))
@@ -224,17 +235,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[12];
-                pGUI->PrintMessage("Pick all Red square !");
+                pGUI->PrintMessage("Pick all INDIAN square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[13];
-                pGUI->PrintMessage("Pick all Red hexagon !");
+                pGUI->PrintMessage("Pick all INDIAN hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[14];
-                pGUI->PrintMessage("Pick all Red ellipse !");
+                pGUI->PrintMessage("Pick all INDIAN ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(6)))
@@ -242,17 +253,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[15];
-                pGUI->PrintMessage("Pick all SandyBrown square!");
+                pGUI->PrintMessage("Pick all SANDYBROWN square!");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[16];
-                pGUI->PrintMessage("Pick all SandyBrown hexagon!");
+                pGUI->PrintMessage("Pick all SANDYBROWN hexagon!");
             }
             else
             {
                 picked_fig_no = combinations[17];
-                pGUI->PrintMessage("Pick all SandyBrown ellipse!");
+                pGUI->PrintMessage("Pick all SANDYBROWN ellipse!");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(7)))
@@ -260,17 +271,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[18];
-                pGUI->PrintMessage("Pick all Brown square !");
+                pGUI->PrintMessage("Pick all SALMON square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[19];
-                pGUI->PrintMessage("Pick all Brown hexagon !");
+                pGUI->PrintMessage("Pick all SALMON hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[20];
-                pGUI->PrintMessage("Pick all Brown ellipse !");
+                pGUI->PrintMessage("Pick all SALMON ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(8)))
@@ -278,17 +289,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[21];
-                pGUI->PrintMessage("Pick all Orange square !");
+                pGUI->PrintMessage("Pick all ORANGERED square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[22];
-                pGUI->PrintMessage("Pick all Orange hexagon !");
+                pGUI->PrintMessage("Pick all ORANGERED hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[23];
-                pGUI->PrintMessage("Pick all Orange ellipse !");
+                pGUI->PrintMessage("Pick all ORANGERED ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(9)))
@@ -296,17 +307,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[24];
-                pGUI->PrintMessage("Pick all Violet square !");
+                pGUI->PrintMessage("Pick all PALEVIOLETRED square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[25];
-                pGUI->PrintMessage("Pick all Violet hexagon !");
+                pGUI->PrintMessage("Pick all PALEVIOLETRED hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[26];
-                pGUI->PrintMessage("Pick all Violet ellipse !");
+                pGUI->PrintMessage("Pick all PALEVIOLETRED ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(10)))
@@ -314,17 +325,17 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             if (dynamic_cast<CSquare*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[27];
-                pGUI->PrintMessage("Pick all Cyan square !");
+                pGUI->PrintMessage("Pick all DARKCYAN square !");
             }
             else if (dynamic_cast<CHexagon*>(pickFigureInfo))
             {
                 picked_fig_no = combinations[28];
-                pGUI->PrintMessage("Pick all Cyan hexagon !");
+                pGUI->PrintMessage("Pick all DARKCYAN hexagon !");
             }
             else
             {
                 picked_fig_no = combinations[29];
-                pGUI->PrintMessage("Pick all Cyan ellipse !");
+                pGUI->PrintMessage("Pick all DARKCYAN ellipse !");
             }
         }
         else if (IsEqualColor(c, pGUI->getColorFromPallet(11)))
@@ -343,6 +354,24 @@ void ActionPickTypeFillFigure::randomShape(color& c)
             {
                 picked_fig_no = combinations[32];
                 pGUI->PrintMessage("Pick all YELLOWGREEN ellipse !");
+            }
+        }
+        else
+        {
+            if (dynamic_cast<CSquare*>(pickFigureInfo))
+            {
+                picked_fig_no = combinations[33];
+                pGUI->PrintMessage("Pick all UNFILLED square !");
+            }
+            else if (dynamic_cast<CHexagon*>(pickFigureInfo))
+            {
+                picked_fig_no = combinations[34];
+                pGUI->PrintMessage("Pick all UNFILLED hexagon !");
+            }
+            else
+            {
+                picked_fig_no = combinations[35];
+                pGUI->PrintMessage("Pick all UNFILLED ellipse !");
             }
         }
     }
@@ -366,22 +395,16 @@ void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
     while (randomShapeCount > 0)
     {
         pGUI->GetPointClicked(p.x, p.y);
+
         clickedFig = pManager->GetFigure(p.x, p.y);
         if (clickedFig == NULL) {
-            pGUI->PrintMessage(" game aborted.");
+            pGUI->ClearStatusBar();  
             showShapes();
             pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
             return;
         }
+        
         clickedFigColor = clickedFig->getFilledColor();
-        if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
-        {
-            clickedFig = pManager->GetFigure(p.x, p.y);
-            if (!clickedFig) {
-                pGUI->PrintMessage(" game aborted.");
-                return;
-            }
-            clickedFigColor = clickedFig->getFilledColor();
             if ((dynamic_cast<CSquare*>(clickedFig)) && (dynamic_cast<CSquare*>(pickFigureInfo)) && IsEqualColor(clickedFigColor, Color))
             {
                 rightSelect++;
@@ -427,9 +450,9 @@ void ActionPickTypeFillFigure::match(int& randomShapeCount, color Color)
 
                 pGUI->PrintMessage(Message);
             }
-        }
-
     }
+
+    
     pGUI->RemoveButtonHighlight(ITM_SELECT_TYPE_FILL);
 }
 void ActionPickTypeFillFigure::hideshape()
@@ -455,7 +478,7 @@ void ActionPickTypeFillFigure::Execute()
     pGUI->HighlightButton(ITM_SELECT_TYPE_FILL);
 
 	pGUI->ClearStatusBar();
-	ReadActionParameters();
+    GetFilledTypeShape();
 	randomShape(c);
 	match(picked_fig_no, c);
 	showShapes();

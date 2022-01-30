@@ -9,13 +9,19 @@ CFigure::CFigure(GfxInfo FigureGfxInfo)
 }
 
 void CFigure::SetSelected(bool s)
-{	Selected = s; }
+{	
+	Selected = s; 
+}
 
 bool CFigure::IsSelected() const
-{	return Selected; }
+{	
+	return Selected; 
+}
 
 void CFigure::ChngDrawClr(color Dclr)
-{	FigGfxInfo.DrawClr = Dclr; }
+{	
+	FigGfxInfo.DrawClr = Dclr; 
+}
 
 void CFigure::ChngFillClr(color Fclr)
 {	
@@ -60,8 +66,8 @@ void CFigure::SetGfxInfo(GfxInfo& PickFigureInfo)
 	PickFigureInfo.DrawClr = storedColorOfDraw;
 }
 
-//---------------------> for play mode		//17-1-2022
-
+//---------------------> for play mode		
+// 
 //Hides Figures
 void CFigure::Hide()
 {
@@ -72,9 +78,14 @@ void CFigure::Show()
 {
 	figHidden = false;
 }
-
 //Gives Current Status
 bool CFigure::HiddenStatus()
 {
 	return figHidden;
+}
+
+//Sends color info to playmode   29/1
+GfxInfo CFigure::GetGfxInfo()
+{
+	return FigGfxInfo;
 }
